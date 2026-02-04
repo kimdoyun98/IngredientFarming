@@ -6,7 +6,6 @@ class FeatureConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("ingredientfarming.android.library")
-                apply("ingredientfarming.hilt")
                 apply("ingredientfarming.compose")
             }
         }
