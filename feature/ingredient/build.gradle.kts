@@ -16,4 +16,6 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
     implementation(projects.core.designsystem)
+    implementation(projects.core.model)
+    implementation(projects.domain.ingredient)
 }
