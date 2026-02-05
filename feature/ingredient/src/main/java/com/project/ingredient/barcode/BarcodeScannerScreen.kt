@@ -23,13 +23,12 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.project.ingredient.barcode.BarcodeViewModel
 import java.util.concurrent.Executors
 
 @Composable
 fun BarcodeScannerScreen(
     modifier: Modifier = Modifier,
-    vm: BarcodeViewModel
+    setBarcode: (String) -> Unit,
 ) {
     var barcodeValue by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
@@ -59,7 +58,7 @@ fun BarcodeScannerScreen(
                     BarcodeAnalyzer(scanner) { barcodes ->
                         barcodes.firstOrNull()?.rawValue?.let {
                             barcodeValue = it
-                            vm.setBarcode(it)
+                            setBarcode(it)
                         }
                     })
 

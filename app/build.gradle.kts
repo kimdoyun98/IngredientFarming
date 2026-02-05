@@ -16,6 +16,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    implementation(projects.feature.ingredient)
+    implementation(projects.feature.main)
     implementation(projects.data.ingredient)
 }
