@@ -1,4 +1,4 @@
-package com.project.ingredient
+package com.project.ingredient.barcode
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
