@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.project.designsystem.theme.IngredientFarmingTheme
+import com.project.navigation.rememberIngredientFarmingNavigator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

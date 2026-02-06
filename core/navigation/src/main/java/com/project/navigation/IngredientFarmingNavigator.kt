@@ -1,12 +1,11 @@
-package com.project.main
+package com.project.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.project.navigation.IngredientRoute
 
-internal class IngredientFarmingNavigator(
+class IngredientFarmingNavigator(
     val navController: NavHostController,
 ) {
     fun navigateToBarcodeScanner() =
@@ -14,7 +13,7 @@ internal class IngredientFarmingNavigator(
 }
 
 @Composable
-internal fun rememberIngredientFarmingNavigator(
+fun rememberIngredientFarmingNavigator(
     navController: NavHostController = rememberNavController(),
 ): IngredientFarmingNavigator = remember(navController) {
     IngredientFarmingNavigator(navController)

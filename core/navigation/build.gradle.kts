@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.ingredientfarming.android.library)
+    alias(libs.plugins.ingredientfarming.compose)
     alias(libs.plugins.kotlin.serialization)
 }
 
