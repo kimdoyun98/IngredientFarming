@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BarcodeResponse(
-    @SerialName("I2570") val i2570: I2570Response?,
+    @SerialName("I2570") val i2570: I2570 = I2570(),
 )
 
 @Serializable
-data class I2570Response(
-    @SerialName("total_count") val total_count: String?,
-    @SerialName("row") val row: List<ProductResponse>?,
+data class I2570(
+    @SerialName("total_count") val total_count: String = "0",
+    @SerialName("row") val row: List<ProductResponse> = emptyList(),
 )
 
 @Serializable
