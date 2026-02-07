@@ -1,11 +1,11 @@
-package com.project.ingredient.barcode
+package com.project.ingredient.barcode.barcode
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.ingredient.barcode.contract.BarcodeEffect
-import com.project.ingredient.barcode.contract.BarcodeIntent
-import com.project.ingredient.barcode.contract.BarcodeScanStatus
-import com.project.ingredient.barcode.contract.BarcodeState
+import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
+import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
+import com.project.ingredient.barcode.contract.barcode.BarcodeScanStatus
+import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import com.project.ingredient.usecase.GetBarcodeInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

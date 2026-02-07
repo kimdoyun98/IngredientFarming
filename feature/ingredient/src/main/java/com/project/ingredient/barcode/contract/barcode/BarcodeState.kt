@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode.contract
+package com.project.ingredient.barcode.contract.barcode
 
 import androidx.compose.runtime.Immutable
 import com.project.model.barcode.Product

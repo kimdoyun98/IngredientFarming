@@ -6,9 +6,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.project.ingredient.barcode.BarcodeScannerScreen
-import com.project.ingredient.barcode.BarcodeViewModel
-import com.project.ingredient.barcode.contract.BarcodeEffect
+import com.project.ingredient.barcode.barcode.BarcodeScannerScreen
+import com.project.ingredient.barcode.barcode.BarcodeViewModel
+import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState

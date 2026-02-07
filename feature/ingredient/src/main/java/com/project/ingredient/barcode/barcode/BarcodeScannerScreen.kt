@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode
+package com.project.ingredient.barcode.barcode
 
 import android.util.Log
 import androidx.camera.core.CameraSelector
@@ -16,9 +16,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.project.ingredient.barcode.contract.BarcodeIntent
-import com.project.ingredient.barcode.contract.BarcodeScanStatus
-import com.project.ingredient.barcode.contract.BarcodeState
+import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
+import com.project.ingredient.barcode.contract.barcode.BarcodeScanStatus
+import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import java.util.concurrent.Executors
 
 @Composable
