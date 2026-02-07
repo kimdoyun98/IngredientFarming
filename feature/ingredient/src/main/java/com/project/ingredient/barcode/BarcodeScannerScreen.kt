@@ -8,29 +8,54 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.project.ingredient.barcode.contract.BarcodeIntent
+import com.project.ingredient.barcode.contract.BarcodeScanStatus
+import com.project.ingredient.barcode.contract.BarcodeState
 import java.util.concurrent.Executors
 
 @Composable
-fun BarcodeScannerScreen(
+internal fun BarcodeScannerScreen(
     modifier: Modifier = Modifier,
-    setBarcode: (String) -> Unit,
+    state: () -> BarcodeState,
+    onIntent: (BarcodeIntent) -> Unit,
 ) {
-    var barcodeValue by remember { mutableStateOf<String?>(null) }
+
+    CameraXScreen(
+        modifier = modifier,
+        barcodeScan = { onIntent(BarcodeIntent.BarcodeScan(it)) },
+    )
+
+    when (val status = state().scanStatus) {
+
+        is BarcodeScanStatus.Scanning -> {
+            // Loading
+        }
+
+        is BarcodeScanStatus.Success -> {
+            // Navigate
+        }
+
+        is BarcodeScanStatus.Error -> {
+            // Toast
+        }
+
+        else -> Unit
+    }
+}
+
+@Composable
+private fun CameraXScreen(
+    modifier: Modifier = Modifier,
+    barcodeScan: (String) -> Unit,
+) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -57,8 +82,7 @@ fun BarcodeScannerScreen(
                     Executors.newSingleThreadExecutor(),
                     BarcodeAnalyzer(scanner) { barcodes ->
                         barcodes.firstOrNull()?.rawValue?.let {
-                            barcodeValue = it
-                            setBarcode(it)
+                            barcodeScan(it)
                         }
                     })
 
@@ -77,14 +101,5 @@ fun BarcodeScannerScreen(
             },
             modifier = Modifier.fillMaxSize()
         )
-
-        barcodeValue?.let {
-            Text(
-                text = "스캔된 바코드: $it",
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 32.dp)
-            )
-        }
     }
 }
