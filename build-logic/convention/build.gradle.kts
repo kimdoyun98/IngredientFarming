@@ -53,6 +53,11 @@ gradlePlugin {
                 id = "ingredientfarming.jvm"
                 implementationClass = "JvmLibraryConventionPlugin"
             }
+
+            register("Room") {
+                id = "ingredientfarming.room"
+                implementationClass = "RoomPlugin"
+            }
         }
     }
 }

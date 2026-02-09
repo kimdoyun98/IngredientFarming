@@ -29,6 +29,7 @@ loggingInterceptor = "5.3.2"
 
 kotlinSerialization = "2.1.20"
 kotlinxSerializationJson = "1.8.1"
+room = "2.8.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,10 +50,14 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
-#MVI Orbit
+# MVI Orbit
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbitCompose" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbitViewmodel" }
 
+# Room
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 # CameraX
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
@@ -92,7 +97,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-
+#room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 
 #build-logic
@@ -103,3 +108,4 @@ ingredientfarming-compose = { id = "ingredientfarming.compose", version = "unspe
 ingredientfarming-hilt = { id = "ingredientfarming.hilt", version = "unspecified" }
 ingredientfarming-feature = { id = "ingredientfarming.feature", version = "unspecified" }
 ingredientfarming-jvm = { id = "ingredientfarming.jvm", version = "unspecified" }
+ingredientfarming-room = { id = "ingredientfarming.room", version = "unspecified" }
