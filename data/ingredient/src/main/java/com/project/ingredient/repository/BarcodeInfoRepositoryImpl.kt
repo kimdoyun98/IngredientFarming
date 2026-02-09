@@ -1,6 +1,6 @@
-package com.project.ingredient
+package com.project.ingredient.repository
 
-import com.project.ingredient.repository.BarcodeInfoRepository
+import com.project.ingredient.asExternalModel
 import com.project.model.barcode.Product
 import com.project.network.retrofit.BarcodeApiService
 import javax.inject.Inject

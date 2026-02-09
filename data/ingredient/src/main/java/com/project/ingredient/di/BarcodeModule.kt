@@ -1,6 +1,6 @@
 package com.project.ingredient.di
 
-import com.project.ingredient.BarcodeInfoRepositoryImpl
+import com.project.ingredient.repository.BarcodeInfoRepositoryImpl
 import com.project.ingredient.repository.BarcodeInfoRepository
 import dagger.Binds
 import dagger.Module
