@@ -1,13 +1,13 @@
 package com.project.model.barcode
 
-enum class IngredientCategory {
-    CONDIMENT,
-    VEGETABLE,
-    FRUIT,
-    MEAT,
-    DAIRY,
-    GRAIN,
-    BEVERAGE,
-    SNACK,
-    OTHER
+enum class IngredientCategory(val n: String) {
+    CONDIMENT("양념"),
+    VEGETABLE("채소"),
+    FRUIT("과일"),
+    MEAT("육류"),
+    DAIRY("유제품"),
+    GRAIN("곡물"),
+    BEVERAGE("음료"),
+    SNACK("간식"),
+    OTHER("기타")
 }
