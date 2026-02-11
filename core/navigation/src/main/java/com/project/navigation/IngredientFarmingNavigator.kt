@@ -10,6 +10,9 @@ class IngredientFarmingNavigator(
 ) {
     fun navigateToBarcodeScanner() =
         navController.navigate(IngredientRoute.BarcodeScanner)
+
+    fun navigateToSaveIngredient() =
+        navController.navigate(IngredientRoute.SaveIngredient)
 }
 
 @Composable

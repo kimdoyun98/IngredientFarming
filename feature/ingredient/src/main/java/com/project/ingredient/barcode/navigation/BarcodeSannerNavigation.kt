@@ -6,8 +6,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.project.ingredient.barcode.barcode.BarcodeScannerScreen
-import com.project.ingredient.barcode.barcode.BarcodeViewModel
+import com.project.ingredient.barcode.ui.barcode.BarcodeScannerScreen
+import com.project.ingredient.barcode.ui.barcode.BarcodeViewModel
 import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
@@ -25,7 +25,7 @@ fun NavGraphBuilder.barcodeScannerGraph(
         barcodeViewModel.collectSideEffect { effect ->
             when(effect){
                 is BarcodeEffect.NavigateSaveIngredientScreen -> {
-                    //TODO Navigate to Save Ingredient Screen
+                    navigator.navigateToSaveIngredient()
                 }
 
                 is BarcodeEffect.ToastMessage -> {

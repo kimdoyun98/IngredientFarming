@@ -5,4 +5,7 @@ import kotlinx.serialization.Serializable
 sealed interface IngredientRoute: Route {
     @Serializable
     data object BarcodeScanner : IngredientRoute
+
+    @Serializable
+    data object SaveIngredient : IngredientRoute
 }
