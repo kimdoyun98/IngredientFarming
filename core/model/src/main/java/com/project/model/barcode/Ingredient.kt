@@ -9,5 +9,5 @@ data class Ingredient(
     val category: IngredientCategory,
     val enterDate: LocalDate,
     val expirationDate: LocalDate? = null,
-    val store: String? = null,
+    val store: IngredientStore,
 )
