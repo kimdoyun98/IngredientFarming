@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode.barcode
+package com.project.ingredient.barcode.ui.barcode
 
 import android.util.Log
 import androidx.annotation.OptIn

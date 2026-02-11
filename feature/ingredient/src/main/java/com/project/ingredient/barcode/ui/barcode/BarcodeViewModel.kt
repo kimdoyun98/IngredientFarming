@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode.barcode
+package com.project.ingredient.barcode.ui.barcode
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -61,6 +61,12 @@ class BarcodeViewModel @Inject constructor(
         when (intent) {
             is BarcodeIntent.BarcodeScan -> {
                 _barcode.value = intent.barcode
+            }
+
+            is BarcodeIntent.NavigateSaveScreen -> {
+                intent {
+                    postSideEffect(BarcodeEffect.NavigateSaveIngredientScreen)
+                }
             }
         }
     }
