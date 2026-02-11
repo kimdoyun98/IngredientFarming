@@ -17,8 +17,9 @@ dependencies {
 
     implementation(projects.core.designsystem)
     implementation(projects.core.model)
-    implementation(projects.domain.ingredient)
     implementation(projects.core.navigation)
+    implementation(projects.core.ui)
+    implementation(projects.domain.ingredient)
 
     implementation(libs.barcode.scanning)
 

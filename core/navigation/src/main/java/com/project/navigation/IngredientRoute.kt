@@ -8,4 +8,7 @@ sealed interface IngredientRoute: Route {
 
     @Serializable
     data object SaveIngredient : IngredientRoute
+
+    @Serializable
+    data object DirectInput : IngredientRoute
 }
