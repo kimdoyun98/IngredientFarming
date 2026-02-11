@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="top_bar_default_navigation_icon_description">back button</string>
+    <string name="top_bar_default_action_icon_description">done icon</string>
+</resources>
