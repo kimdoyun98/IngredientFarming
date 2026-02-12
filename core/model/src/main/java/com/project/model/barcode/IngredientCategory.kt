@@ -11,3 +11,6 @@ enum class IngredientCategory(val n: String) {
     SNACK("간식"),
     OTHER("기타")
 }
+
+fun getIndexToIngredientCategory(index: Int?): IngredientCategory =
+    index?.let { IngredientCategory.entries[it] } ?: IngredientCategory.OTHER

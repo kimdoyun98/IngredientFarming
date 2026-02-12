@@ -13,6 +13,7 @@ dependencies {
 
     implementation(projects.core.designsystem)
     implementation(projects.core.navigation)
+    implementation(projects.core.model)
 
     implementation(projects.feature.ingredient)
 }

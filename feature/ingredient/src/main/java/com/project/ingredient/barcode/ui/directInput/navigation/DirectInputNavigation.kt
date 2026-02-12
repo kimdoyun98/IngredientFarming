@@ -13,20 +13,28 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.directInputGraph(
-    navigator: IngredientFarmingNavigator
+    navigator: IngredientFarmingNavigator,
 ) {
     composable<IngredientRoute.DirectInput> {
         val directInputViewModel: DirectInputViewModel = hiltViewModel()
         val state by directInputViewModel.collectAsState()
 
         directInputViewModel.collectSideEffect { effect ->
-            when(effect){
+            when (effect) {
                 is DirectInputEffect.NavigateToBack -> {
                     navigator.navController.popBackStack()
                 }
 
                 is DirectInputEffect.NavigateToSaveIngredient -> {
-                    navigator.navigateToSaveIngredient()
+                    navigator.navController.popBackStack()
+                    navigator.navigateToSaveIngredient(
+                        IngredientRoute.SaveIngredient(
+                            name = state.name,
+                            expirationDate = state.expirationDate,
+                            storeSelected = state.storeSelected,
+                            categorySelected = state.categorySelected
+                        )
+                    )
                 }
             }
         }

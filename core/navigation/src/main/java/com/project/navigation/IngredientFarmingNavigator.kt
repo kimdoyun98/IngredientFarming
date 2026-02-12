@@ -11,8 +11,13 @@ class IngredientFarmingNavigator(
     fun navigateToBarcodeScanner() =
         navController.navigate(IngredientRoute.BarcodeScanner)
 
-    fun navigateToSaveIngredient() =
-        navController.navigate(IngredientRoute.SaveIngredient)
+    fun navigateToDirectInput() =
+        navController.navigate(IngredientRoute.DirectInput)
+
+    fun navigateToSaveIngredient(route: IngredientRoute) =
+        navController.navigate(route) {
+            launchSingleTop = true
+        }
 }
 
 @Composable

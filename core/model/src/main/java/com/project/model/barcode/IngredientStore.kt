@@ -5,3 +5,6 @@ enum class IngredientStore(val n: String) {
     REFRIGERATED("냉장"),
     FROZEN("냉동");
 }
+
+fun getIndexToIngredientStore(index: Int?): IngredientStore =
+    index?.let { IngredientStore.entries[it] } ?: IngredientStore.ROOM_TEMPERATURE

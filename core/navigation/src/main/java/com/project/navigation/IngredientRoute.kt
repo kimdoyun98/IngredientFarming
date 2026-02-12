@@ -2,12 +2,17 @@ package com.project.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed interface IngredientRoute: Route {
+sealed interface IngredientRoute : Route {
     @Serializable
     data object BarcodeScanner : IngredientRoute
 
     @Serializable
-    data object SaveIngredient : IngredientRoute
+    data class SaveIngredient(
+        val name: String,
+        val expirationDate: String,
+        val storeSelected: Int?,
+        val categorySelected: Int?,
+    ) : IngredientRoute
 
     @Serializable
     data object DirectInput : IngredientRoute
