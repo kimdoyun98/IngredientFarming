@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode.navigation
+package com.project.ingredient.barcode.ui.barcode.navigation
 
 import android.widget.Toast
 import androidx.compose.runtime.getValue

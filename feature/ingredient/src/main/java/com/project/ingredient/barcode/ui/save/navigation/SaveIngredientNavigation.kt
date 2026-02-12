@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode.navigation
+package com.project.ingredient.barcode.ui.save.navigation
 
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -14,6 +14,6 @@ fun NavGraphBuilder.saveIngredientGraph(
     composable<IngredientRoute.SaveIngredient>    {
         val saveIngredientViewModel: SaveIngredientViewModel = hiltViewModel()
         saveIngredientViewModel.saveTestData()
-        
+        SaveIngredientScreen()
     }
 }

@@ -1,4 +1,4 @@
-package com.project.ingredient.barcode.navigation
+package com.project.ingredient.barcode.ui.directInput.navigation
 
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
