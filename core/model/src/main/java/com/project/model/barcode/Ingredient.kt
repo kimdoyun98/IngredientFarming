@@ -8,6 +8,6 @@ data class Ingredient(
     val count: Int = 1,
     val category: IngredientCategory = IngredientCategory.OTHER,
     val enterDate: LocalDate = LocalDate.now(),
-    val expirationDate: LocalDate? = null,
+    val expirationDate: LocalDate = LocalDate.parse("9999-01-01"),
     val store: IngredientStore = IngredientStore.ROOM_TEMPERATURE,
 )

@@ -6,5 +6,12 @@
     <string name="store">보관방법</string>
     <string name="category">카테고리</string>
     <string name="next">다음</string>
+    <string name="barcodeScanner">바코드스캐너</string>
+    <string name="directInput">직접입력</string>
     <string name="expiration_text_field_placeholder">예: 2026–02–01</string>
+    <string name="top_app_bar_save_ingredient_screen_title">추가목록</string>
+    <string name="bottom_sheet_close_button">close</string>
+    <string name="bottom_sheet_update_button_text">변경하기</string>
+    <string name="save">저장</string>
+    <string name="add">추가</string>
 </resources>

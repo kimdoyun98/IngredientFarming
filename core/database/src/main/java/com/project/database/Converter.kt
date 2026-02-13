@@ -16,10 +16,10 @@ internal class Converter {
         return dateString?.toLocalDate()
     }
 
-    @TypeConverter
-    fun enumToString(value: IngredientCategory) = value.toString()
-    @TypeConverter
-    fun stringToMyEnum(value: String) = value.toEnum<IngredientCategory>()
+//    @TypeConverter
+//    fun enumToString(value: IngredientCategory) = value.toString()
+//    @TypeConverter
+//    fun stringToMyEnum(value: String) = value.toEnum<IngredientCategory>()
 
     private fun String.toLocalDate(): LocalDate = LocalDate
         .parse(this, DateTimeFormatter.ISO_LOCAL_DATE)

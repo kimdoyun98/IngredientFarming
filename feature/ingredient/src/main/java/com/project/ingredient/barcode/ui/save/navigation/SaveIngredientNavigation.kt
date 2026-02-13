@@ -1,6 +1,5 @@
 package com.project.ingredient.barcode.ui.save.navigation
 
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -34,7 +33,7 @@ fun NavGraphBuilder.saveIngredientGraph(
         saveIngredientViewModel.collectSideEffect { effect ->
             when (effect) {
                 SaveIngredientEffect.SaveIngredient -> {
-
+                    //TODO Save
                 }
 
                 SaveIngredientEffect.NavigateToDirectInputScreen -> {
@@ -47,24 +46,21 @@ fun NavGraphBuilder.saveIngredientGraph(
             }
         }
 
+        saveIngredientViewModel.addNewIngredient(
+            Ingredient(
+                name = newIngredient.name,
+                count = newIngredient.count,
+                category = getIndexToIngredientCategory(newIngredient.categorySelected),
+                enterDate = LocalDate.now(),
+                expirationDate = LocalDate.parse(newIngredient.expirationDate.ifBlank { "9999-01-01" }),
+                store = getIndexToIngredientStore(newIngredient.storeSelected),
+            )
+        )
+
         SaveIngredientScreen(
             state = { saveIngredientState },
             onIntent = saveIngredientViewModel::onIntent,
+            onBottomSheetIntent = saveIngredientViewModel::onBottomSheetIntent,
         )
-
-        LaunchedEffect(Unit) {
-            saveIngredientViewModel.addNewIngredient(
-                Ingredient(
-                    name = newIngredient.name,
-                    count = newIngredient.count,
-                    category = getIndexToIngredientCategory(newIngredient.categorySelected),
-                    enterDate = LocalDate.now(),
-                    expirationDate = if (newIngredient.expirationDate.isBlank()) null else LocalDate.parse(
-                        newIngredient.expirationDate
-                    ),
-                    store = getIndexToIngredientStore(newIngredient.storeSelected),
-                )
-            )
-        }
     }
 }
