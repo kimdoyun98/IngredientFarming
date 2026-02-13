@@ -45,6 +45,12 @@ class DirectInputViewModel : ContainerHost<DirectInputState, DirectInputEffect>,
                 }
             }
 
+            is DirectInputIntent.CountInputChange -> intent {
+                reduce {
+                    state.copy(count = intent.count)
+                }
+            }
+
             is DirectInputIntent.ExpirationDateInputChange -> intent {
                 reduce {
                     state.copy(

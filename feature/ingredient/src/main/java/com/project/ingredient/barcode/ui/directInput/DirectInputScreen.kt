@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.compose.IngredientFarmingWideButton
 import com.project.ingredient.R
 import com.project.ingredient.barcode.contract.directInput.DirectInputIntent
 import com.project.ingredient.barcode.contract.directInput.DirectInputState
@@ -51,8 +51,6 @@ internal fun DirectInputScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            // 개수
-
             OutlinedTextField(
                 modifier = modifier
                     .fillMaxWidth(),
@@ -60,6 +58,18 @@ internal fun DirectInputScreen(
                 value = state().name,
                 onValueChange = { onIntent(DirectInputIntent.NameInputChange(it)) },
                 keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                ),
+            )
+
+            OutlinedTextField(
+                modifier = modifier
+                    .fillMaxWidth(),
+                label = { Text(text = stringResource(R.string.count)) },
+                value = "${state().count}",
+                onValueChange = { onIntent(DirectInputIntent.CountInputChange(it)) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done,
                 ),
             )
@@ -96,9 +106,7 @@ internal fun DirectInputScreen(
                 selectedChipIndex = state().categorySelected ?: -1,
             )
 
-            Button(
-                modifier = modifier
-                    .fillMaxWidth(),
+            IngredientFarmingWideButton(
                 onClick = { onIntent(DirectInputIntent.NextButtonClick) },
                 enabled = state().isEnabled()
             ) {

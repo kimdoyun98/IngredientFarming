@@ -5,12 +5,14 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class DirectInputState(
     val name: String = "",
+    val count: String = "",
     val expirationDate: String = "",
     val storeSelected: Int? = null,
     val categorySelected: Int? = null,
-){
-    fun isEnabled(): Boolean{
+) {
+    fun isEnabled(): Boolean {
         return name.isNotEmpty() &&
+                count.isNotEmpty() &&
                 storeSelected != null &&
                 categorySelected != null &&
                 (expirationDate.isEmpty() || expirationDate.length == 10)

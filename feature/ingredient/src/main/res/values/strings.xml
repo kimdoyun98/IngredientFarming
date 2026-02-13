@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="name">이름</string>
+    <string name="count">수량</string>
     <string name="expiration">유통기한(선택)</string>
     <string name="store">보관방법</string>
     <string name="category">카테고리</string>

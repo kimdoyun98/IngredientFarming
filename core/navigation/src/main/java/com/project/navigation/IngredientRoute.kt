@@ -9,6 +9,7 @@ sealed interface IngredientRoute : Route {
     @Serializable
     data class SaveIngredient(
         val name: String,
+        val count: Int,
         val expirationDate: String,
         val storeSelected: Int?,
         val categorySelected: Int?,

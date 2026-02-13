@@ -30,6 +30,7 @@ fun NavGraphBuilder.directInputGraph(
                     navigator.navigateToSaveIngredient(
                         IngredientRoute.SaveIngredient(
                             name = state.name,
+                            count = state.count.toInt(),
                             expirationDate = state.expirationDate,
                             storeSelected = state.storeSelected,
                             categorySelected = state.categorySelected

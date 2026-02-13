@@ -56,7 +56,7 @@ fun NavGraphBuilder.saveIngredientGraph(
             saveIngredientViewModel.addNewIngredient(
                 Ingredient(
                     name = newIngredient.name,
-                    count = 1,
+                    count = newIngredient.count,
                     category = getIndexToIngredientCategory(newIngredient.categorySelected),
                     enterDate = LocalDate.now(),
                     expirationDate = if (newIngredient.expirationDate.isBlank()) null else LocalDate.parse(
