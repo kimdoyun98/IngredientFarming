@@ -7,5 +7,6 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.core.model)
+    debugImplementation(libs.androidx.ui.tooling)
 }

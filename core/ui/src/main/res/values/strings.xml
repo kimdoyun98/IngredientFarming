@@ -3,4 +3,6 @@
 
     <string name="top_bar_default_navigation_icon_description">back button</string>
     <string name="top_bar_default_action_icon_description">done icon</string>
+
+    <string name="ingredient_card_view_icon_description">icon</string>
 </resources>
