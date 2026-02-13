@@ -20,6 +20,7 @@ navigationCompose = "2.9.7"
 hiltNavigationCompose = "1.3.0"
 composeBom = "2024.09.00"
 activityCompose = "1.12.2"
+materialIconsExtended = "1.7.8"
 
 orbitCompose = "11.0.0"
 orbitViewmodel = "11.0.0"
@@ -49,6 +50,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 
 # MVI Orbit
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbitCompose" }
