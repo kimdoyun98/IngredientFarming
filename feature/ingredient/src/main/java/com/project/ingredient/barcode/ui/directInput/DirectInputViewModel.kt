@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.project.ingredient.barcode.contract.directInput.DirectInputEffect
 import com.project.ingredient.barcode.contract.directInput.DirectInputIntent
 import com.project.ingredient.barcode.contract.directInput.DirectInputState
+import com.project.ui.util.RegexDate.regexDate
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 
@@ -58,32 +59,6 @@ class DirectInputViewModel : ContainerHost<DirectInputState, DirectInputEffect>,
                     )
                 }
             }
-        }
-    }
-
-    companion object {
-        private const val DATE_MASK = "####-##-##"
-        private const val MASK = '#'
-        private const val MAX_LENGTH = DATE_MASK.length
-        private const val DATE_FORMAT = "\\D"
-
-        private fun regexDate(text: String): String {
-            val cleanString = text.replace(DATE_FORMAT.toRegex(), "")
-            val maskBuffer = StringBuilder()
-            var maskIndex = 0
-            var cleanIndex = 0
-
-            while (maskIndex < MAX_LENGTH && cleanIndex < cleanString.length) {
-                if (DATE_MASK[maskIndex] == MASK) {
-                    maskBuffer.append(cleanString[cleanIndex])
-                    cleanIndex++
-                } else {
-                    maskBuffer.append(DATE_MASK[maskIndex])
-                }
-                maskIndex++
-            }
-
-            return maskBuffer.toString()
         }
     }
 }
