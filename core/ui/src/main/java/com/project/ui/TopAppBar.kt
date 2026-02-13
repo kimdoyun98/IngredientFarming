@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,4 +67,54 @@ fun IngredientFarmingTopAppBar(
 
 enum class AppBarType {
     None, Navigation, Action, All
+}
+
+@Preview(
+    name = "NavigationTopAppBar",
+    heightDp = 60
+)
+@Composable
+private fun TopAppBarPreview(){
+    IngredientFarmingTopAppBar(
+        title = "테스트",
+        type = AppBarType.None,
+        onClickNavigation = {}
+    ){}
+}
+
+@Preview(
+    name = "NavigationTopAppBar",
+    heightDp = 60
+)
+@Composable
+private fun NavigationTopAppBarPreview(){
+    IngredientFarmingTopAppBar(
+        title = "테스트",
+        type = AppBarType.Navigation
+    ){}
+}
+
+@Preview(
+    name = "ActionTopAppBarPreview",
+    heightDp = 60
+)
+@Composable
+private fun ActionTopAppBarPreview(){
+    IngredientFarmingTopAppBar(
+        title = "테스트",
+        type = AppBarType.Action,
+    ){}
+}
+
+@Preview(
+    name = "AllTopAppBarPreview",
+    heightDp = 60
+)
+@Composable
+private fun AllTopAppBarPreview(){
+    IngredientFarmingTopAppBar(
+        title = "테스트",
+        type = AppBarType.All,
+        onClickNavigation = {}
+    ){}
 }
