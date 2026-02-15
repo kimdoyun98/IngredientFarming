@@ -1,21 +1,22 @@
 package com.project.ingredient.barcode.ui.barcode.navigation
 
-import android.widget.Toast
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.ingredient.barcode.ui.barcode.BarcodeScannerScreen
 import com.project.ingredient.barcode.ui.barcode.BarcodeViewModel
-import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.barcodeScannerGraph(
-    navigator: IngredientFarmingNavigator
+    navigator: IngredientFarmingNavigator,
+    requestCameraPermission: () -> Unit,
 ) {
     composable<IngredientRoute.BarcodeScanner> { backStack ->
         val barcodeViewModel: BarcodeViewModel = hiltViewModel()
@@ -23,13 +24,21 @@ fun NavGraphBuilder.barcodeScannerGraph(
         val context = LocalContext.current
 
         barcodeViewModel.collectSideEffect { effect ->
-            when(effect){
+            when (effect) {
                 is BarcodeEffect.NavigateSaveIngredientScreen -> {
-                    navigator.navigateToSaveIngredient()
+                    navigator.navigateToSaveIngredient(
+                        IngredientRoute.SaveIngredient(
+                            name = barcodeState.selectProduct.name,
+                            count = 1,
+                            expirationDate = "",
+                            storeSelected = null,
+                            categorySelected = null
+                        )
+                    )
                 }
 
-                is BarcodeEffect.ToastMessage -> {
-                    Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+                is BarcodeEffect.NavigateDirectInputScreen -> {
+                    navigator.navigateToDirectInput()
                 }
             }
         }
@@ -38,5 +47,9 @@ fun NavGraphBuilder.barcodeScannerGraph(
             state = { barcodeState },
             onIntent = barcodeViewModel::onIntent,
         )
+
+        SideEffect {
+            requestCameraPermission()
+        }
     }
 }

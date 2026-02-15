@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
-import com.project.ingredient.barcode.contract.barcode.BarcodeScanStatus
 import com.project.ingredient.barcode.contract.barcode.BarcodeState
+import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
 import com.project.ingredient.usecase.GetBarcodeInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -63,10 +63,19 @@ class BarcodeViewModel @Inject constructor(
                 _barcode.value = intent.barcode
             }
 
-            is BarcodeIntent.NavigateSaveScreen -> {
-                intent {
-                    postSideEffect(BarcodeEffect.NavigateSaveIngredientScreen)
-                }
+            is BarcodeIntent.SelectIngredient -> intent {
+                reduce { state.copy(selectProduct = intent.product) }
+
+                postSideEffect(BarcodeEffect.NavigateSaveIngredientScreen)
+
+            }
+
+            is BarcodeIntent.DirectInputClick -> intent {
+                postSideEffect(BarcodeEffect.NavigateDirectInputScreen)
+            }
+
+            is BarcodeIntent.SnackBarDismissed -> intent {
+                reduce { state.copy(scanStatus = BarcodeScanStatus.Idle) }
             }
         }
     }
