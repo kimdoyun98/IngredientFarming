@@ -8,6 +8,13 @@ import androidx.navigation.compose.rememberNavController
 class IngredientFarmingNavigator(
     val navController: NavHostController,
 ) {
+    fun navigateToHome() =
+        navController.navigate(IngredientRoute.Home) {
+            popUpTo(IngredientRoute.Home) {
+                inclusive = true
+            }
+        }
+
     fun navigateToBarcodeScanner() =
         navController.navigate(IngredientRoute.BarcodeScanner)
 

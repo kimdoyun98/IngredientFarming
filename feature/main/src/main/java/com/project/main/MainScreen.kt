@@ -3,6 +3,7 @@ package com.project.main
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.project.home.navigation.homeGraph
 import com.project.ingredient.barcode.ui.barcode.navigation.barcodeScannerGraph
 import com.project.ingredient.barcode.ui.directInput.navigation.directInputGraph
 import com.project.ingredient.barcode.ui.save.navigation.saveIngredientGraph
@@ -20,8 +21,10 @@ internal fun MainScreen(
 ) {
     NavHost(
         navController = navigator.navController,
-        startDestination = IngredientRoute.BarcodeScanner
+        startDestination = IngredientRoute.Home
     ) {
+        homeGraph(navigator = navigator)
+
         barcodeScannerGraph(
             navigator = navigator,
             requestCameraPermission = {

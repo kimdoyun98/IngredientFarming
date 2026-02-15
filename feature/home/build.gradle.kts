@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.project.main"
+    namespace = "com.project.home"
 }
 
 dependencies {
@@ -11,11 +11,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(projects.core.ui)
     implementation(projects.core.designsystem)
     implementation(projects.core.navigation)
-    implementation(projects.core.model)
-    implementation(projects.core.ui)
-
-    implementation(projects.feature.ingredient)
-    implementation(projects.feature.home)
 }
