@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -35,6 +34,7 @@ import com.project.ingredient.barcode.ui.component.IngredientInputContent
 import com.project.model.barcode.Ingredient
 import com.project.model.barcode.IngredientCategory
 import com.project.model.barcode.IngredientStore
+import com.project.ui.AddTypeSelectBottomSheetContent
 import com.project.ui.AppBarType
 import com.project.ui.IngredientCard
 import com.project.ui.IngredientFarmingTopAppBar
@@ -276,34 +276,6 @@ private fun UpdateBottomSheetContent(
             enabled = updateIngredient.isEnabled(),
         ) {
             Text(text = stringResource(R.string.bottom_sheet_update_button_text))
-        }
-    }
-}
-
-@Composable
-private fun AddTypeSelectBottomSheetContent(
-    modifier: Modifier = Modifier,
-    onBarcodeScannerClick: () -> Unit,
-    onDirectInputClick: () -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        TextButton(
-            modifier = modifier
-                .fillMaxWidth(),
-            onClick = { onBarcodeScannerClick() }
-        ) {
-            Text(stringResource(R.string.barcodeScanner))
-        }
-
-        TextButton(
-            modifier = modifier
-                .fillMaxWidth(),
-            onClick = { onDirectInputClick() }
-        ) {
-            Text(stringResource(R.string.directInput))
         }
     }
 }

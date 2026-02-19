@@ -5,4 +5,6 @@
     <string name="top_bar_default_action_icon_description">done icon</string>
 
     <string name="ingredient_card_view_icon_description">icon</string>
+    <string name="barcodeScanner">바코드스캐너</string>
+    <string name="directInput">직접입력</string>
 </resources>
