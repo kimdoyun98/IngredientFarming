@@ -14,4 +14,5 @@ dependencies {
     implementation(projects.core.ui)
     implementation(projects.core.designsystem)
     implementation(projects.core.navigation)
+    implementation(projects.domain.ingredient)
 }
