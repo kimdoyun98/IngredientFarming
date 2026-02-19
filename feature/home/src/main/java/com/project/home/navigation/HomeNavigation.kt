@@ -22,7 +22,7 @@ fun NavGraphBuilder.homeGraph(
         viewModel.collectSideEffect { effect ->
             when (effect) {
                 is HomeEffect.NavigateToManage -> {
-                    //navigator.navigateToManage()
+                    navigator.navigateToManage()
                 }
                 is HomeEffect.NavigateToBarcodeScanner -> {
                     navigator.navigateToBarcodeScanner()

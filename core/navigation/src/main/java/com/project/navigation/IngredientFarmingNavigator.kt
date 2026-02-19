@@ -25,6 +25,9 @@ class IngredientFarmingNavigator(
         navController.navigate(route) {
             launchSingleTop = true
         }
+
+    fun navigateToManage() =
+        navController.navigate(IngredientRoute.Manage)
 }
 
 @Composable

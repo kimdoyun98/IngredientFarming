@@ -16,6 +16,7 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.ui)
 
-    implementation(projects.feature.ingredient)
     implementation(projects.feature.home)
+    implementation(projects.feature.ingredient)
+    implementation(projects.feature.ingredientManage)
 }

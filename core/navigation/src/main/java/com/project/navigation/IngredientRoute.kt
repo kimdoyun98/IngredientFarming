@@ -21,4 +21,7 @@ sealed interface IngredientRoute : Route {
 
     @Serializable
     data object DirectInput : IngredientRoute
+
+    @Serializable
+    data object Manage : IngredientRoute
 }
