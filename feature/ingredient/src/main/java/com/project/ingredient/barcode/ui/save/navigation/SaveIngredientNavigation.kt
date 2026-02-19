@@ -33,7 +33,7 @@ fun NavGraphBuilder.saveIngredientGraph(
         saveIngredientViewModel.collectSideEffect { effect ->
             when (effect) {
                 SaveIngredientEffect.SaveIngredient -> {
-                    //TODO Save
+                    navigator.navigateToHome()
                 }
 
                 SaveIngredientEffect.NavigateToDirectInputScreen -> {
