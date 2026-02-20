@@ -1,6 +1,6 @@
 package com.project.ingredient_manage.contract
 
-import com.project.model.barcode.Ingredient
+import com.project.model.ingredient.Ingredient
 
 data class ManageState(
     val query: String = "",

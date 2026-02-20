@@ -26,9 +26,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
-import com.project.model.barcode.IngredientStore
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientStore
 import java.time.LocalDate
 
 @Composable

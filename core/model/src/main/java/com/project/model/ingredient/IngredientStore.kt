@@ -1,4 +1,4 @@
-package com.project.model.barcode
+package com.project.model.ingredient
 
 enum class IngredientStore(val n: String) {
     ROOM_TEMPERATURE("실온"),

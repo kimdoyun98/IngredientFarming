@@ -7,11 +7,11 @@ import com.project.ingredient.barcode.contract.save.SaveIngredientEffect
 import com.project.ingredient.barcode.contract.save.SaveIngredientIntent
 import com.project.ingredient.barcode.contract.save.SaveIngredientState
 import com.project.ingredient.usecase.InsertIngredientUseCase
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
-import com.project.model.barcode.IngredientStore
-import com.project.model.barcode.getIndexToIngredientCategory
-import com.project.model.barcode.getIndexToIngredientStore
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientStore
+import com.project.model.ingredient.getIndexToIngredientCategory
+import com.project.model.ingredient.getIndexToIngredientStore
 import com.project.ui.util.RegexDate.regexDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

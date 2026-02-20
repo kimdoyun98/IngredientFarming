@@ -3,8 +3,8 @@ package com.project.ingredient.repository
 import com.project.database.dao.IngredientDao
 import com.project.database.model.asExternalModel
 import com.project.ingredient.asEntity
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

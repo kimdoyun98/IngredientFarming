@@ -2,9 +2,9 @@ package com.project.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
-import com.project.model.barcode.IngredientStore
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientStore
 import java.time.LocalDate
 
 @Entity(tableName = "IngredientEntity")

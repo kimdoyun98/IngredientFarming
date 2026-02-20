@@ -1,6 +1,6 @@
 package com.project.ingredient
 
-import com.project.model.barcode.Ingredient
+import com.project.model.ingredient.Ingredient
 import com.project.model.barcode.Product
 import com.project.network.retrofit.model.BarcodeResponse
 

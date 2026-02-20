@@ -2,7 +2,7 @@ package com.project.ingredient.barcode.contract.save
 
 import androidx.compose.runtime.Stable
 import com.project.ingredient.barcode.contract.directInput.DirectInputState
-import com.project.model.barcode.Ingredient
+import com.project.model.ingredient.Ingredient
 
 @Stable
 data class SaveIngredientState(

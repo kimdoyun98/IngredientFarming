@@ -9,9 +9,9 @@ import androidx.navigation.toRoute
 import com.project.ingredient.barcode.contract.save.SaveIngredientEffect
 import com.project.ingredient.barcode.ui.save.SaveIngredientScreen
 import com.project.ingredient.barcode.ui.save.SaveIngredientViewModel
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.getIndexToIngredientCategory
-import com.project.model.barcode.getIndexToIngredientStore
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.getIndexToIngredientCategory
+import com.project.model.ingredient.getIndexToIngredientStore
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState

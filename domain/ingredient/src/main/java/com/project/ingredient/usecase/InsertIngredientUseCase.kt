@@ -1,7 +1,7 @@
 package com.project.ingredient.usecase
 
 import com.project.ingredient.repository.IngredientRepository
-import com.project.model.barcode.Ingredient
+import com.project.model.ingredient.Ingredient
 import javax.inject.Inject
 
 class InsertIngredientUseCase @Inject constructor(

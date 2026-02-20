@@ -1,4 +1,4 @@
-package com.project.model.barcode
+package com.project.model.ingredient
 
 import java.time.LocalDate
 

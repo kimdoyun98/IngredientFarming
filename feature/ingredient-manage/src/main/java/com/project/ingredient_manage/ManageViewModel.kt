@@ -6,7 +6,7 @@ import com.project.ingredient.usecase.SearchIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
 import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
-import com.project.model.barcode.IngredientCategory
+import com.project.model.ingredient.IngredientCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow

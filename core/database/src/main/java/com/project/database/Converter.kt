@@ -1,7 +1,6 @@
 package com.project.database
 
 import androidx.room.TypeConverter
-import com.project.model.barcode.IngredientCategory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

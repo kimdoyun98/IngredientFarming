@@ -22,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
-import com.project.model.barcode.IngredientStore
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
 import com.project.ui.IngredientCard
 import com.project.ui.IngredientFarmingSearchBar

@@ -1,8 +1,8 @@
 package com.project.ingredient.usecase
 
 import com.project.ingredient.repository.IngredientRepository
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
 import javax.inject.Inject
 
 class SearchIngredientUseCase @Inject constructor(

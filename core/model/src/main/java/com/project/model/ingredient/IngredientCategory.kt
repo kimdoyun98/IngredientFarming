@@ -1,4 +1,4 @@
-package com.project.model.barcode
+package com.project.model.ingredient
 
 enum class IngredientCategory(val n: String) {
     CONDIMENT("양념"),

@@ -31,9 +31,9 @@ import com.project.ingredient.barcode.contract.directInput.DirectInputState
 import com.project.ingredient.barcode.contract.save.SaveIngredientIntent
 import com.project.ingredient.barcode.contract.save.SaveIngredientState
 import com.project.ingredient.barcode.ui.component.IngredientInputContent
-import com.project.model.barcode.Ingredient
-import com.project.model.barcode.IngredientCategory
-import com.project.model.barcode.IngredientStore
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientStore
 import com.project.ui.AddTypeSelectBottomSheetContent
 import com.project.ui.AppBarType
 import com.project.ui.IngredientCard

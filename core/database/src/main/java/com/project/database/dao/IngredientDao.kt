@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.database.model.IngredientEntity
-import com.project.model.barcode.IngredientCategory
+import com.project.model.ingredient.IngredientCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
