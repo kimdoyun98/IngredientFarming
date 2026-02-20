@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.ingredient_manage.contract.ManageIntent
@@ -64,13 +65,13 @@ internal fun ManageScreen(
     onSelectCategoryChip: (Int) -> Unit,
 ) {
     IngredientFarmingTopAppBar(
-        title = "관리",
+        title = stringResource(R.string.top_app_bar_title),
         type = AppBarType.All,
         onClickNavigation = { onClickTopAppBarNavigation() },
         actionIcon = {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = null
+                contentDescription = stringResource(R.string.top_app_bar_action_icon_ingredient_add)
             )
         },
         onClickAction = { onClickTopAppBarAction() }
@@ -117,12 +118,12 @@ private fun CategoryFilterChipGroup(
         item {
             FilterChip(
                 modifier = modifier,
-                label = { Text("전체") },
+                label = { Text(stringResource(R.string.total)) },
                 leadingIcon = if (selectedCategoryIndex == 0) {
                     {
                         Icon(
                             imageVector = Icons.Filled.Done,
-                            contentDescription = "Done icon",
+                            contentDescription = stringResource(R.string.filter_chip_check_icon_description),
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     }
@@ -142,7 +143,7 @@ private fun CategoryFilterChipGroup(
                     {
                         Icon(
                             imageVector = Icons.Filled.Done,
-                            contentDescription = "Done icon",
+                            contentDescription = stringResource(R.string.filter_chip_check_icon_description),
                             modifier = Modifier.size(FilterChipDefaults.IconSize)
                         )
                     }
