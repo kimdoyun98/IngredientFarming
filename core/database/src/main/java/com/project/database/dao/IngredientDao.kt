@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.database.model.IngredientEntity
+import com.project.model.barcode.IngredientCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,5 +22,15 @@ interface IngredientDao {
         WHERE expirationDate BETWEEN DATE('now') AND DATE('now', '+3 days')
         """)
     fun getExpirationDateSoonCount(): Flow<Int>
+
+    @Query("""
+        SELECT * 
+        FROM IngredientEntity
+        WHERE
+            (:query = '' OR name LIKE '%' || :query || '%')
+            AND
+            (:category IS NULL OR category = :category)
+    """)
+    suspend fun searchIngredients(query: String, category: IngredientCategory?): List<IngredientEntity>
 
 }
