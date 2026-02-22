@@ -15,10 +15,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
-    implementation(projects.core.designsystem)
     implementation(projects.core.model)
-    implementation(projects.core.navigation)
-    implementation(projects.core.ui)
     implementation(projects.domain.ingredient)
 
     implementation(libs.barcode.scanning)

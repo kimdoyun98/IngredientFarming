@@ -14,6 +14,10 @@ class FeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                implementation(project(":core:designsystem"))
+                implementation(project(":core:navigation"))
+                implementation(project(":core:ui"))
+
                 implementation(libs.getLibrary("orbit-compose"))
                 implementation(libs.getLibrary("orbit-viewmodel"))
             }
