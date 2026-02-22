@@ -58,6 +58,11 @@ gradlePlugin {
                 id = "ingredientfarming.room"
                 implementationClass = "RoomPlugin"
             }
+
+            register("Test") {
+                id = "ingredientfarming.test"
+                implementationClass = "TestConventionPlugin"
+            }
         }
     }
 }

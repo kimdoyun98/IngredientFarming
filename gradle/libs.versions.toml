@@ -115,3 +115,4 @@ ingredientfarming-hilt = { id = "ingredientfarming.hilt", version = "unspecified
 ingredientfarming-feature = { id = "ingredientfarming.feature", version = "unspecified" }
 ingredientfarming-jvm = { id = "ingredientfarming.jvm", version = "unspecified" }
 ingredientfarming-room = { id = "ingredientfarming.room", version = "unspecified" }
+ingredientfarming-test = { id = "ingredientfarming.test", version = "unspecified" }

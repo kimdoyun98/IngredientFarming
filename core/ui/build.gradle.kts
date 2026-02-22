@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.ingredientfarming.compose)
+    alias(libs.plugins.ingredientfarming.test)
 }
 
 android {

@@ -11,6 +11,7 @@ class FeatureConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("ingredientfarming.android.library")
                 apply("ingredientfarming.compose")
+                apply("ingredientfarming.test")
             }
 
             dependencies {
