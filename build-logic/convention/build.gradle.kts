@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.android.tools.build.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.compose.compiler.gradlePlugin)
 }
 
 gradlePlugin {

@@ -7,6 +7,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 class ComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -18,6 +19,12 @@ class ComposeConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 configureCompose(this)
+            }
+
+            extensions.configure<ComposeCompilerGradlePluginExtension> {
+                stabilityConfigurationFile.set(
+                    layout.projectDirectory.file("config/compose/compose-stability.conf")
+                )
             }
 
             dependencies {
