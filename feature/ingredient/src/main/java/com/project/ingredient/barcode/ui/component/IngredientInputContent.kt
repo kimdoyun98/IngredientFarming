@@ -21,6 +21,8 @@ import com.project.ingredient.R
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.FilterChipGroup
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 internal fun IngredientInputContent(
@@ -84,7 +86,7 @@ internal fun IngredientInputContent(
         FilterChipGroup(
             modifier = modifier,
             groupName = stringResource(R.string.store),
-            groupList = IngredientStore.entries.map { it.n },
+            groupList = IngredientStore.entries.map { it.n }.toImmutableList(),
             onClick = { selected -> clickStoreFilterChip(selected) },
             selectedChipIndex = storeChipSelectIndex ?: -1,
         )
@@ -92,7 +94,7 @@ internal fun IngredientInputContent(
         FilterChipGroup(
             modifier = modifier,
             groupName = stringResource(R.string.category),
-            groupList = IngredientCategory.entries.map { it.n },
+            groupList = IngredientCategory.entries.map { it.n }.toImmutableList(),
             onClick = { selected -> clickCategoryFilterChip(selected) },
             selectedChipIndex = categoryChipSelectIndex ?: -1,
         )

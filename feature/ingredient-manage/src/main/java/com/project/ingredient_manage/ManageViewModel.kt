@@ -8,6 +8,8 @@ import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
 import com.project.model.ingredient.IngredientCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,7 +41,7 @@ class ManageViewModel @Inject constructor(
                 query
                     .debounce(500L)
                     .onEach { q ->
-                        val items = searchIngredientUseCase.invoke(q, category)
+                        val items = searchIngredientUseCase.invoke(q, category).toImmutableList()
                         intent {
                             reduce { state.copy(ingredientItems = items) }
                         }

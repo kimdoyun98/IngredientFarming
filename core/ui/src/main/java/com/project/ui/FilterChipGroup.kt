@@ -15,12 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun FilterChipGroup(
     modifier: Modifier = Modifier,
     groupName: String,
-    groupList: List<String>, //TODO List로 인해 Recomposition 발생 - ImmutableList 사용
+    groupList: ImmutableList<String>,
     onClick: (Int) -> Unit,
     selectedChipIndex: Int,
 ) {
@@ -61,7 +63,7 @@ fun FilterChipGroup(
 private fun FilterChipGroupPreview() {
     FilterChipGroup(
         groupName = "보관방법",
-        groupList = listOf("실온", "냉장", "냉동"),
+        groupList = persistentListOf("실온", "냉장", "냉동"),
         onClick = {},
         selectedChipIndex = 1,
     )

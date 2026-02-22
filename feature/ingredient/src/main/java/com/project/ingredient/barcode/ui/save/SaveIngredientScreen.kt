@@ -38,6 +38,8 @@ import com.project.ui.AddTypeSelectBottomSheetContent
 import com.project.ui.AppBarType
 import com.project.ui.IngredientCard
 import com.project.ui.IngredientFarmingTopAppBar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -104,7 +106,7 @@ internal fun SaveIngredientScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 internal fun SaveIngredientScreen(
     modifier: Modifier = Modifier,
-    ingredientList: List<Ingredient>,
+    ingredientList: ImmutableList<Ingredient>,
     updateBottomSheetState: Boolean,
     addBottomSheetState: Boolean,
     onPlusButtonClick: () -> Unit,
@@ -286,7 +288,7 @@ private fun SaveIngredientScreenPreview() {
     SaveIngredientScreen(
         state = {
             SaveIngredientState(
-                ingredientList = listOf(
+                ingredientList = persistentListOf(
                     Ingredient(
                         name = "요구르트",
                         count = 10,

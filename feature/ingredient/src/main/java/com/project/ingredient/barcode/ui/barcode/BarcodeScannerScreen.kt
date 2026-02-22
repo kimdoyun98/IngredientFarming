@@ -46,6 +46,8 @@ import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
 import com.project.model.barcode.Product
 import com.project.ui.IngredientFarmingCenterLoading
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
@@ -231,7 +233,7 @@ private fun showSnackBar(
 private fun SelectIngredientBottomSheet(
     modifier: Modifier = Modifier,
     sheetState: SheetState,
-    products: List<Product>,
+    products: ImmutableList<Product>,
     onNameClick: (Product) -> Unit,
     onDirectInputClick: () -> Unit,
     onDismissed: () -> Unit
@@ -282,7 +284,7 @@ private fun BarcodeScannerScreenPreview() {
     BarcodeScannerScreen(
         modifier = Modifier,
         scanStatus = BarcodeScanStatus.Success(
-            products = listOf(
+            products = persistentListOf(
                 Product(barcode = "1234567890123", name = "Sample Product 1"),
                 Product(barcode = "1234567890124", name = "Sample Product 2")
             )

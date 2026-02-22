@@ -30,6 +30,8 @@ import com.project.ui.AppBarType
 import com.project.ui.IngredientCard
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDate
 
 @Composable
@@ -56,7 +58,7 @@ internal fun ManageScreen(
 internal fun ManageScreen(
     modifier: Modifier = Modifier,
     query: String,
-    ingredientItems: List<Ingredient>,
+    ingredientItems: ImmutableList<Ingredient>,
     selectedCategoryIndex: Int,
     onClickTopAppBarNavigation: () -> Unit,
     onClickTopAppBarAction: () -> Unit,
@@ -162,7 +164,7 @@ private fun CategoryFilterChipGroup(
 private fun ManageScreenPreview() {
     ManageScreen(
         query = "",
-        ingredientItems = listOf(
+        ingredientItems = persistentListOf(
             Ingredient(
                 id = 1,
                 name = "감자",

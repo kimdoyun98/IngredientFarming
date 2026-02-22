@@ -14,6 +14,7 @@ import com.project.model.ingredient.getIndexToIngredientCategory
 import com.project.model.ingredient.getIndexToIngredientStore
 import com.project.ui.util.RegexDate.regexDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
@@ -45,7 +46,7 @@ class SaveIngredientViewModel @Inject constructor(
                         val list = state.ingredientList.toMutableList()
                         list.add(it)
 
-                        state.copy(ingredientList = list)
+                        state.copy(ingredientList = list.toImmutableList())
                     }
                 }
             }
@@ -157,7 +158,10 @@ class SaveIngredientViewModel @Inject constructor(
                 )
 
                 reduce {
-                    state.copy(ingredientList = changeList, openUpdateBottomSheetState = false)
+                    state.copy(
+                        ingredientList = changeList.toImmutableList(),
+                        openUpdateBottomSheetState = false
+                    )
                 }
             }
         }

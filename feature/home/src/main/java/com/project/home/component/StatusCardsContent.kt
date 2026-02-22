@@ -9,11 +9,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.project.home.model.HomeStatusCardInfo
 import com.project.home.model.rememberStatusCardInfo
 import com.project.ui.StatusCard
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun StatusCardsContent(
     modifier: Modifier = Modifier,
-    statusCardInfo: List<HomeStatusCardInfo> = rememberStatusCardInfo(),
+    statusCardInfo: ImmutableList<HomeStatusCardInfo> = rememberStatusCardInfo(),
     ingredientCount: Int,
     expiresSoonCount: Int,
     recipeCount: Int,

@@ -21,7 +21,6 @@ fun NavGraphBuilder.barcodeScannerGraph(
     composable<IngredientRoute.BarcodeScanner> { backStack ->
         val barcodeViewModel: BarcodeViewModel = hiltViewModel()
         val barcodeState by barcodeViewModel.collectAsState()
-        val context = LocalContext.current
 
         barcodeViewModel.collectSideEffect { effect ->
             when (effect) {

@@ -8,6 +8,7 @@ import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
 import com.project.ingredient.usecase.GetBarcodeInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +41,11 @@ class BarcodeViewModel @Inject constructor(
             .onEach { barcode ->
                 intent { reduce { state.copy(scanStatus = BarcodeScanStatus.Scanning) } }
                 val products = barcodeInfoUseCase.invoke(barcode)
-                intent { reduce { state.copy(scanStatus = BarcodeScanStatus.Success(products)) } }
+                intent {
+                    reduce {
+                        state.copy(scanStatus = BarcodeScanStatus.Success(products.toImmutableList()))
+                    }
+                }
             }
             .retryWhen { cause, attempt ->
                 when (cause) {

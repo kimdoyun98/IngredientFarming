@@ -12,6 +12,8 @@ import com.project.designsystem.theme.MoreLightBlue
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.designsystem.theme.MoreLightOrange
 import com.project.ui.R
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class HomeStatusCardInfo(
     val icon: @Composable () -> Unit,
@@ -21,7 +23,7 @@ data class HomeStatusCardInfo(
 )
 
 @Composable
-fun rememberStatusCardInfo(): List<HomeStatusCardInfo> {
+fun rememberStatusCardInfo(): ImmutableList<HomeStatusCardInfo> {
     val first = HomeStatusCardInfo(
         icon = {
             Icon(
@@ -62,7 +64,7 @@ fun rememberStatusCardInfo(): List<HomeStatusCardInfo> {
     )
 
     return remember {
-        listOf(
+        persistentListOf(
             first,
             second,
             third
