@@ -7,7 +7,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.model)
     implementation(projects.domain.ingredient)
 
     implementation(libs.barcode.scanning)
