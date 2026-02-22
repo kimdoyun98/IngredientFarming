@@ -19,3 +19,11 @@ fun DependencyHandlerScope.ksp(provider: Provider<*>) {
 fun DependencyHandlerScope.androidTestImplementation(provider: Provider<*>) {
     "androidTestImplementation"(provider)
 }
+
+fun DependencyHandlerScope.testImplementation(provider: Provider<*>) {
+    "testImplementation"(provider)
+}
+
+fun DependencyHandlerScope.debugImplementation(provider: Provider<*>) {
+    "debugImplementation"(provider)
+}

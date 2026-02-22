@@ -21,6 +21,7 @@ internal fun Project.configureCompose(commonExtension: BaseExtension) {
             implementation(libs.getLibrary("androidx-navigation-compose"))
             implementation(libs.getLibrary("androidx-hilt-navigation-compose"))
             implementation(libs.getLibrary("androidx-material-icons-extended"))
+            debugImplementation(libs.getLibrary("androidx-ui-tooling"))
         }
     }
 }
