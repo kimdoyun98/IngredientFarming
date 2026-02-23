@@ -52,7 +52,7 @@ fun NavGraphBuilder.saveIngredientGraph(
                 count = newIngredient.count,
                 category = getIndexToIngredientCategory(newIngredient.categorySelected),
                 enterDate = LocalDate.now(),
-                expirationDate = LocalDate.parse(newIngredient.expirationDate.ifBlank { "9999-01-01" }),
+                expirationDate = LocalDate.parse(newIngredient.expirationDate.ifBlank { Ingredient.UNKNOWN_DATE }),
                 store = getIndexToIngredientStore(newIngredient.storeSelected),
             )
         )

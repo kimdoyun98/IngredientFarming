@@ -39,7 +39,7 @@ class SaveIngredientViewModel @Inject constructor(
 
     init {
         newIngredient
-            .filter { it.name != "알수없음" }
+            .filter { it.name != Ingredient.UNKNOWN_NAME }
             .onEach {
                 intent {
                     reduce {
