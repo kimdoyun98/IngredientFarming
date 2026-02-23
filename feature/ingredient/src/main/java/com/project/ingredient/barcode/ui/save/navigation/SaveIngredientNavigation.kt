@@ -58,7 +58,7 @@ fun NavGraphBuilder.saveIngredientGraph(
         )
 
         SaveIngredientScreen(
-            state = { saveIngredientState },
+            saveIngredientState = saveIngredientState,
             onIntent = saveIngredientViewModel::onIntent,
             onBottomSheetIntent = saveIngredientViewModel::onBottomSheetIntent,
         )

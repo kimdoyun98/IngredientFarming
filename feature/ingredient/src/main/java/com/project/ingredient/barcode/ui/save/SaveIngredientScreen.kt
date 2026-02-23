@@ -47,56 +47,42 @@ import java.time.LocalDate
 @Composable
 internal fun SaveIngredientScreen(
     modifier: Modifier = Modifier,
-    state: () -> SaveIngredientState,
+    saveIngredientState: SaveIngredientState,
     onIntent: (SaveIngredientIntent) -> Unit,
     onBottomSheetIntent: (SaveIngredientIntent.BottomSheetIntent) -> Unit
 ) {
     SaveIngredientScreen(
         modifier = modifier,
-        ingredientList = state().ingredientList,
-        updateBottomSheetState = state().openUpdateBottomSheetState,
-        addBottomSheetState = state().openAddBottomSheetState,
+        ingredientList = saveIngredientState.ingredientList,
+        updateBottomSheetState = saveIngredientState.openUpdateBottomSheetState,
+        addBottomSheetState = saveIngredientState.openAddBottomSheetState,
         onPlusButtonClick = { onIntent(SaveIngredientIntent.PlusButtonClick) },
         onUpdateButtonClick = { idx -> onIntent(SaveIngredientIntent.UpdateButtonClick(idx)) },
         onDismissRequestToUpdate = { onIntent(SaveIngredientIntent.UpdateBottomSheetDisMiss) },
         onDismissRequestToAdd = { onIntent(SaveIngredientIntent.AddBottomSheetDisMiss) },
         onSaveButtonClick = { onIntent(SaveIngredientIntent.SaveButtonClick) },
         //bottomSheet
-        updateIngredient = state().updateIngredient,
+        updateIngredient = saveIngredientState.updateIngredient,
         onBarcodeScannerClick = { onBottomSheetIntent(SaveIngredientIntent.BottomSheetIntent.BarcodeScannerClick) },
         onDirectInputClick = { onBottomSheetIntent(SaveIngredientIntent.BottomSheetIntent.DirectInputClick) },
         changeNameValue = { name ->
-            onBottomSheetIntent(
-                SaveIngredientIntent.BottomSheetIntent.NameInputChange(
-                    name
-                )
-            )
+            onBottomSheetIntent(SaveIngredientIntent.BottomSheetIntent.NameInputChange(name))
         },
         changeCountValue = { count ->
-            onBottomSheetIntent(
-                SaveIngredientIntent.BottomSheetIntent.CountInputChange(count)
-            )
+            onBottomSheetIntent(SaveIngredientIntent.BottomSheetIntent.CountInputChange(count))
         },
         changeExpirationDateValue = { date ->
             onBottomSheetIntent(
-                SaveIngredientIntent.BottomSheetIntent.ExpirationDateInputChange(
-                    date
-                )
+                SaveIngredientIntent.BottomSheetIntent.ExpirationDateInputChange(date)
             )
         },
         clickStoreFilterChip = { idx ->
             onBottomSheetIntent(
-                SaveIngredientIntent.BottomSheetIntent.StoreFilterChipSelect(
-                    idx
-                )
+                SaveIngredientIntent.BottomSheetIntent.StoreFilterChipSelect(idx)
             )
         },
         clickCategoryFilterChip = { idx ->
-            onBottomSheetIntent(
-                SaveIngredientIntent.BottomSheetIntent.CategoryFilterChipSelect(
-                    idx
-                )
-            )
+            onBottomSheetIntent(SaveIngredientIntent.BottomSheetIntent.CategoryFilterChipSelect(idx))
         },
         clickUpdateButton = { onBottomSheetIntent(SaveIngredientIntent.BottomSheetIntent.UpdateButtonClick) }
     )
@@ -286,7 +272,7 @@ private fun UpdateBottomSheetContent(
 @Composable
 private fun SaveIngredientScreenPreview() {
     SaveIngredientScreen(
-        state = {
+        saveIngredientState =
             SaveIngredientState(
                 ingredientList = persistentListOf(
                     Ingredient(
@@ -304,8 +290,7 @@ private fun SaveIngredientScreenPreview() {
                         expirationDate = LocalDate.parse("2026-02-24")
                     )
                 )
-            )
-        },
+            ),
         onIntent = {},
         onBottomSheetIntent = {}
     )
