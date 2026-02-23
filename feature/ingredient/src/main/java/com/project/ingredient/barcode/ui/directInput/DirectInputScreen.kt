@@ -65,7 +65,7 @@ internal fun DirectInputScreen(
 ) {
 
     IngredientFarmingTopAppBar(
-        title = "직접 입력",
+        title = stringResource(R.string.directInput),
         type = AppBarType.Navigation,
         onClickNavigation = onClickNavigation,
     ) { innerPadding ->
