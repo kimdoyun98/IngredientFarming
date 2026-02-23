@@ -24,27 +24,27 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    homeState: () -> HomeState,
+    homeState: HomeState,
     onIntent: (HomeIntent) -> Unit,
 ) {
     HomeScreen(
         modifier = modifier,
-        ingredientCount = homeState().ingredientCount,
-        expiresSoonCount = homeState().expiresSoonCount,
-        recipeCount = homeState().recipeCount,
-        addStatus = homeState().addStatus,
+        ingredientCount = homeState.ingredientCount,
+        expiresSoonCount = homeState.expiresSoonCount,
+        recipeCount = homeState.recipeCount,
+        addStatus = homeState.addStatus,
         onManageButtonClick = { onIntent(HomeIntent.OnManageButtonClick) },
         onAddButtonClick = { onIntent(HomeIntent.OnAddButtonClick) },
         onDismissRequestToAdd = { onIntent(HomeIntent.OnDismissRequestToAdd) },
         onDirectInputButtonClick = { onIntent(HomeIntent.OnDirectInputButtonClick) },
         onBarcodeScannerButtonClick = { onIntent(HomeIntent.OnBarcodeScannerButtonClick) },
         onRecipeButtonClick = { onIntent(HomeIntent.OnRecipeButtonClick) },
-        onShoppingCartButtonClick = { onIntent(HomeIntent.OnShoppingCartButtonClick) }
+        onShoppingCartButtonClick = { onIntent(HomeIntent.OnShoppingCartButtonClick) },
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     ingredientCount: Int,
@@ -57,7 +57,7 @@ internal fun HomeScreen(
     onDirectInputButtonClick: () -> Unit,
     onBarcodeScannerButtonClick: () -> Unit,
     onRecipeButtonClick: () -> Unit,
-    onShoppingCartButtonClick: () -> Unit
+    onShoppingCartButtonClick: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -121,6 +121,6 @@ private fun HomeScreenPreview() {
         onDirectInputButtonClick = { },
         onBarcodeScannerButtonClick = {},
         onRecipeButtonClick = {},
-        onShoppingCartButtonClick = { }
+        onShoppingCartButtonClick = { },
     )
 }

@@ -24,6 +24,7 @@ fun NavGraphBuilder.homeGraph(
                 is HomeEffect.NavigateToManage -> {
                     navigator.navigateToManage()
                 }
+
                 is HomeEffect.NavigateToBarcodeScanner -> {
                     navigator.navigateToBarcodeScanner()
                 }
@@ -35,6 +36,7 @@ fun NavGraphBuilder.homeGraph(
                 is HomeEffect.NavigateToRecipe -> {
                     //navigator.navigateToRecipe()
                 }
+
                 is HomeEffect.NavigateToShoppingCart -> {
                     //navigator.navigateToShoppingCart()
                 }
@@ -43,7 +45,7 @@ fun NavGraphBuilder.homeGraph(
         }
 
         HomeScreen(
-            homeState = { homeState },
+            homeState = homeState,
             onIntent = viewModel::onIntent
         )
     }
