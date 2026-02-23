@@ -6,10 +6,12 @@ import com.project.ingredient.usecase.SearchIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
 import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
+import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +31,9 @@ class ManageViewModel @Inject constructor(
 ) : ContainerHost<ManageState, ManageEffect>, ViewModel() {
     override val container = container<ManageState, ManageEffect>(ManageState())
 
+    private val _items = MutableStateFlow<ImmutableList<Ingredient>>(persistentListOf())
+    private val items = _items.asStateFlow()
+
     private val _query = MutableStateFlow("")
     private val query: StateFlow<String> = _query.asStateFlow()
 
@@ -39,13 +44,22 @@ class ManageViewModel @Inject constructor(
         selectedCategory
             .flatMapLatest { category ->
                 query
+                    .onEach { q ->
+                        intent { reduce { state.copy(query = q) } }
+                    }
                     .debounce(500L)
                     .onEach { q ->
-                        val items = searchIngredientUseCase.invoke(q, category).toImmutableList()
-                        intent {
-                            reduce { state.copy(ingredientItems = items) }
-                        }
+                        _items.value =
+                            searchIngredientUseCase.invoke(q, category).toImmutableList()
                     }
+            }
+            .launchIn(viewModelScope)
+
+        items
+            .onEach {
+                intent {
+                    reduce { state.copy(ingredientItems = it) }
+                }
             }
             .launchIn(viewModelScope)
     }
@@ -60,13 +74,11 @@ class ManageViewModel @Inject constructor(
 
             }
 
-            is ManageIntent.OnSearchQueryChange -> intent {
-                reduce { state.copy(query = intent.query) }
+            is ManageIntent.OnSearchQueryChange -> {
                 _query.value = intent.query
             }
 
-            is ManageIntent.OnSearchCloseButtonClick -> intent {
-                reduce { state.copy(query = "") }
+            is ManageIntent.OnSearchCloseButtonClick -> {
                 _query.value = ""
             }
 
