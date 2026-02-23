@@ -28,7 +28,7 @@ fun NavGraphBuilder.manageGraph(
         }
 
         ManageScreen(
-            manageState = { manageState },
+            manageState = manageState,
             onIntent = manageViewModel::onIntent
         )
     }

@@ -37,14 +37,14 @@ import java.time.LocalDate
 @Composable
 internal fun ManageScreen(
     modifier: Modifier = Modifier,
-    manageState: () -> ManageState,
+    manageState: ManageState,
     onIntent: (ManageIntent) -> Unit,
 ) {
     ManageScreen(
         modifier = modifier,
-        query = manageState().query,
-        ingredientItems = manageState().ingredientItems,
-        selectedCategoryIndex = manageState().selectedCategoryIndex,
+        query = manageState.query,
+        ingredientItems = manageState.ingredientItems,
+        selectedCategoryIndex = manageState.selectedCategoryIndex,
         onClickTopAppBarNavigation = { onIntent(ManageIntent.OnClickTopAppBarNavigation) },
         onClickTopAppBarAction = { onIntent(ManageIntent.OnClickTopAppBarAction) },
         onSearchQueryChange = { q -> onIntent(ManageIntent.OnSearchQueryChange(q)) },
@@ -84,6 +84,7 @@ internal fun ManageScreen(
                 .fillMaxSize()
         ) {
             IngredientFarmingSearchBar(
+                modifier = modifier,
                 query = query,
                 onQueryChange = { q -> onSearchQueryChange(q) },
                 onCloseClick = { onSearchCloseButtonClick() }
@@ -96,7 +97,10 @@ internal fun ManageScreen(
             )
 
             LazyColumn {
-                items(ingredientItems) { ingredient ->
+                items(
+                    items = ingredientItems,
+                    key = { ingredient -> ingredient.id }
+                ) { ingredient ->
                     IngredientCard(
                         modifier = modifier,
                         item = ingredient
