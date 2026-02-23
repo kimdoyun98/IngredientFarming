@@ -143,7 +143,10 @@ internal fun SaveIngredientScreen(
                 LazyColumn(
                     modifier = modifier
                 ) {
-                    items(ingredientList.size) { idx ->
+                    items(
+                        count = ingredientList.size,
+                        key = { idx -> ingredientList[idx].name }
+                    ) { idx ->
                         Box {
                             IngredientCard(
                                 modifier = modifier,
