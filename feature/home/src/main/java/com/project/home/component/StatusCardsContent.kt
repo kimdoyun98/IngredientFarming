@@ -3,6 +3,7 @@ package com.project.home.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,17 +25,20 @@ internal fun StatusCardsContent(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        items(statusCardInfo.size) { idx ->
+        items(
+            items = statusCardInfo,
+            key = { it.title }
+        ) { info ->
             StatusCard(
-                icon = statusCardInfo[idx].icon,
-                iconBackgroundColor = statusCardInfo[idx].iconBackgroundColor,
-                count = when (idx) {
-                    0 -> ingredientCount
-                    1 -> expiresSoonCount
-                    2 -> recipeCount
+                icon = info.icon,
+                iconBackgroundColor = info.iconBackgroundColor,
+                count = when (info.title) {
+                    statusCardInfo[0].title -> ingredientCount
+                    statusCardInfo[1].title -> expiresSoonCount
+                    statusCardInfo[2].title -> recipeCount
                     else -> 0
                 },
-                title = statusCardInfo[idx].title
+                title = info.title
             )
         }
     }
