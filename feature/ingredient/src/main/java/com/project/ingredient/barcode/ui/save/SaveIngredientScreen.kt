@@ -133,7 +133,7 @@ internal fun SaveIngredientScreen(
             Row(modifier = modifier.align(Alignment.End)) {
                 TextButton(
                     modifier = modifier,
-                    onClick = { onPlusButtonClick() }
+                    onClick = onPlusButtonClick
                 ) {
                     Text(stringResource(R.string.add))
                 }
@@ -180,17 +180,17 @@ internal fun SaveIngredientScreen(
         if (updateBottomSheetState) {
             ModalBottomSheet(
                 sheetState = sheetState,
-                onDismissRequest = { onDismissRequestToUpdate() }
+                onDismissRequest = onDismissRequestToUpdate
             ) {
                 UpdateBottomSheetContent(
                     modifier = modifier,
                     updateIngredient = updateIngredient,
-                    onCloseButtonClick = { onDismissRequestToUpdate() },
-                    changeNameValue = { name -> changeNameValue(name) },
-                    changeCountValue = { count -> changeCountValue(count) },
-                    changeExpirationDateValue = { date -> changeExpirationDateValue(date) },
-                    clickStoreFilterChip = { idx -> clickStoreFilterChip(idx) },
-                    clickCategoryFilterChip = { idx -> clickCategoryFilterChip(idx) },
+                    onCloseButtonClick = onDismissRequestToUpdate,
+                    changeNameValue = changeNameValue,
+                    changeCountValue = changeCountValue,
+                    changeExpirationDateValue = changeExpirationDateValue,
+                    clickStoreFilterChip = clickStoreFilterChip,
+                    clickCategoryFilterChip = clickCategoryFilterChip,
                     clickUpdateButton = {
                         clickUpdateButton()
                         scope.launch { sheetState.hide() }
@@ -202,7 +202,7 @@ internal fun SaveIngredientScreen(
         if (addBottomSheetState) {
             ModalBottomSheet(
                 sheetState = sheetState,
-                onDismissRequest = { onDismissRequestToAdd() }
+                onDismissRequest = onDismissRequestToAdd
             ) {
                 AddTypeSelectBottomSheetContent(
                     modifier = modifier,
@@ -239,7 +239,7 @@ private fun UpdateBottomSheetContent(
             IconButton(
                 modifier = modifier
                     .align(Alignment.TopEnd),
-                onClick = { onCloseButtonClick() }
+                onClick = onCloseButtonClick
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
@@ -254,16 +254,16 @@ private fun UpdateBottomSheetContent(
                 expirationDate = updateIngredient.expirationDate,
                 storeChipSelectIndex = updateIngredient.storeSelected,
                 categoryChipSelectIndex = updateIngredient.categorySelected,
-                changeNameValue = { name -> changeNameValue(name) },
-                changeCountValue = { count -> changeCountValue(count) },
-                changeExpirationDateValue = { date -> changeExpirationDateValue(date) },
-                clickStoreFilterChip = { idx -> clickStoreFilterChip(idx) },
-                clickCategoryFilterChip = { idx -> clickCategoryFilterChip(idx) },
+                changeNameValue = changeNameValue,
+                changeCountValue = changeCountValue,
+                changeExpirationDateValue = changeExpirationDateValue,
+                clickStoreFilterChip = clickStoreFilterChip,
+                clickCategoryFilterChip = clickCategoryFilterChip,
             )
         }
 
         IngredientFarmingWideButton(
-            onClick = { clickUpdateButton() },
+            onClick = clickUpdateButton,
             enabled = updateIngredient.isEnabled(),
         ) {
             Text(text = stringResource(R.string.bottom_sheet_update_button_text))
