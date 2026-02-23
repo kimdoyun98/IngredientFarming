@@ -19,14 +19,55 @@ import com.project.ui.IngredientFarmingTopAppBar
 @Composable
 internal fun DirectInputScreen(
     modifier: Modifier = Modifier,
-    state: () -> DirectInputState,
+    directInputState: DirectInputState,
     onIntent: (DirectInputIntent) -> Unit,
+) {
+    DirectInputScreen(
+        modifier = modifier,
+        name = directInputState.name,
+        count = directInputState.count,
+        expirationDate = directInputState.expirationDate,
+        storeChipSelectIndex = directInputState.storeSelected,
+        categoryChipSelectIndex = directInputState.categorySelected,
+        nextButtonEnabled = directInputState.isEnabled(),
+        onClickNavigation = { onIntent(DirectInputIntent.TopAppBarNavigationClick) },
+        onChangeNameValue = { name -> onIntent(DirectInputIntent.NameInputChange(name)) },
+        onChangeCountValue = { count -> onIntent(DirectInputIntent.CountInputChange(count)) },
+        onChangeExpirationDateValue = { date ->
+            onIntent(DirectInputIntent.ExpirationDateInputChange(date))
+        },
+        onClickStoreFilterChip = { selected ->
+            onIntent(DirectInputIntent.StoreFilterChipSelect(selected))
+        },
+        onClickCategoryFilterChip = { selected ->
+            onIntent(DirectInputIntent.CategoryFilterChipSelect(selected))
+        },
+        onClickNextButton = { onIntent(DirectInputIntent.NextButtonClick) },
+    )
+}
+
+@Composable
+internal fun DirectInputScreen(
+    modifier: Modifier = Modifier,
+    name: String,
+    count: String,
+    expirationDate: String,
+    storeChipSelectIndex: Int?,
+    categoryChipSelectIndex: Int?,
+    nextButtonEnabled: Boolean,
+    onClickNavigation: () -> Unit,
+    onChangeNameValue: (String) -> Unit,
+    onChangeCountValue: (String) -> Unit,
+    onChangeExpirationDateValue: (String) -> Unit,
+    onClickStoreFilterChip: (Int) -> Unit,
+    onClickCategoryFilterChip: (Int) -> Unit,
+    onClickNextButton: () -> Unit,
 ) {
 
     IngredientFarmingTopAppBar(
         title = "직접 입력",
         type = AppBarType.Navigation,
-        onClickNavigation = { onIntent(DirectInputIntent.TopAppBarNavigationClick) },
+        onClickNavigation = onClickNavigation,
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -38,40 +79,22 @@ internal fun DirectInputScreen(
             ) {
                 IngredientInputContent(
                     modifier = modifier,
-                    name = state().name,
-                    count = state().count,
-                    expirationDate = state().expirationDate,
-                    changeNameValue = { onIntent(DirectInputIntent.NameInputChange(it)) },
-                    changeCountValue = { onIntent(DirectInputIntent.CountInputChange(it)) },
-                    changeExpirationDateValue = {
-                        onIntent(
-                            DirectInputIntent.ExpirationDateInputChange(
-                                it
-                            )
-                        )
-                    },
-                    clickStoreFilterChip = { selected ->
-                        onIntent(
-                            DirectInputIntent.StoreFilterChipSelect(
-                                selected
-                            )
-                        )
-                    },
-                    clickCategoryFilterChip = { selected ->
-                        onIntent(
-                            DirectInputIntent.CategoryFilterChipSelect(
-                                selected
-                            )
-                        )
-                    },
-                    storeChipSelectIndex = state().storeSelected,
-                    categoryChipSelectIndex = state().categorySelected,
+                    name = name,
+                    count = count,
+                    expirationDate = expirationDate,
+                    changeNameValue = onChangeNameValue,
+                    changeCountValue = onChangeCountValue,
+                    changeExpirationDateValue = onChangeExpirationDateValue,
+                    clickStoreFilterChip = onClickStoreFilterChip,
+                    clickCategoryFilterChip = onClickCategoryFilterChip,
+                    storeChipSelectIndex = storeChipSelectIndex,
+                    categoryChipSelectIndex = categoryChipSelectIndex,
                 )
             }
 
             IngredientFarmingWideButton(
-                onClick = { onIntent(DirectInputIntent.NextButtonClick) },
-                enabled = state().isEnabled()
+                onClick = onClickNextButton,
+                enabled = nextButtonEnabled
             ) {
                 Text(text = stringResource(R.string.next))
             }
@@ -83,7 +106,7 @@ internal fun DirectInputScreen(
 @Composable
 private fun DirectInputScreenPreview() {
     DirectInputScreen(
-        state = { DirectInputState() },
-        onIntent = {}
+        directInputState =  DirectInputState() ,
+        onIntent = {},
     )
 }

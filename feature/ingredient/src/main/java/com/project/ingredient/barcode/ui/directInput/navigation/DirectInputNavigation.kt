@@ -17,7 +17,7 @@ fun NavGraphBuilder.directInputGraph(
 ) {
     composable<IngredientRoute.DirectInput> {
         val directInputViewModel: DirectInputViewModel = hiltViewModel()
-        val state by directInputViewModel.collectAsState()
+        val directInputState by directInputViewModel.collectAsState()
 
         directInputViewModel.collectSideEffect { effect ->
             when (effect) {
@@ -29,11 +29,11 @@ fun NavGraphBuilder.directInputGraph(
                     navigator.navController.popBackStack()
                     navigator.navigateToSaveIngredient(
                         IngredientRoute.SaveIngredient(
-                            name = state.name,
-                            count = state.count.toInt(),
-                            expirationDate = state.expirationDate,
-                            storeSelected = state.storeSelected,
-                            categorySelected = state.categorySelected
+                            name = directInputState.name,
+                            count = directInputState.count.toInt(),
+                            expirationDate = directInputState.expirationDate,
+                            storeSelected = directInputState.storeSelected,
+                            categorySelected = directInputState.categorySelected
                         )
                     )
                 }
@@ -41,7 +41,7 @@ fun NavGraphBuilder.directInputGraph(
         }
 
         DirectInputScreen(
-            state = { state },
+            directInputState = directInputState,
             onIntent = directInputViewModel::onIntent
         )
     }
