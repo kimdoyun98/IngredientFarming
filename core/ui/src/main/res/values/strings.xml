@@ -7,4 +7,17 @@
     <string name="ingredient_card_view_icon_description">icon</string>
     <string name="barcodeScanner">바코드스캐너</string>
     <string name="directInput">직접입력</string>
+    
+    <string name="count">개수</string>
+    <string name="store_type">보관방법</string>
+    <string name="expiration_date">유통기한</string>
+    <string name="condiment_icon_description">양념 아이콘</string>
+    <string name="vegetable_icon_description">채소 아이콘</string>
+    <string name="fruit_icon_description">과일 아이콘</string>
+    <string name="meat_icon_description">육류 아이콘</string>
+    <string name="dairy_icon_description">유제품 아이콘</string>
+    <string name="grain_icon_description">곡물 아이콘</string>
+    <string name="beverage_icon_description">음료 아이콘</string>
+    <string name="snack_icon_description">과자 아이콘</string>
+    <string name="other_icon_description">기타 아이콘</string>
 </resources>

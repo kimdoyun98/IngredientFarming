@@ -27,6 +27,7 @@ import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
+import com.project.ui.IconIngredientCard
 import com.project.ui.IngredientCard
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
@@ -101,7 +102,7 @@ internal fun ManageScreen(
                     items = ingredientItems,
                     key = { ingredient -> ingredient.id }
                 ) { ingredient ->
-                    IngredientCard(
+                    IconIngredientCard(
                         modifier = modifier,
                         item = ingredient
                     )
@@ -173,16 +174,16 @@ private fun ManageScreenPreview() {
                 id = 1,
                 name = "감자",
                 count = 2,
-                expirationDate = LocalDate.now(),
+                expirationDate = LocalDate.now().plusDays(1),
                 category = IngredientCategory.VEGETABLE,
                 store = IngredientStore.REFRIGERATED
             ),
             Ingredient(
                 id = 2,
-                name = "당근",
+                name = "돼지고기",
                 count = 3,
-                expirationDate = LocalDate.now(),
-                category = IngredientCategory.VEGETABLE,
+                expirationDate = LocalDate.parse("2026-03-02"),
+                category = IngredientCategory.MEAT,
                 store = IngredientStore.REFRIGERATED
             )
         ),
