@@ -18,4 +18,5 @@ dependencies {
 
     implementation(projects.feature.main)
     implementation(projects.data.ingredient)
+    implementation(projects.core.common)
 }
