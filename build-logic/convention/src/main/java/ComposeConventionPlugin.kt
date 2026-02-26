@@ -23,7 +23,7 @@ class ComposeConventionPlugin : Plugin<Project> {
 
             extensions.configure<ComposeCompilerGradlePluginExtension> {
                 stabilityConfigurationFile.set(
-                    layout.projectDirectory.file("config/compose/compose-stability.conf")
+                    rootProject.layout.projectDirectory.file("config/compose/compose-stability.conf")
                 )
             }
 
