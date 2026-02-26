@@ -1,7 +1,9 @@
 package com.project.ingredient
 
-import com.project.model.ingredient.Ingredient
+import com.project.database.model.HoldIngredientEntity
+import com.project.database.model.IngredientEntity
 import com.project.model.barcode.Product
+import com.project.model.ingredient.Ingredient
 import com.project.network.retrofit.model.BarcodeResponse
 
 fun BarcodeResponse.asExternalModel(): List<Product> {
@@ -13,11 +15,16 @@ fun BarcodeResponse.asExternalModel(): List<Product> {
     }
 }
 
-fun Ingredient.asEntity() = com.project.database.model.IngredientEntity(
-    name = this.name,
-    count = this.count,
-    category = this.category,
-    enterDate = this.enterDate,
-    expirationDate = this.expirationDate,
-    store = this.store,
+fun Ingredient.asIngredientEntity() = IngredientEntity(
+    name = name,
+    category = category,
+    store = store,
+    holdState = true
+)
+
+fun Ingredient.asHoldIngredientEntity(id: Int) = HoldIngredientEntity(
+    ingredientId = id,
+    count = count,
+    enterDate = enterDate,
+    expirationDate = expirationDate,
 )

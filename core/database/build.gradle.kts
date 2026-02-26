@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.ingredientfarming.android.library)
     alias(libs.plugins.ingredientfarming.room)
-    alias(libs.plugins.ingredientfarming.hilt)
 }
 
 android {
@@ -10,4 +9,5 @@ android {
 
 dependencies {
     implementation(projects.core.model)
+    implementation(libs.androidx.runtime)
 }

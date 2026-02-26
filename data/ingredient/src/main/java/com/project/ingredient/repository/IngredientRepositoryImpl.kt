@@ -1,19 +1,35 @@
 package com.project.ingredient.repository
 
 import com.project.database.dao.IngredientDao
-import com.project.database.model.asExternalModel
-import com.project.ingredient.asEntity
+import com.project.ingredient.asHoldIngredientEntity
+import com.project.ingredient.asIngredientEntity
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class IngredientRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao,
 ) : IngredientRepository {
-    override suspend fun insertIngredient(igdList: List<Ingredient>): List<Long> {
-        val entities = igdList.map { it.asEntity() }.toTypedArray()
-        return ingredientDao.insertIngredient(*entities)
+
+    override suspend fun insertIngredient(
+        igdList: List<Ingredient>
+    ) = coroutineScope {
+        igdList.forEach { igd ->
+            launch {
+                val id = ingredientDao.findIngredientIdByName(igd.name) ?: insertIngredient(igd)
+
+                ingredientDao.insertHoldIngredient(igd.asHoldIngredientEntity(id))
+            }
+        }
+    }
+
+    private suspend fun insertIngredient(igd: Ingredient): Int {
+        ingredientDao.insertIngredient(igd.asIngredientEntity())
+
+        return ingredientDao.findIngredientIdByName(igd.name)!!
     }
 
     override fun getIngredientCount(): Flow<Int> {
@@ -30,7 +46,6 @@ class IngredientRepositoryImpl @Inject constructor(
         category: IngredientCategory?
     ): List<Ingredient> {
 
-        //return ingredientDao.getIngredientsByName(query).map { it.asExternalModel() }
-        return ingredientDao.searchIngredients(query, category).map { it.asExternalModel() }
+        return ingredientDao.searchIngredients(query, category)
     }
 }

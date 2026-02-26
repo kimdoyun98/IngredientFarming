@@ -5,7 +5,7 @@ import com.project.model.ingredient.IngredientCategory
 import kotlinx.coroutines.flow.Flow
 
 interface IngredientRepository {
-    suspend fun insertIngredient(igdList: List<Ingredient>): List<Long>
+    suspend fun insertIngredient(igdList: List<Ingredient>)
     fun getIngredientCount(): Flow<Int>
     fun getCountExpiringInThreeDays(): Flow<Int>
 

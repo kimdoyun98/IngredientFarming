@@ -4,11 +4,13 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.project.database.dao.IngredientDao
+import com.project.database.model.HoldIngredientEntity
 import com.project.database.model.IngredientEntity
 
 @Database(
     entities = [
         IngredientEntity::class,
+        HoldIngredientEntity::class
     ],
     version = 1,
     exportSchema = true
