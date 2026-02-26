@@ -8,6 +8,6 @@ android {
 
 dependencies {
     implementation(projects.feature.home)
-    implementation(projects.feature.ingredient)
+    implementation(projects.feature.ingredientAdd)
     implementation(projects.feature.ingredientManage)
 }

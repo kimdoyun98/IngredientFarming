@@ -27,7 +27,7 @@ gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:t
 rootProject.name = "IngredientFarming"
 include(":app")
 include(":feature")
-include(":feature:ingredient")
+include(":feature:ingredient-add")
 include(":core")
 include(":core:designsystem")
 include(":core:network")
