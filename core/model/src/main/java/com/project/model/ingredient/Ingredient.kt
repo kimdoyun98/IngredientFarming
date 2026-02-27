@@ -1,9 +1,7 @@
 package com.project.model.ingredient
 
-import androidx.compose.runtime.Immutable
 import java.time.LocalDate
 
-@Immutable
 data class Ingredient(
     val id: Int = 0,
     val name: String = UNKNOWN_NAME,
