@@ -10,5 +10,6 @@ class SearchIngredientUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(query: String, category: IngredientCategory?): List<Ingredient> {
         return ingredientRepository.searchIngredients(query, category)
+            .sortedBy { it.expirationDate }
     }
 }
