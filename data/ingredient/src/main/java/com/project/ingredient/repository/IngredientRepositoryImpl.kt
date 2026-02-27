@@ -4,6 +4,7 @@ import com.project.database.dao.IngredientDao
 import com.project.database.model.asExternalModel
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
+import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientInfo
@@ -18,6 +19,10 @@ class IngredientRepositoryImpl @Inject constructor(
 
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
         return ingredientDao.getIngredientByName(name)?.asExternalModel()
+    }
+
+    override fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>> {
+        return ingredientDao.getExpirationDateSoonIngredient()
     }
 
     override suspend fun insertIngredient(

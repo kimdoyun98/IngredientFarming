@@ -7,7 +7,9 @@ import com.project.home.contract.HomeIntent
 import com.project.home.contract.HomeState
 import com.project.ingredient.usecase.home.GetCurrentIngredientCount
 import com.project.ingredient.usecase.home.GetExpirationDateSoonCount
+import com.project.ingredient.usecase.home.GetExpirationDateSoonIngredient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getCurrentIngredientCount: GetCurrentIngredientCount,
-    private val getExpirationDateSoonCount: GetExpirationDateSoonCount
+    private val getExpirationDateSoonCount: GetExpirationDateSoonCount,
+    private val getExpirationDateSoonIngredient: GetExpirationDateSoonIngredient
 ) : ContainerHost<HomeState, HomeEffect>, ViewModel() {
     override val container = container<HomeState, HomeEffect>(HomeState())
 
@@ -47,6 +50,16 @@ class HomeViewModel @Inject constructor(
         expiresSoonCount
             .onEach {
                 intent { reduce { state.copy(expiresSoonCount = it) } }
+            }
+            .launchIn(viewModelScope)
+
+        getExpirationDateSoonIngredient.invoke()
+            .onEach {
+                intent {
+                    reduce {
+                        state.copy(expirationDateSoonItems = it.toImmutableList())
+                    }
+                }
             }
             .launchIn(viewModelScope)
     }

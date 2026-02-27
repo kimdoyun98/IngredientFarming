@@ -20,7 +20,7 @@ import com.project.home.component.NavigateButtonsContent
 import com.project.home.component.StatusCardsContent
 import com.project.home.contract.HomeIntent
 import com.project.home.contract.HomeState
-import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.ui.AddTypeSelectBottomSheetContent
 import com.project.ui.AppBarType
@@ -61,7 +61,7 @@ internal fun HomeScreen(
     expiresSoonCount: Int,
     recipeCount: Int,
     addStatus: Boolean = false,
-    expirationDateSoonItems: ImmutableList<Ingredient>,
+    expirationDateSoonItems: ImmutableList<ExpirationDateSoonIngredient>,
     onManageButtonClick: () -> Unit,
     onAddButtonClick: () -> Unit,
     onDismissRequestToAdd: () -> Unit,
@@ -126,7 +126,7 @@ internal fun HomeScreen(
 @Composable
 private fun ExpirationDateSoonContent(
     modifier: Modifier = Modifier,
-    items: ImmutableList<Ingredient>
+    items: ImmutableList<ExpirationDateSoonIngredient>
 ) {
     Text(
         modifier = modifier
@@ -153,13 +153,13 @@ private fun HomeScreenPreview() {
             recipeCount = 10,
             expirationDateSoonItems =
                 persistentListOf(
-                    Ingredient(
+                    ExpirationDateSoonIngredient(
                         id = 0,
                         name = "사과",
                         category = IngredientCategory.FRUIT,
                         expirationDate = LocalDate.now().plusDays(2)
                     ),
-                    Ingredient(
+                    ExpirationDateSoonIngredient(
                         id = 1,
                         name = "삼겹살",
                         category = IngredientCategory.MEAT,

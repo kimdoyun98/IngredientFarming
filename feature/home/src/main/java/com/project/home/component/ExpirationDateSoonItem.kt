@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.ui.CategorySmallIconBox
 import com.project.ui.util.daysLeft
@@ -22,7 +22,7 @@ import java.time.LocalDate
 @Composable
 fun ExpirationDateSoonItem(
     modifier: Modifier = Modifier,
-    item: Ingredient,
+    item: ExpirationDateSoonIngredient,
 ) {
     val daysLeft = remember(item.expirationDate) { daysLeft(item.expirationDate) }
 
@@ -76,7 +76,8 @@ fun ExpirationDateSoonItem(
 private fun ExpirationDateSoonContentPreview() {
     ExpirationDateSoonItem(
         modifier = Modifier,
-        item = Ingredient(
+        item = ExpirationDateSoonIngredient(
+            id = 1,
             name = "사과",
             category = IngredientCategory.FRUIT,
             expirationDate = LocalDate.now().plusDays(2)

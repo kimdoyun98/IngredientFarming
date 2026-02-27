@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.IngredientCategory
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -25,7 +25,7 @@ import java.time.LocalDate
 @Composable
 fun ExpirationDateSoonBox(
     modifier: Modifier = Modifier,
-    items: ImmutableList<Ingredient>
+    items: ImmutableList<ExpirationDateSoonIngredient>
 ) {
     Box(
         modifier = Modifier
@@ -78,13 +78,13 @@ private fun TestPreview() {
     ExpirationDateSoonBox(
         modifier = Modifier,
         items = persistentListOf(
-            Ingredient(
+            ExpirationDateSoonIngredient(
                 id = 0,
                 name = "사과",
                 category = IngredientCategory.FRUIT,
                 expirationDate = LocalDate.now().plusDays(2)
             ),
-            Ingredient(
+            ExpirationDateSoonIngredient(
                 id = 1,
                 name = "사과",
                 category = IngredientCategory.FRUIT,

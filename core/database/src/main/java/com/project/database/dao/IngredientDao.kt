@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.database.model.HoldIngredientEntity
 import com.project.database.model.IngredientEntity
+import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import kotlinx.coroutines.flow.Flow
@@ -61,4 +62,15 @@ interface IngredientDao {
         category: IngredientCategory?
     ): List<Ingredient>
 
+    @Query("""
+        SELECT
+            IngredientEntity.id,
+            name,
+            expirationDate,
+            category
+        FROM IngredientEntity
+        JOIN HoldIngredientEntity ON IngredientEntity.id = HoldIngredientEntity.ingredient_id
+        WHERE HoldIngredientEntity.expirationDate BETWEEN DATE('now') AND DATE('now', '+3 days')
+    """)
+    fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>>
 }
