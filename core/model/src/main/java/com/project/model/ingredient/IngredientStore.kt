@@ -8,3 +8,6 @@ enum class IngredientStore(val n: String) {
 
 fun getIndexToIngredientStore(index: Int?): IngredientStore =
     index?.let { IngredientStore.entries[it] } ?: IngredientStore.ROOM_TEMPERATURE
+
+fun getIndexByIngredientStore(store: IngredientStore): Int =
+    IngredientStore.entries.indexOf(store)

@@ -18,3 +18,6 @@ enum class IngredientCategory(
 
 fun getIndexToIngredientCategory(index: Int?): IngredientCategory =
     index?.let { IngredientCategory.entries[it] } ?: IngredientCategory.OTHER
+
+fun getIndexByIngredientCategory(category: IngredientCategory): Int =
+    IngredientCategory.entries.indexOf(category)

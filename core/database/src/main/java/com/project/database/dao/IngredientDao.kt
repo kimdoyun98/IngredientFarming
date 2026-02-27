@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface IngredientDao {
 
+    @Query("SELECT * FROM IngredientEntity WHERE name =:name")
+    suspend fun getIngredientByName(name: String): IngredientEntity?
+
     @Query("SELECT id FROM IngredientEntity WHERE name =:name")
     suspend fun findIngredientIdByName(name: String): Int?
 

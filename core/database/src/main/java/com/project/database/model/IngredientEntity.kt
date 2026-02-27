@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientInfo
 import com.project.model.ingredient.IngredientStore
 
 @Entity(tableName = "IngredientEntity")
@@ -16,8 +17,8 @@ data class IngredientEntity(
     @ColumnInfo(name = "hold_state") val holdState: Boolean
 )
 
-fun IngredientEntity.asExternalModel(): Ingredient {
-    return Ingredient(
+fun IngredientEntity.asExternalModel(): IngredientInfo {
+    return IngredientInfo(
         id = id,
         name = name,
         category = category,

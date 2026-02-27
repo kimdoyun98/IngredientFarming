@@ -7,6 +7,7 @@ import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
 import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
 import com.project.ingredient.usecase.GetBarcodeInfoUseCase
+import com.project.ingredient.usecase.GetIngredientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BarcodeViewModel @Inject constructor(
     barcodeInfoUseCase: GetBarcodeInfoUseCase,
+    private val getIngredientUseCase: GetIngredientUseCase
 ) : ContainerHost<BarcodeState, BarcodeEffect>, ViewModel() {
     override val container = container<BarcodeState, BarcodeEffect>(BarcodeState())
     private val _barcode: MutableStateFlow<String> = MutableStateFlow("")
@@ -71,8 +73,15 @@ class BarcodeViewModel @Inject constructor(
             is BarcodeIntent.SelectIngredient -> intent {
                 reduce { state.copy(selectProduct = intent.product) }
 
-                postSideEffect(BarcodeEffect.NavigateSaveIngredientScreen)
-
+                postSideEffect(
+                    getIngredientUseCase.invoke(intent.product.name)?.let { info ->
+                        BarcodeEffect.NavigateSaveIngredientScreen(
+                            name = intent.product.name,
+                            category = info.category,
+                            store = info.store
+                        )
+                    } ?: BarcodeEffect.NavigateSaveIngredientScreen(name = intent.product.name)
+                )
             }
 
             is BarcodeIntent.DirectInputClick -> intent {
