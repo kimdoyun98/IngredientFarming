@@ -5,4 +5,5 @@
     <string name="add">추가</string>
     <string name="recipe">레시피</string>
     <string name="shopping_cart">장보기</string>
+    <string name="expiration_date_soon_ingredient">곧 만료되는 식재료</string>
 </resources>

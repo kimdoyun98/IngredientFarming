@@ -4,22 +4,31 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.home.component.ExpirationDateSoonBox
 import com.project.home.component.NavigateButtonsContent
 import com.project.home.component.StatusCardsContent
 import com.project.home.contract.HomeIntent
 import com.project.home.contract.HomeState
+import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
 import com.project.ui.AddTypeSelectBottomSheetContent
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingTopAppBar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @Composable
 internal fun HomeScreen(
@@ -33,6 +42,7 @@ internal fun HomeScreen(
         expiresSoonCount = homeState.expiresSoonCount,
         recipeCount = homeState.recipeCount,
         addStatus = homeState.addStatus,
+        expirationDateSoonItems = homeState.expirationDateSoonItems,
         onManageButtonClick = { onIntent(HomeIntent.OnManageButtonClick) },
         onAddButtonClick = { onIntent(HomeIntent.OnAddButtonClick) },
         onDismissRequestToAdd = { onIntent(HomeIntent.OnDismissRequestToAdd) },
@@ -51,6 +61,7 @@ internal fun HomeScreen(
     expiresSoonCount: Int,
     recipeCount: Int,
     addStatus: Boolean = false,
+    expirationDateSoonItems: ImmutableList<Ingredient>,
     onManageButtonClick: () -> Unit,
     onAddButtonClick: () -> Unit,
     onDismissRequestToAdd: () -> Unit,
@@ -84,6 +95,11 @@ internal fun HomeScreen(
                 onRecipeButtonClick = { onRecipeButtonClick() },
                 onShoppingCartButtonClick = { onShoppingCartButtonClick() }
             )
+
+            ExpirationDateSoonContent(
+                modifier = modifier,
+                items = expirationDateSoonItems
+            )
         }
     }
 
@@ -107,20 +123,50 @@ internal fun HomeScreen(
     }
 }
 
+@Composable
+private fun ExpirationDateSoonContent(
+    modifier: Modifier = Modifier,
+    items: ImmutableList<Ingredient>
+) {
+    Text(
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .padding(top = 16.dp),
+        text = stringResource(R.string.expiration_date_soon_ingredient),
+        style = MaterialTheme.typography.titleLarge,
+        fontWeight = FontWeight.Bold
+    )
+
+    ExpirationDateSoonBox(
+        modifier = modifier,
+        items = items
+    )
+}
+
 @Preview
 @Composable
 private fun HomeScreenPreview() {
     HomeScreen(
-        addStatus = false,
-        ingredientCount = 30,
-        expiresSoonCount = 5,
-        recipeCount = 10,
-        onManageButtonClick = { },
-        onAddButtonClick = { },
-        onDismissRequestToAdd = {},
-        onDirectInputButtonClick = { },
-        onBarcodeScannerButtonClick = {},
-        onRecipeButtonClick = {},
-        onShoppingCartButtonClick = { },
+        homeState = HomeState(
+            ingredientCount = 30,
+            expiresSoonCount = 5,
+            recipeCount = 10,
+            expirationDateSoonItems =
+                persistentListOf(
+                    Ingredient(
+                        id = 0,
+                        name = "사과",
+                        category = IngredientCategory.FRUIT,
+                        expirationDate = LocalDate.now().plusDays(2)
+                    ),
+                    Ingredient(
+                        id = 1,
+                        name = "삼겹살",
+                        category = IngredientCategory.MEAT,
+                        expirationDate = LocalDate.now().plusDays(1)
+                    )
+                )
+        ),
+        onIntent = {}
     )
 }
