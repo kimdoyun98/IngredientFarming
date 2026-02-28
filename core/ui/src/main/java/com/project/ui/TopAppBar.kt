@@ -8,6 +8,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -23,6 +25,7 @@ fun IngredientFarmingTopAppBar(
     modifier: Modifier = Modifier,
     type: AppBarType,
     title: String,
+    snackBarHostState: SnackbarHostState? = null,
     actionIcon: @Composable (() -> Unit)? = null,
     onClickNavigation: () -> Unit = {},
     onClickAction: () -> Unit = {},
@@ -59,8 +62,11 @@ fun IngredientFarmingTopAppBar(
                     }
                 }
             )
+        },
+        snackbarHost = {
+            if (snackBarHostState != null) SnackbarHost(hostState = snackBarHostState)
         }
-    ){  innerPadding ->
+    ) { innerPadding ->
         content(innerPadding)
     }
 }
@@ -74,12 +80,12 @@ enum class AppBarType {
     heightDp = 60
 )
 @Composable
-private fun TopAppBarPreview(){
+private fun TopAppBarPreview() {
     IngredientFarmingTopAppBar(
         title = "테스트",
         type = AppBarType.None,
         onClickNavigation = {}
-    ){}
+    ) {}
 }
 
 @Preview(
@@ -87,11 +93,11 @@ private fun TopAppBarPreview(){
     heightDp = 60
 )
 @Composable
-private fun NavigationTopAppBarPreview(){
+private fun NavigationTopAppBarPreview() {
     IngredientFarmingTopAppBar(
         title = "테스트",
         type = AppBarType.Navigation
-    ){}
+    ) {}
 }
 
 @Preview(
@@ -99,11 +105,11 @@ private fun NavigationTopAppBarPreview(){
     heightDp = 60
 )
 @Composable
-private fun ActionTopAppBarPreview(){
+private fun ActionTopAppBarPreview() {
     IngredientFarmingTopAppBar(
         title = "테스트",
         type = AppBarType.Action,
-    ){}
+    ) {}
 }
 
 @Preview(
@@ -111,10 +117,10 @@ private fun ActionTopAppBarPreview(){
     heightDp = 60
 )
 @Composable
-private fun AllTopAppBarPreview(){
+private fun AllTopAppBarPreview() {
     IngredientFarmingTopAppBar(
         title = "테스트",
         type = AppBarType.All,
         onClickNavigation = {}
-    ){}
+    ) {}
 }

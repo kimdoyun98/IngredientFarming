@@ -148,6 +148,8 @@ class ManageViewModel @Inject constructor(
 
                 reduce { state.copy(ingredientItems = list.toImmutableList()) }
 
+                postSideEffect(ManageEffect.ShowSnackBar)
+
                 onIntent(ManageIntent.OnClickDeleteOptionsCancel)
             }
         }
