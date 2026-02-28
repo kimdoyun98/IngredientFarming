@@ -141,11 +141,11 @@ class ManageViewModel @Inject constructor(
 
             is ManageIntent.OnDeleteButtonClick -> intent {
                 val deleteIds = state.selectedItems.toList().filter { it.second }.map { it.first }
-                deleteHoldIngredientUseCase.invoke(deleteIds)
-
                 val list = state.ingredientItems.toMutableList()
-                list.removeAll(state.ingredientItems.filter { deleteIds.contains(it.id) })
+                val deleteIngredient = state.ingredientItems.filter { deleteIds.contains(it.id) }
+                list.removeAll(deleteIngredient)
 
+                deleteHoldIngredientUseCase.invoke(deleteIds)
                 reduce { state.copy(ingredientItems = list.toImmutableList()) }
 
                 postSideEffect(ManageEffect.ShowSnackBar)

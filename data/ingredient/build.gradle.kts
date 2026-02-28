@@ -14,4 +14,5 @@ dependencies {
     implementation(projects.core.common)
 
     implementation(libs.retrofit)
+    implementation(libs.androidx.room.common.jvm)
 }

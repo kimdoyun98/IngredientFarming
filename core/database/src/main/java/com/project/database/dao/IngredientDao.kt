@@ -30,6 +30,15 @@ interface IngredientDao {
     @Query("DELETE FROM HoldIngredientEntity WHERE id IN (:ids)")
     suspend fun deleteHoldIngredientsByIds(ids: List<Int>)
 
+    @Query("""
+        UPDATE IngredientEntity 
+        SET hold_state = 0 
+        WHERE id NOT IN (SELECT DISTINCT ingredient_id FROM HoldIngredientEntity)
+        AND hold_state = 1
+    """)
+    suspend fun updateMissingIngredientsHoldState(): Int
+
+
     @Query("SELECT Count(*) FROM IngredientEntity WHERE hold_state = 1")
     fun getIngredientCount(): Flow<Int>
 
