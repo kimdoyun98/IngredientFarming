@@ -11,7 +11,9 @@ import com.project.model.ingredient.IngredientCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -86,6 +88,59 @@ class ManageViewModel @Inject constructor(
                 reduce { state.copy(selectedCategoryIndex = intent.index) }
                 _selectedCategory.value =
                     if (intent.index == 0) null else IngredientCategory.entries[intent.index - 1]
+            }
+
+            is ManageIntent.OnClickItem -> intent {
+                if (state.deleteOptionsState) {
+                    val map = state.selectedItems.toMutableMap()
+                    map[intent.id] = map[intent.id] == null || map[intent.id] == false
+
+                    reduce { state.copy(selectedItems = map.toImmutableMap()) }
+                } else {
+                    //TODO Single Item Click
+                }
+            }
+
+            is ManageIntent.OnLongClickItem -> intent {
+                if (state.deleteOptionsState) return@intent
+
+                val map = state.selectedItems.toMutableMap()
+                map[intent.id] = true
+
+                reduce {
+                    state.copy(
+                        deleteOptionsState = true,
+                        selectedItems = map.toImmutableMap()
+                    )
+                }
+            }
+
+            is ManageIntent.OnClickAllSelectRadioButton -> intent {
+                reduce {
+                    state.copy(
+                        allSelectedState = !state.allSelectedState,
+                        selectedItems =
+                            if (state.allSelectedState) {
+                                persistentMapOf()
+                            } else {
+                                val map = mutableMapOf<Int, Boolean>()
+                                state.ingredientItems.map {
+                                    map[it.id] = true
+                                }
+                                map.toImmutableMap()
+                            }
+                    )
+                }
+            }
+
+            is ManageIntent.OnClickDeleteOptionsCancel -> intent {
+                reduce { state.copy(deleteOptionsState = false, selectedItems = persistentMapOf()) }
+            }
+
+            is ManageIntent.OnDeleteButtonClick -> intent {
+                //TODO DELETE SELECTED INGREDIENT
+
+                onIntent(ManageIntent.OnClickDeleteOptionsCancel)
             }
         }
     }

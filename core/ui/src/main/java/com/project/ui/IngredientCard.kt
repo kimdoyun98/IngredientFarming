@@ -1,6 +1,7 @@
 package com.project.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +34,6 @@ import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.LightPink
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.designsystem.theme.MoreLightOrange
-import com.project.designsystem.theme.MoreLightPink
 import com.project.designsystem.theme.Orange
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
@@ -67,16 +67,23 @@ fun IngredientCard(
 @Composable
 fun IconIngredientCard(
     modifier: Modifier = Modifier,
-    item: Ingredient
+    item: Ingredient,
+    borderColor: Color = Color.Gray,
+    onClick: () -> Unit = {},
+    onLongClick: () -> Unit = {},
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .padding(4.dp)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
         ),
-        border = BorderStroke(1.dp, Color.Gray),
+        border = BorderStroke(1.dp, borderColor),
     ) {
         Row(
             modifier = modifier
@@ -137,25 +144,23 @@ private fun IngredientCardContent(
                 border = null,
                 colors = SuggestionChipDefaults.suggestionChipColors(
                     containerColor =
-                        if(isIconCard) {
-                            when(leftDays){
+                        if (isIconCard) {
+                            when (leftDays) {
                                 0L, 1L -> LightPink
                                 2L, 3L -> MoreLightOrange
                                 else -> MoreLightGreen
                             }
-                        }
-                        else {
+                        } else {
                             Color(item.category.color)
                         },
                     labelColor =
-                        if(isIconCard) {
-                            when(leftDays){
+                        if (isIconCard) {
+                            when (leftDays) {
                                 0L, 1L -> Red
                                 2L, 3L -> Orange
                                 else -> Green
                             }
-                        }
-                        else {
+                        } else {
                             getLuminanceTextColor(Color(item.category.color))
                         },
                 )
@@ -259,6 +264,6 @@ private fun IconIngredientCardPreview() {
             category = IngredientCategory.FRUIT,
             store = IngredientStore.REFRIGERATED,
             expirationDate = LocalDate.parse("2026-02-26")
-        )
+        ),
     )
 }
