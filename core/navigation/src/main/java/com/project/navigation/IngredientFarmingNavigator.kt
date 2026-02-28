@@ -28,6 +28,9 @@ class IngredientFarmingNavigator(
 
     fun navigateToManage() =
         navController.navigate(IngredientRoute.Manage)
+
+    fun navigateToUpdateHoldIngredient(id: Int) =
+        navController.navigate(IngredientRoute.UpdateHoldIngredient(id = id))
 }
 
 @Composable

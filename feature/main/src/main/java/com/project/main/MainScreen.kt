@@ -8,6 +8,7 @@ import com.project.ingredient.barcode.ui.barcode.navigation.barcodeScannerGraph
 import com.project.ingredient.barcode.ui.directInput.navigation.directInputGraph
 import com.project.ingredient.barcode.ui.save.navigation.saveIngredientGraph
 import com.project.ingredient_manage.navigation.manageGraph
+import com.project.ingredient_manage.navigation.updateHoldIngredientGraph
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import com.project.navigation.rememberIngredientFarmingNavigator
@@ -40,5 +41,7 @@ internal fun MainScreen(
         directInputGraph(navigator = navigator)
 
         manageGraph(navigator = navigator)
+
+        updateHoldIngredientGraph(navigator = navigator)
     }
 }

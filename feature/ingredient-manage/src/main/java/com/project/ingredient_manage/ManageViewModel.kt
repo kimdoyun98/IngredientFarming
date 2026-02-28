@@ -99,7 +99,7 @@ class ManageViewModel @Inject constructor(
 
                     reduce { state.copy(selectedItems = map.toImmutableMap()) }
                 } else {
-                    //TODO Single Item Click
+                    postSideEffect(ManageEffect.NavigateToUpdateIngredient(intent.id))
                 }
             }
 

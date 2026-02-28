@@ -24,4 +24,7 @@ sealed interface IngredientRoute : Route {
 
     @Serializable
     data object Manage : IngredientRoute
+
+    @Serializable
+    data class UpdateHoldIngredient(val id: Int): IngredientRoute
 }

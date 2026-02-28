@@ -33,6 +33,10 @@ fun NavGraphBuilder.manageGraph(
                     navigator.navigateToHome()
                 }
 
+                is ManageEffect.NavigateToUpdateIngredient -> {
+                    navigator.navigateToUpdateHoldIngredient(effect.id)
+                }
+
                 is ManageEffect.ShowSnackBar -> {
                     scope.launch {
                         val result = snackBarHostState
@@ -46,6 +50,7 @@ fun NavGraphBuilder.manageGraph(
                             SnackbarResult.ActionPerformed -> {
                                 //TODO 추가
                             }
+
                             SnackbarResult.Dismissed -> {
 
                             }
