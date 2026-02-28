@@ -2,6 +2,7 @@ package com.project.ingredient_manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.ingredient.usecase.DeleteHoldIngredientUseCase
 import com.project.ingredient.usecase.SearchIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
 import com.project.ingredient_manage.contract.ManageIntent
@@ -30,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ManageViewModel @Inject constructor(
     private val searchIngredientUseCase: SearchIngredientUseCase,
+    private val deleteHoldIngredientUseCase: DeleteHoldIngredientUseCase,
 ) : ContainerHost<ManageState, ManageEffect>, ViewModel() {
     override val container = container<ManageState, ManageEffect>(ManageState())
 
@@ -138,7 +140,13 @@ class ManageViewModel @Inject constructor(
             }
 
             is ManageIntent.OnDeleteButtonClick -> intent {
-                //TODO DELETE SELECTED INGREDIENT
+                val deleteIds = state.selectedItems.toList().filter { it.second }.map { it.first }
+                deleteHoldIngredientUseCase.invoke(deleteIds)
+
+                val list = state.ingredientItems.toMutableList()
+                list.removeAll(state.ingredientItems.filter { deleteIds.contains(it.id) })
+
+                reduce { state.copy(ingredientItems = list.toImmutableList()) }
 
                 onIntent(ManageIntent.OnClickDeleteOptionsCancel)
             }

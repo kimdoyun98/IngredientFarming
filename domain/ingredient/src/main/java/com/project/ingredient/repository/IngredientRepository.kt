@@ -15,4 +15,6 @@ interface IngredientRepository {
     fun getCountExpiringInThreeDays(): Flow<Int>
 
     suspend fun searchIngredients(query: String, category: IngredientCategory?): List<Ingredient>
+
+    suspend fun deleteHoldIngredientByIds(ids: List<Int>)
 }

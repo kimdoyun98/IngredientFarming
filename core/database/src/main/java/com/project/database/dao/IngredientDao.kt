@@ -1,6 +1,7 @@
 package com.project.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -25,6 +26,9 @@ interface IngredientDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHoldIngredient(holdIngredientEntity: HoldIngredientEntity): Long
+
+    @Query("DELETE FROM HoldIngredientEntity WHERE id IN (:ids)")
+    suspend fun deleteHoldIngredientsByIds(ids: List<Int>)
 
     @Query("SELECT Count(*) FROM IngredientEntity WHERE hold_state = 1")
     fun getIngredientCount(): Flow<Int>

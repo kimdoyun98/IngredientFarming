@@ -59,4 +59,8 @@ class IngredientRepositoryImpl @Inject constructor(
 
         return ingredientDao.searchIngredients(query, category)
     }
+
+    override suspend fun deleteHoldIngredientByIds(ids: List<Int>) {
+        return ingredientDao.deleteHoldIngredientsByIds(ids)
+    }
 }
