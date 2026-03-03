@@ -8,7 +8,6 @@ import com.project.database.model.HoldIngredientEntity
 import com.project.database.model.IngredientEntity
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
-import com.project.model.ingredient.IngredientCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -65,16 +64,9 @@ interface IngredientDao {
          HoldIngredientEntity.expirationDate as expirationDate
         FROM IngredientEntity
         JOIN HoldIngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
-        WHERE
-            (:query = '' OR name LIKE '%' || :query || '%')
-            AND
-            (:category IS NULL OR category = :category)
     """
     )
-    suspend fun searchIngredients(
-        query: String,
-        category: IngredientCategory?
-    ): List<Ingredient>
+    fun getAllHoldIngredient(): Flow<List<Ingredient>>
 
     @Query(
         """

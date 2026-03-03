@@ -3,7 +3,7 @@ package com.project.ingredient_manage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.ingredient.usecase.DeleteHoldIngredientUseCase
-import com.project.ingredient.usecase.SearchIngredientUseCase
+import com.project.ingredient.usecase.GetAllHoldIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
 import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
@@ -19,6 +19,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
@@ -30,7 +31,7 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 @HiltViewModel
 class ManageViewModel @Inject constructor(
-    private val searchIngredientUseCase: SearchIngredientUseCase,
+    private val getAllHoldIngredientUseCase: GetAllHoldIngredientUseCase,
     private val deleteHoldIngredientUseCase: DeleteHoldIngredientUseCase,
 ) : ContainerHost<ManageState, ManageEffect>, ViewModel() {
     override val container = container<ManageState, ManageEffect>(ManageState())
@@ -45,17 +46,25 @@ class ManageViewModel @Inject constructor(
     private val selectedCategory: StateFlow<IngredientCategory?> = _selectedCategory.asStateFlow()
 
     init {
-        selectedCategory
-            .flatMapLatest { category ->
-                query
-                    .onEach { q ->
-                        intent { reduce { state.copy(query = q) } }
+        getAllHoldIngredientUseCase.invoke()
+            .flatMapLatest { ingredients ->
+                selectedCategory
+                    .combine(
+                        query
+                            .onEach { q ->
+                                intent { reduce { state.copy(query = q) } }
+                            }
+                            .debounce(300L)
+                    ) { category, q ->
+                        ingredients
+                            .filter { ingredient ->
+                                (category == null || ingredient.category == category) &&
+                                        ingredient.name.contains(q)
+                            }
                     }
-                    .debounce(500L)
-                    .onEach { q ->
-                        _items.value =
-                            searchIngredientUseCase.invoke(q, category).toImmutableList()
-                    }
+            }
+            .onEach { filterIngredients ->
+                _items.value = filterIngredients.toImmutableList()
             }
             .launchIn(viewModelScope)
 
@@ -141,12 +150,7 @@ class ManageViewModel @Inject constructor(
 
             is ManageIntent.OnDeleteButtonClick -> intent {
                 val deleteIds = state.selectedItems.toList().filter { it.second }.map { it.first }
-                val list = state.ingredientItems.toMutableList()
-                val deleteIngredient = state.ingredientItems.filter { deleteIds.contains(it.id) }
-                list.removeAll(deleteIngredient)
-
                 deleteHoldIngredientUseCase.invoke(deleteIds)
-                reduce { state.copy(ingredientItems = list.toImmutableList()) }
 
                 postSideEffect(ManageEffect.ShowSnackBar)
 

@@ -7,7 +7,6 @@ import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
-import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -62,13 +61,8 @@ class IngredientRepositoryImpl @Inject constructor(
         return ingredientDao.getExpirationDateSoonCount()
     }
 
-    override suspend fun searchIngredients(
-        query: String,
-        category: IngredientCategory?
-    ): List<Ingredient> {
-
-        return ingredientDao.searchIngredients(query, category)
-    }
+    override fun getAllHoldIngredient(): Flow<List<Ingredient>> =
+        ingredientDao.getAllHoldIngredient()
 
     override suspend fun deleteHoldIngredientByIds(ids: List<Int>) {
         runWithRetry {
