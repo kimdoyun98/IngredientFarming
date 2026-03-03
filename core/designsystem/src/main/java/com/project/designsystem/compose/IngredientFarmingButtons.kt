@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun IngredientFarmingWideButton(
     modifier: Modifier = Modifier,
+    background: Color? = null,
     enabled: Boolean = true,
     onClick: () -> Unit,
     content: @Composable () -> Unit
@@ -28,6 +30,30 @@ fun IngredientFarmingWideButton(
         modifier = modifier
             .fillMaxWidth()
             .padding(4.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors =
+            if (background == null) ButtonDefaults.buttonColors()
+            else ButtonDefaults.buttonColors(containerColor = background),
+        onClick = { onClick() },
+        enabled = enabled,
+        content = { content() }
+    )
+}
+
+@Composable
+fun IngredientFarmingButton(
+    modifier: Modifier = Modifier,
+    background: Color? = null,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Button(
+        modifier = modifier
+            .padding(4.dp),
+        colors =
+            if (background == null) ButtonDefaults.buttonColors()
+            else ButtonDefaults.buttonColors(containerColor = background),
         shape = RoundedCornerShape(8.dp),
         onClick = { onClick() },
         enabled = enabled,
