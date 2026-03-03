@@ -12,6 +12,7 @@ import com.project.ingredient_manage.navigation.updateHoldIngredientGraph
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import com.project.navigation.rememberIngredientFarmingNavigator
+import com.project.shopping_cart.navigation.shoppingCartGraph
 import com.project.ui.permission.IngredientFarmingPermission
 import com.project.ui.permission.rememberIngredientFarmingPermission
 
@@ -43,5 +44,7 @@ internal fun MainScreen(
         manageGraph(navigator = navigator)
 
         updateHoldIngredientGraph(navigator = navigator)
+
+        shoppingCartGraph(navigator = navigator)
     }
 }

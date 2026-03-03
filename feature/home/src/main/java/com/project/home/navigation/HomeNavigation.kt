@@ -38,7 +38,7 @@ fun NavGraphBuilder.homeGraph(
                 }
 
                 is HomeEffect.NavigateToShoppingCart -> {
-                    //navigator.navigateToShoppingCart()
+                    navigator.navigateToShoppingCart()
                 }
             }
 

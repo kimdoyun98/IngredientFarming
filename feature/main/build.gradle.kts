@@ -10,4 +10,5 @@ dependencies {
     implementation(projects.feature.home)
     implementation(projects.feature.ingredientAdd)
     implementation(projects.feature.ingredientManage)
+    implementation(projects.feature.shoppingCart)
 }

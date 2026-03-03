@@ -31,6 +31,9 @@ class IngredientFarmingNavigator(
 
     fun navigateToUpdateHoldIngredient(id: Int) =
         navController.navigate(IngredientRoute.UpdateHoldIngredient(id = id))
+
+    fun navigateToShoppingCart() =
+        navController.navigate(IngredientRoute.ShoppingCart)
 }
 
 @Composable
