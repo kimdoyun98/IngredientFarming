@@ -37,15 +37,18 @@ class IngredientRepositoryImpl @Inject constructor(
     override suspend fun insertIngredient(
         igdList: List<Ingredient>
     ) = coroutineScope {
-        igdList.forEach { igd ->
+        igdList.forEach { ingredient ->
             launch {
-                val id = ingredientDao.findIngredientIdByName(igd.name) ?: insertIngredient(igd)
+                var id = ingredientDao.findIngredientIdByName(ingredient.name)
 
-                ingredientDao.insertHoldIngredient(igd.asHoldIngredientEntity(id))
+                if (id == null) id = insertIngredient(ingredient)
+                else ingredientDao.updateHoldStateById(id)
+
+                ingredientDao.insertHoldIngredient(ingredient.asHoldIngredientEntity(id))
             }
         }
     }
-
+    
     private suspend fun insertIngredient(igd: Ingredient): Int {
         ingredientDao.insertIngredient(igd.asIngredientEntity())
 

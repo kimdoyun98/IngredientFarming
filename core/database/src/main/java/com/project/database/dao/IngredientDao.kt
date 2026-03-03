@@ -22,6 +22,9 @@ interface IngredientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertIngredient(ingredientEntity: IngredientEntity): Long
 
+    @Query("UPDATE IngredientEntity SET hold_state = 1 WHERE id =:id")
+    suspend fun updateHoldStateById(id: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHoldIngredient(holdIngredientEntity: HoldIngredientEntity): Long
 
