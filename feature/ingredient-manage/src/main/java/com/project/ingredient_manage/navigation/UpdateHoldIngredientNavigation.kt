@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.project.ingredient_manage.contract.update.UpdateEffect
 import com.project.ingredient_manage.update.UpdateHoldIngredientScreen
 import com.project.ingredient_manage.update.UpdateHoldIngredientViewModel
 import com.project.navigation.IngredientFarmingNavigator
@@ -20,7 +21,9 @@ fun NavGraphBuilder.updateHoldIngredientGraph(
 
         updateViewModel.collectSideEffect { effect ->
             when (effect) {
-
+                UpdateEffect.PopBackStack -> {
+                    navigator.navController.popBackStack()
+                }
             }
         }
 

@@ -11,6 +11,7 @@
     <string name="count">개수</string>
     <string name="store_type">보관방법</string>
     <string name="expiration_date">유통기한</string>
+    <string name="enter_date">등록일자</string>
     <string name="condiment_icon_description">양념 아이콘</string>
     <string name="vegetable_icon_description">채소 아이콘</string>
     <string name="fruit_icon_description">과일 아이콘</string>

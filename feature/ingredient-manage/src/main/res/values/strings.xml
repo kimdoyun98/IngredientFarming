@@ -4,4 +4,14 @@
     <string name="top_app_bar_title">식재료 관리</string>
     <string name="top_app_bar_action_icon_ingredient_add">식료품 추가</string>
     <string name="filter_chip_check_icon_description">Check</string>
+
+    <string name="update_hold_screen_title">식재료</string>
+    <string name="delete_button_text">소진/폐기</string>
+    <string name="update_button_text">변경</string>
+
+    <string name="count_icon_description">수량 아이콘</string>
+    <string name="store_icon_description">보관 방법 아이콘</string>
+    <string name="expiration_date_icon_description">유통 기한 아이콘</string>
+    <string name="enter_date_icon_description">등록 일자 아이콘</string>
+    <string name="count_minus_button_description">개수 차감 버튼</string>
 </resources>
