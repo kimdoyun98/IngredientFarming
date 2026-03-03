@@ -3,6 +3,7 @@ package com.project.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -88,12 +89,16 @@ fun IconIngredientCard(
         Row(
             modifier = modifier
         ) {
-            CategorySmallIconBox(
+            Box(
                 modifier = modifier
                     .offset(x = 8.dp, y = 24.dp)
-                    .padding(4.dp),
-                category = item.category
-            )
+                    .padding(4.dp)
+            ) {
+                CategorySmallIconBox(
+                    modifier = modifier,
+                    category = item.category
+                )
+            }
 
             IngredientCardContent(
                 modifier = modifier,
