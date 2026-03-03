@@ -1,7 +1,6 @@
 package com.project.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -30,12 +29,14 @@ interface IngredientDao {
     @Query("DELETE FROM HoldIngredientEntity WHERE id IN (:ids)")
     suspend fun deleteHoldIngredientsByIds(ids: List<Int>)
 
-    @Query("""
+    @Query(
+        """
         UPDATE IngredientEntity 
         SET hold_state = 0 
         WHERE id NOT IN (SELECT DISTINCT ingredient_id FROM HoldIngredientEntity)
         AND hold_state = 1
-    """)
+    """
+    )
     suspend fun updateMissingIngredientsHoldState(): Int
 
 
@@ -75,7 +76,8 @@ interface IngredientDao {
         category: IngredientCategory?
     ): List<Ingredient>
 
-    @Query("""
+    @Query(
+        """
         SELECT
             IngredientEntity.id,
             name,
@@ -84,6 +86,33 @@ interface IngredientDao {
         FROM IngredientEntity
         JOIN HoldIngredientEntity ON IngredientEntity.id = HoldIngredientEntity.ingredient_id
         WHERE HoldIngredientEntity.expirationDate BETWEEN DATE('now') AND DATE('now', '+3 days')
-    """)
+    """
+    )
     fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>>
+
+    @Query(
+        """
+        SELECT
+         HoldIngredientEntity.id as id,
+         IngredientEntity.name as name,
+         HoldIngredientEntity.count as count,
+         IngredientEntity.category as category,
+         IngredientEntity.store as store,
+         HoldIngredientEntity.enterDate as enterDate,
+         HoldIngredientEntity.expirationDate as expirationDate
+        FROM HoldIngredientEntity
+        JOIN IngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
+        WHERE HoldIngredientEntity.id =:id
+    """
+    )
+    suspend fun getHoldIngredientById(id: Int): Ingredient
+
+    @Query(
+        """
+        UPDATE HoldIngredientEntity 
+        SET count =:count
+        WHERE id =:id
+    """
+    )
+    suspend fun updateHoldIngredientCount(id: Int, count: Int)
 }

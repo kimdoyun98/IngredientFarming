@@ -17,4 +17,8 @@ interface IngredientRepository {
     suspend fun searchIngredients(query: String, category: IngredientCategory?): List<Ingredient>
 
     suspend fun deleteHoldIngredientByIds(ids: List<Int>)
+
+    suspend fun getHoldIngredientById(id: Int): Ingredient
+
+    suspend fun updateHoldIngredientCount(id: Int, count: Int)
 }

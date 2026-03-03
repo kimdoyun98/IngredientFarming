@@ -19,6 +19,14 @@ class IngredientRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao,
 ) : IngredientRepository {
 
+    override suspend fun getHoldIngredientById(id: Int): Ingredient {
+        return ingredientDao.getHoldIngredientById(id)
+    }
+
+    override suspend fun updateHoldIngredientCount(id: Int, count: Int) {
+        ingredientDao.updateHoldIngredientCount(id, count)
+    }
+
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
         return ingredientDao.getIngredientByName(name)?.asExternalModel()
     }
