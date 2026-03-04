@@ -1,6 +1,6 @@
 package com.project.shopping_cart.di
 
-import com.project.shopping_cart.repository.ShoppingCartRepository
+import com.project.ingredient.repository.ShoppingCartRepository
 import com.project.shopping_cart.repository.ShoppingCartRepositoryImpl
 import dagger.Binds
 import dagger.Module

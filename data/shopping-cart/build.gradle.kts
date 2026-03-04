@@ -8,9 +8,9 @@ android {
 
 dependencies {
     implementation(projects.core.model)
-    implementation(projects.domain.shoppingCart)
     implementation(projects.core.database)
     implementation(projects.core.common)
+    implementation(projects.domain.ingredient)
 
     implementation(libs.androidx.room.common.jvm)
 }

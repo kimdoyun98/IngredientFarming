@@ -2,6 +2,7 @@ package com.project.shopping_cart.repository
 
 import com.project.database.dao.ShoppingCartDao
 import com.project.database.model.asExternalModel
+import com.project.ingredient.repository.ShoppingCartRepository
 import com.project.model.cart.ShoppingCart
 import com.project.shopping_cart.asShoppingCartEntity
 import kotlinx.coroutines.flow.Flow

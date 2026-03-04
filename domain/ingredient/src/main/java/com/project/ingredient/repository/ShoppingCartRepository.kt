@@ -1,4 +1,4 @@
-package com.project.shopping_cart.repository
+package com.project.ingredient.repository
 
 import com.project.model.cart.ShoppingCart
 import kotlinx.coroutines.flow.Flow

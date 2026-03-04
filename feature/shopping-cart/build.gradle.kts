@@ -7,6 +7,5 @@ android {
 }
 
 dependencies {
-    implementation(projects.domain.shoppingCart)
     implementation(projects.domain.ingredient)
 }
