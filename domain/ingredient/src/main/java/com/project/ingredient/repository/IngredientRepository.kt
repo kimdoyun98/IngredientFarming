@@ -12,12 +12,4 @@ interface IngredientRepository {
     suspend fun insertIngredient(igdList: List<Ingredient>)
     fun getIngredientCount(): Flow<Int>
     fun getCountExpiringInThreeDays(): Flow<Int>
-
-    fun getAllHoldIngredient(): Flow<List<Ingredient>>
-
-    suspend fun deleteHoldIngredientByIds(ids: List<Int>)
-
-    suspend fun getHoldIngredientById(id: Int): Ingredient
-
-    suspend fun updateHoldIngredientCount(id: Int, count: Int)
 }

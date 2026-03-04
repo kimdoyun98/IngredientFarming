@@ -1,5 +1,7 @@
 package com.project.ingredient.di
 
+import com.project.ingredient.repository.HoldIngredientRepository
+import com.project.ingredient.repository.HoldIngredientRepositoryImpl
 import com.project.ingredient.repository.IngredientRepository
 import com.project.ingredient.repository.IngredientRepositoryImpl
 import dagger.Binds
@@ -15,4 +17,9 @@ abstract class IngredientModule {
     abstract fun bindIngredientRepository(
         ingredientRepositoryImpl: IngredientRepositoryImpl
     ): IngredientRepository
+
+    @Binds
+    abstract fun bindHoldIngredientRepository(
+        holdIngredientRepositoryImpl: HoldIngredientRepositoryImpl
+    ): HoldIngredientRepository
 }

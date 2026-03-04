@@ -1,12 +1,12 @@
 package com.project.ingredient.usecase
 
-import com.project.ingredient.repository.IngredientRepository
+import com.project.ingredient.repository.HoldIngredientRepository
 import javax.inject.Inject
 
 class UpdateHoldIngredientCountUseCase @Inject constructor(
-    private val ingredientRepository: IngredientRepository
+    private val holdIngredientRepository: HoldIngredientRepository,
 ) {
-    suspend operator fun invoke(id: Int, count: Int){
-        ingredientRepository.updateHoldIngredientCount(id, count)
+    suspend operator fun invoke(id: Int, count: Int) {
+        holdIngredientRepository.updateHoldIngredientCount(id, count)
     }
 }
