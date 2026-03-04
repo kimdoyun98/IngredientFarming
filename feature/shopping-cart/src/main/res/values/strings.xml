@@ -5,7 +5,7 @@
     <string name="add">추가</string>
     <string name="animated_progress_label">progress</string>
     <string name="shopping_cart_progress_text_state">%1$d개 / %2$d개 완료</string>
-    <string name="shopping_cart_item_query_placeholder">항복 추가</string>
+    <string name="shopping_cart_item_query_placeholder">항목 추가</string>
     <string name="count">개수</string>
     <string name="shopping_cart_item_count_query_placeholder">개수 입력</string>
     <string name="cancel">취소</string>
