@@ -7,6 +7,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.text.TextStyle
@@ -25,13 +29,18 @@ internal fun ItemAddOutlinedTextField(
     singleLine: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Unspecified,
 ) {
+    var localText by remember { mutableStateOf(value) }
+
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
             .padding(4.dp),
         shape = RoundedCornerShape(16.dp),
-        value = value,
-        onValueChange = { q -> onValueChange(q) },
+        value = localText,
+        onValueChange = { q ->
+            localText = q
+            onValueChange(q)
+        },
 
         textStyle = TextStyle(fontSize = 14.sp),
         placeholder = placeholder,
