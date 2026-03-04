@@ -12,6 +12,7 @@ import com.project.shopping_cart.contract.ShoppingCartState
 import com.project.shopping_cart.usecase.DeleteShoppingCartItemUseCase
 import com.project.shopping_cart.usecase.GetAllShoppingCartItemsUseCase
 import com.project.shopping_cart.usecase.InsertShoppingCartItemUseCase
+import com.project.shopping_cart.usecase.SaveCartSuccessItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
@@ -31,6 +32,7 @@ class ShoppingCartViewModel @Inject constructor(
     private val insertShoppingCartItemUseCase: InsertShoppingCartItemUseCase,
     private val deleteShoppingCartItemUseCase: DeleteShoppingCartItemUseCase,
     private val getIngredientUseCase: GetIngredientUseCase,
+    private val saveCartSuccessItemsUseCase: SaveCartSuccessItemsUseCase,
 ) : ContainerHost<ShoppingCartState, ShoppingCartEffect>, ViewModel() {
     override val container = container<ShoppingCartState, ShoppingCartEffect>(ShoppingCartState())
 
@@ -76,6 +78,14 @@ class ShoppingCartViewModel @Inject constructor(
             .onEach {
                 intent {
                     reduce { state.copy(addItemCount = it) }
+                }
+            }
+            .launchIn(viewModelScope)
+
+        container.stateFlow
+            .onEach { state ->
+                intent {
+                    reduce { state.copy(saveSuccessItemState = state.cartList.any { it.success }) }
                 }
             }
             .launchIn(viewModelScope)
@@ -139,6 +149,15 @@ class ShoppingCartViewModel @Inject constructor(
 
             is ShoppingCartIntent.OnItemDeleteClick -> intent {
                 deleteShoppingCartItemUseCase.invoke(state.cartList[intent.index])
+            }
+
+            is ShoppingCartIntent.OnSaveCartItemsButtonClick -> intent {
+                val successList = state.cartList.filter { it.success }
+                saveCartSuccessItemsUseCase.invoke(successList)
+
+                successList.forEach {
+                    deleteShoppingCartItemUseCase.invoke(it)
+                }
             }
         }
     }

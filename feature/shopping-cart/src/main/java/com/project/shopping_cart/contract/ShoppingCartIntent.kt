@@ -10,4 +10,5 @@ sealed interface ShoppingCartIntent {
     object OnItemAddButtonClick: ShoppingCartIntent
     data class OnItemCheckBoxClick(val index: Int): ShoppingCartIntent
     data class OnItemDeleteClick(val index: Int): ShoppingCartIntent
+    object OnSaveCartItemsButtonClick: ShoppingCartIntent
 }

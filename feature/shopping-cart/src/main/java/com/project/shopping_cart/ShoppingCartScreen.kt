@@ -1,21 +1,25 @@
 package com.project.shopping_cart
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.theme.LightGreen
 import com.project.model.cart.ShoppingCart
 import com.project.model.ingredient.IngredientCategory
 import com.project.shopping_cart.component.ShoppingCartItem
@@ -38,6 +42,7 @@ internal fun ShoppingCartScreen(
         modifier = modifier,
         cartList = shoppingCartState.cartList,
         addState = shoppingCartState.addState,
+        saveSuccessItemState = shoppingCartState.saveSuccessItemState,
         addItemNameQuery = shoppingCartState.addItemNameQuery,
         addItemCount = shoppingCartState.addItemCount,
         addItemCategorySelected = shoppingCartState.addItemCategorySelected,
@@ -50,6 +55,7 @@ internal fun ShoppingCartScreen(
         onItemAddButtonClick = { onIntent(ShoppingCartIntent.OnItemAddButtonClick) },
         onItemCheckBoxClick = { onIntent(ShoppingCartIntent.OnItemCheckBoxClick(it)) },
         onItemDeleteClick = { onIntent(ShoppingCartIntent.OnItemDeleteClick(it)) },
+        onSaveSuccessItemsButtonClick = { onIntent(ShoppingCartIntent.OnSaveCartItemsButtonClick) },
     )
 }
 
@@ -58,6 +64,7 @@ internal fun ShoppingCartScreen(
     modifier: Modifier = Modifier,
     cartList: ImmutableList<ShoppingCart>,
     addState: Boolean,
+    saveSuccessItemState: Boolean,
     addItemNameQuery: String,
     addItemCount: String,
     addItemCategorySelected: Int,
@@ -69,7 +76,8 @@ internal fun ShoppingCartScreen(
     onItemAddCancelButtonClick: () -> Unit,
     onItemAddButtonClick: () -> Unit,
     onItemCheckBoxClick: (Int) -> Unit,
-    onItemDeleteClick: (Int) -> Unit
+    onItemDeleteClick: (Int) -> Unit,
+    onSaveSuccessItemsButtonClick: () -> Unit,
 ) {
     IngredientFarmingTopAppBar(
         modifier = modifier,
@@ -91,11 +99,27 @@ internal fun ShoppingCartScreen(
             )
 
             if (!addState) {
-                Box(
+                Row(
                     modifier = modifier
                         .fillMaxWidth(),
-                    contentAlignment = Alignment.CenterEnd
+                    horizontalArrangement = Arrangement.End
                 ) {
+                    if (saveSuccessItemState) {
+                        Button(
+                            modifier = modifier
+                                .weight(1f)
+                                .padding(horizontal = 4.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = LightGreen),
+                            shape = RoundedCornerShape(8.dp),
+                            onClick = onSaveSuccessItemsButtonClick,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.save_success_items_button_text),
+                                color = DarkGray
+                            )
+                        }
+                    }
+
                     TextButton(
                         onClick = onItemAddContentShowButtonClick
                     ) {
@@ -162,7 +186,8 @@ private fun ShoppingCartScreenPreview() {
                     category = IngredientCategory.MEAT,
                     success = true
                 )
-            )
+            ),
+            saveSuccessItemState = true
         ),
         onIntent = {}
     )

@@ -10,4 +10,5 @@ data class ShoppingCartState(
     val addItemNameQuery: String = "",
     val addItemCount: String = "0",
     val addItemCategorySelected: Int = -1,
+    val saveSuccessItemState: Boolean = false
 )
