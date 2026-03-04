@@ -40,6 +40,8 @@ import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.util.daysLeft
+import com.project.ui.util.getLeftDateText
+import com.project.ui.util.getLocalDateText
 import com.project.ui.util.getLuminanceTextColor
 import java.time.LocalDate
 
@@ -141,7 +143,7 @@ private fun IngredientCardContent(
                 label = {
                     Text(
                         text =
-                            if (isIconCard) "D-$leftDays"
+                            if (isIconCard) getLeftDateText(leftDays)
                             else item.category.n,
                         style = MaterialTheme.typography.labelMedium
                     )
@@ -213,7 +215,7 @@ private fun IngredientCardContent(
                 )
             },
             title = stringResource(R.string.expiration_date),
-            content = item.expirationDate.toString()
+            content = getLocalDateText(item.expirationDate),
         )
     }
 }

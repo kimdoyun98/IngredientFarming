@@ -7,6 +7,9 @@
     <string name="ingredient_card_view_icon_description">icon</string>
     <string name="barcodeScanner">바코드스캐너</string>
     <string name="directInput">직접입력</string>
+
+    <string name="ingredient_card_left_date">D-%1$d</string>
+    <string name="ingredient_card_unknown_date">미기입</string>
     
     <string name="count">개수</string>
     <string name="store_type">보관방법</string>

@@ -49,6 +49,9 @@ import com.project.ui.IngredientFarmingTopAppBar
 import com.project.ui.MediumIconBox
 import com.project.ui.R
 import com.project.ui.modifier.singleClickEvent
+import com.project.ui.util.UNKNOWN_DATE
+import com.project.ui.util.daysLeft
+import com.project.ui.util.getLocalDateText
 import java.time.LocalDate
 
 @Composable
@@ -224,7 +227,7 @@ private fun BodyContent(
         BodyContentItem(
             modifier = modifier,
             itemTitle = stringResource(R.string.expiration_date),
-            itemContent = expirationDate.toString(),
+            itemContent = getLocalDateText(expirationDate),
             iconBackGroundColor = Purple80
         ) {
             Icon(
@@ -341,7 +344,7 @@ private fun UpdateHoldIngredientScreenPreview() {
             count = 4,
             category = IngredientCategory.MEAT,
             store = IngredientStore.FROZEN,
-            expirationDate = LocalDate.now().plusDays(1),
+            expirationDate = LocalDate.parse("9999-01-01"),//LocalDate.now().plusDays(1),
             enterDate = LocalDate.now()
         ),
         onIntent = {}
