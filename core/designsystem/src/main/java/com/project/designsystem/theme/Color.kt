@@ -2,6 +2,9 @@ package com.project.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
+val Purple600 = Color(0xFF9333EA)
+val Purple500 = Color(0xFFA855F7)
+val ShoppingProgressTrackColor = Color(0xFFB97CF9)
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)

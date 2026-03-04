@@ -21,13 +21,13 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun FilterChipGroup(
     modifier: Modifier = Modifier,
-    groupName: String,
+    groupName: String? = null,
     groupList: ImmutableList<String>,
     onClick: (Int) -> Unit,
     selectedChipIndex: Int,
 ) {
     Column {
-        Text(text = groupName)
+        if(groupName != null) Text(text = groupName)
 
         FlowRow(
             modifier = modifier.fillMaxWidth(),
