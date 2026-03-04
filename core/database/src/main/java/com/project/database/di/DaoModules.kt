@@ -1,6 +1,7 @@
 package com.project.database.di
 
 import com.project.database.IngredientFarmingDatabase
+import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
 import com.project.database.dao.ShoppingCartDao
 import dagger.Module
@@ -18,6 +19,12 @@ internal object DaoModules {
     fun provideIngredientDao(
         database: IngredientFarmingDatabase
     ): IngredientDao = database.getIngredientDao()
+
+    @Singleton
+    @Provides
+    fun provideHoldIngredientDao(
+        database: IngredientFarmingDatabase
+    ): HoldIngredientDao = database.getHoldIngredientDao()
 
     @Singleton
     @Provides

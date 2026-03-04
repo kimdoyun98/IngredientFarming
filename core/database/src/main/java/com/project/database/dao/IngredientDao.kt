@@ -25,12 +25,6 @@ interface IngredientDao {
     @Query("UPDATE IngredientEntity SET hold_state = 1 WHERE id =:id")
     suspend fun updateHoldStateById(id: Int)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHoldIngredient(holdIngredientEntity: HoldIngredientEntity): Long
-
-    @Query("DELETE FROM HoldIngredientEntity WHERE id IN (:ids)")
-    suspend fun deleteHoldIngredientsByIds(ids: List<Int>)
-
     @Query(
         """
         UPDATE IngredientEntity 
@@ -58,22 +52,6 @@ interface IngredientDao {
     @Query(
         """
         SELECT
-         HoldIngredientEntity.id as id,
-         IngredientEntity.name as name,
-         HoldIngredientEntity.count as count,
-         IngredientEntity.category as category,
-         IngredientEntity.store as store,
-         HoldIngredientEntity.enterDate as enterDate,
-         HoldIngredientEntity.expirationDate as expirationDate
-        FROM IngredientEntity
-        JOIN HoldIngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
-    """
-    )
-    fun getAllHoldIngredient(): Flow<List<Ingredient>>
-
-    @Query(
-        """
-        SELECT
             IngredientEntity.id,
             name,
             expirationDate,
@@ -84,30 +62,4 @@ interface IngredientDao {
     """
     )
     fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>>
-
-    @Query(
-        """
-        SELECT
-         HoldIngredientEntity.id as id,
-         IngredientEntity.name as name,
-         HoldIngredientEntity.count as count,
-         IngredientEntity.category as category,
-         IngredientEntity.store as store,
-         HoldIngredientEntity.enterDate as enterDate,
-         HoldIngredientEntity.expirationDate as expirationDate
-        FROM HoldIngredientEntity
-        JOIN IngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
-        WHERE HoldIngredientEntity.id =:id
-    """
-    )
-    suspend fun getHoldIngredientById(id: Int): Ingredient
-
-    @Query(
-        """
-        UPDATE HoldIngredientEntity 
-        SET count =:count
-        WHERE id =:id
-    """
-    )
-    suspend fun updateHoldIngredientCount(id: Int, count: Int)
 }
