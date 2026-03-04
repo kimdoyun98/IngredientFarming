@@ -12,11 +12,8 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-
     implementation(projects.feature.main)
     implementation(projects.data.ingredient)
+    implementation(projects.data.shoppingCart)
     implementation(projects.core.common)
 }

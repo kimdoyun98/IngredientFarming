@@ -1,0 +1,30 @@
+package com.project.shopping_cart.repository
+
+import com.project.database.dao.ShoppingCartDao
+import com.project.database.model.asExternalModel
+import com.project.model.cart.ShoppingCart
+import com.project.shopping_cart.asShoppingCartEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+
+class ShoppingCartRepositoryImpl @Inject constructor(
+    private val shoppingCartDao: ShoppingCartDao
+) : ShoppingCartRepository {
+    override suspend fun insertShoppingCartItem(item: ShoppingCart) {
+        shoppingCartDao.insertShoppingCartItem(item.asShoppingCartEntity())
+    }
+
+    override fun getAllShoppingCartItems(): Flow<List<ShoppingCart>> {
+        return shoppingCartDao.getAllShoppingCartItems()
+            .map { entities ->
+                entities.map {
+                    it.asExternalModel()
+                }
+            }
+    }
+
+    override suspend fun deleteShoppingCartItem(item: ShoppingCart) {
+        shoppingCartDao.deleteShoppingCartItem(item.asShoppingCartEntity())
+    }
+}
