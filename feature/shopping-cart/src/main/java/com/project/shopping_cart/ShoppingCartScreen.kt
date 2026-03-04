@@ -21,6 +21,7 @@ import com.project.model.ingredient.IngredientCategory
 import com.project.shopping_cart.component.ShoppingCartItem
 import com.project.shopping_cart.component.ShoppingItemAddContent
 import com.project.shopping_cart.component.ShoppingProgress
+import com.project.shopping_cart.contract.ShoppingCartIntent
 import com.project.shopping_cart.contract.ShoppingCartState
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingTopAppBar
@@ -31,7 +32,7 @@ import kotlinx.collections.immutable.persistentListOf
 internal fun ShoppingCartScreen(
     modifier: Modifier = Modifier,
     shoppingCartState: ShoppingCartState,
-    onIntent: () -> Unit,
+    onIntent: (ShoppingCartIntent) -> Unit,
 ) {
     ShoppingCartScreen(
         modifier = modifier,
@@ -40,15 +41,15 @@ internal fun ShoppingCartScreen(
         addItemNameQuery = shoppingCartState.addItemNameQuery,
         addItemCount = shoppingCartState.addItemCount,
         addItemCategorySelected = shoppingCartState.addItemCategorySelected,
-        onTopAppBarNavigationButtonClick = { },
-        onItemAddContentShowButtonClick = { },
-        onAddItemNameChanged = { },
-        onAddItemCountChanged = { },
-        onAddItemCategoryChanged = { },
-        onItemAddCancelButtonClick = { },
-        onItemAddButtonClick = { },
-        onItemCheckBoxClick = { },
-        onItemDeleteClick = { },
+        onTopAppBarNavigationButtonClick = { onIntent(ShoppingCartIntent.OnTopAppBarNavigationButtonClick) },
+        onItemAddContentShowButtonClick = { onIntent(ShoppingCartIntent.OnItemAddContentShowButtonClick) },
+        onAddItemNameChanged = { onIntent(ShoppingCartIntent.OnAddItemNameChanged(it)) },
+        onAddItemCountChanged = { onIntent(ShoppingCartIntent.OnAddItemCountChanged(it)) },
+        onAddItemCategoryChanged = { onIntent(ShoppingCartIntent.OnAddItemCategoryChanged(it)) },
+        onItemAddCancelButtonClick = { onIntent(ShoppingCartIntent.OnItemAddCancelButtonClick) },
+        onItemAddButtonClick = { onIntent(ShoppingCartIntent.OnItemAddButtonClick) },
+        onItemCheckBoxClick = { onIntent(ShoppingCartIntent.OnItemCheckBoxClick(it)) },
+        onItemDeleteClick = { onIntent(ShoppingCartIntent.OnItemDeleteClick(it)) },
     )
 }
 

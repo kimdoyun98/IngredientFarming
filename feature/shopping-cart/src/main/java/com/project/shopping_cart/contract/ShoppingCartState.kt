@@ -8,6 +8,6 @@ data class ShoppingCartState(
     val addState: Boolean = false,
     val cartList: ImmutableList<ShoppingCart> = persistentListOf(),
     val addItemNameQuery: String = "",
-    val addItemCount: String = "",
+    val addItemCount: String = "0",
     val addItemCategorySelected: Int = -1,
 )
