@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,9 +37,11 @@ internal fun HomeScreen(
     modifier: Modifier = Modifier,
     homeState: HomeState,
     onIntent: (HomeIntent) -> Unit,
+    snackBarHost: SnackbarHostState,
 ) {
     HomeScreen(
         modifier = modifier,
+        snackBarHost = snackBarHost,
         ingredientCount = homeState.ingredientCount,
         expiresSoonCount = homeState.expiresSoonCount,
         recipeCount = homeState.recipeCount,
@@ -57,6 +61,7 @@ internal fun HomeScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
+    snackBarHost: SnackbarHostState,
     ingredientCount: Int,
     expiresSoonCount: Int,
     recipeCount: Int,
@@ -75,7 +80,8 @@ internal fun HomeScreen(
 
     IngredientFarmingTopAppBar(
         title = stringResource(R.string.home_title),
-        type = AppBarType.None
+        type = AppBarType.None,
+        snackBarHostState = snackBarHost,
     ) { innerPadding ->
         Column(
             modifier = modifier
@@ -167,6 +173,7 @@ private fun HomeScreenPreview() {
                     )
                 )
         ),
-        onIntent = {}
+        onIntent = {},
+        snackBarHost = remember { SnackbarHostState() }
     )
 }
