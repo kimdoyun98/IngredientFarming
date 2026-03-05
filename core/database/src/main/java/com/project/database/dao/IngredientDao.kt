@@ -13,28 +13,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface IngredientDao {
 
+    /**
+     * GET
+     */
     @Query("SELECT * FROM IngredientEntity WHERE name =:name")
     suspend fun getIngredientByName(name: String): IngredientEntity?
 
     @Query("SELECT id FROM IngredientEntity WHERE name =:name")
     suspend fun findIngredientIdByName(name: String): Int?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertIngredient(ingredientEntity: IngredientEntity): Long
-
-    @Query("UPDATE IngredientEntity SET hold_state = 1 WHERE id =:id")
-    suspend fun updateHoldStateById(id: Int)
-
-    @Query(
-        """
-        UPDATE IngredientEntity 
-        SET hold_state = 0 
-        WHERE id NOT IN (SELECT DISTINCT ingredient_id FROM HoldIngredientEntity)
-        AND hold_state = 1
-    """
-    )
-    suspend fun updateMissingIngredientsHoldState(): Int
-
 
     @Query("SELECT Count(*) FROM IngredientEntity WHERE hold_state = 1")
     fun getIngredientCount(): Flow<Int>
@@ -62,4 +48,26 @@ interface IngredientDao {
     """
     )
     fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>>
+
+    /**
+     * INSERT
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertIngredient(ingredientEntity: IngredientEntity): Long
+
+    /**
+     * UPDATE
+     */
+    @Query("UPDATE IngredientEntity SET hold_state = 1 WHERE id =:id")
+    suspend fun updateHoldStateById(id: Int)
+
+    @Query(
+        """
+        UPDATE IngredientEntity 
+        SET hold_state = 0 
+        WHERE id NOT IN (SELECT DISTINCT ingredient_id FROM HoldIngredientEntity)
+        AND hold_state = 1
+    """
+    )
+    suspend fun updateMissingIngredientsHoldState(): Int
 }

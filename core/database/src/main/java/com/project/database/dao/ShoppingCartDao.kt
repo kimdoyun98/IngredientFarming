@@ -10,12 +10,21 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ShoppingCartDao {
 
-    @Insert
-    suspend fun insertShoppingCartItem(item: ShoppingCartEntity)
-
+    /**
+     * GET
+     */
     @Query("SELECT * FROM ShoppingCartEntity")
     fun getAllShoppingCartItems(): Flow<List<ShoppingCartEntity>>
 
+    /**
+     * INSERT
+     */
+    @Insert
+    suspend fun insertShoppingCartItem(item: ShoppingCartEntity)
+
+    /**
+     * DELETE
+     */
     @Delete
     suspend fun deleteShoppingCartItem(item: ShoppingCartEntity)
 }

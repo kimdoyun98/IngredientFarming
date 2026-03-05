@@ -10,12 +10,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HoldIngredientDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHoldIngredient(holdIngredientEntity: HoldIngredientEntity): Long
 
-    @Query("DELETE FROM HoldIngredientEntity WHERE id IN (:ids)")
-    suspend fun deleteHoldIngredientsByIds(ids: List<Int>)
-
+    /**
+     * GET
+     */
     @Query(
         """
         SELECT
@@ -49,6 +47,15 @@ interface HoldIngredientDao {
     )
     suspend fun getHoldIngredientById(id: Int): Ingredient
 
+    /**
+     * INSERT
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertHoldIngredient(holdIngredientEntity: HoldIngredientEntity): Long
+
+    /**
+     * UPDATE
+     */
     @Query(
         """
         UPDATE HoldIngredientEntity 
@@ -57,4 +64,10 @@ interface HoldIngredientDao {
     """
     )
     suspend fun updateHoldIngredientCount(id: Int, count: Int)
+
+    /**
+     * DELETE
+     */
+    @Query("DELETE FROM HoldIngredientEntity WHERE id IN (:ids)")
+    suspend fun deleteHoldIngredientsByIds(ids: List<Int>)
 }
