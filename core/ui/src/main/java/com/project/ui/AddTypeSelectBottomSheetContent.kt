@@ -19,7 +19,7 @@ fun AddTypeSelectBottomSheetContent(
             .fillMaxWidth()
     ) {
         TextButton(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             onClick = { onBarcodeScannerClick() }
         ) {
@@ -27,7 +27,7 @@ fun AddTypeSelectBottomSheetContent(
         }
 
         TextButton(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             onClick = { onDirectInputClick() }
         ) {

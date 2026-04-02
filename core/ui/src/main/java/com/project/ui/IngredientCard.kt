@@ -60,7 +60,6 @@ fun IngredientCard(
         border = BorderStroke(1.dp, Color.Gray),
     ) {
         IngredientCardContent(
-            modifier = modifier,
             item = item,
             isIconCard = false
         )
@@ -88,22 +87,18 @@ fun IconIngredientCard(
         ),
         border = BorderStroke(1.dp, borderColor),
     ) {
-        Row(
-            modifier = modifier
-        ) {
+        Row {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .offset(x = 8.dp, y = 24.dp)
                     .padding(4.dp)
             ) {
                 CategorySmallIconBox(
-                    modifier = modifier,
                     category = item.category
                 )
             }
 
             IngredientCardContent(
-                modifier = modifier,
                 item = item,
                 isIconCard = true
             )
@@ -114,7 +109,6 @@ fun IconIngredientCard(
 
 @Composable
 private fun IngredientCardContent(
-    modifier: Modifier = Modifier,
     item: Ingredient,
     isIconCard: Boolean,
 ) {
@@ -123,17 +117,17 @@ private fun IngredientCardContent(
     }
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .padding(16.dp)
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = modifier.padding(start = 4.dp),
+                modifier = Modifier.padding(start = 4.dp),
                 text = item.name,
                 style = MaterialTheme.typography.titleMedium
             )
@@ -174,13 +168,12 @@ private fun IngredientCardContent(
             )
         }
 
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         IngredientAttrItem(
-            modifier = modifier,
             icon = {
                 Icon(
-                    modifier = modifier.size(20.dp),
+                    modifier = Modifier.size(20.dp),
                     painter = painterResource(id = R.drawable.ic_3d_box),
                     contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
                     tint = Color.Gray
@@ -191,10 +184,9 @@ private fun IngredientCardContent(
         )
 
         IngredientAttrItem(
-            modifier = modifier,
             icon = {
                 Icon(
-                    modifier = modifier.size(20.dp),
+                    modifier = Modifier.size(20.dp),
                     painter = painterResource(id = R.drawable.ic_refrigerator),
                     contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
                     tint = Color.Gray
@@ -205,10 +197,9 @@ private fun IngredientCardContent(
         )
 
         IngredientAttrItem(
-            modifier = modifier,
             icon = {
                 Icon(
-                    modifier = modifier.size(20.dp),
+                    modifier = Modifier.size(20.dp),
                     imageVector = Icons.Default.CalendarToday,
                     contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
                     tint = Color.Gray
@@ -222,13 +213,12 @@ private fun IngredientCardContent(
 
 @Composable
 private fun IngredientAttrItem(
-    modifier: Modifier = Modifier,
     icon: @Composable () -> Unit,
     title: String,
     content: String,
 ) {
     Row(
-        modifier = modifier.padding(vertical = 4.dp),
+        modifier = Modifier.padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
