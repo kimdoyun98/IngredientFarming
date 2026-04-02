@@ -26,11 +26,14 @@ fun FilterChipGroup(
     onClick: (Int) -> Unit,
     selectedChipIndex: Int,
 ) {
-    Column {
-        if(groupName != null) Text(text = groupName)
+    Column(
+        modifier = modifier,
+    ) {
+        if (groupName != null) Text(text = groupName)
 
         FlowRow(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             groupList.forEachIndexed { idx, name ->
@@ -43,7 +46,8 @@ fun FilterChipGroup(
                             Icon(
                                 imageVector = Icons.Filled.Done,
                                 contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                modifier = Modifier
+                                    .size(FilterChipDefaults.IconSize)
                             )
                         }
                     } else {

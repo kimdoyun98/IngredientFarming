@@ -31,27 +31,25 @@ fun StatusCard(
     title: String,
 ) {
     Card(
-        modifier = modifier
-            .size(120.dp),
+        modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
         ),
         border = BorderStroke(1.dp, Color.Gray),
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 16.dp),
+                .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center
         ) {
             SmallIconBox(
-                modifier = modifier,
                 iconBackgroundColor = iconBackgroundColor,
                 icon = icon
             )
 
             Text(
-                modifier = modifier
+                modifier = Modifier
                     .padding(top = 10.dp, bottom = 2.dp),
                 text = "$count",
                 fontSize = 24.sp,
@@ -71,6 +69,7 @@ fun StatusCard(
 @Composable
 private fun StatusCardPreview() {
     StatusCard(
+        modifier = Modifier.size(120.dp),
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_clock),

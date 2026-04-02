@@ -38,7 +38,7 @@ fun IngredientFarmingTopAppBar(
                 navigationIcon = {
                     if (type == AppBarType.All || type == AppBarType.Navigation) {
                         IconButton(
-                            modifier = Modifier.semantics { testTag = "test" },
+                            modifier = modifier.semantics { testTag = "test" },
                             onClick = { onClickNavigation() }
                         ) {
                             Icon(
