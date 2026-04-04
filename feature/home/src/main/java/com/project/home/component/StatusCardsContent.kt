@@ -2,11 +2,13 @@ package com.project.home.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.project.home.model.HomeStatusCardInfo
 import com.project.home.model.rememberStatusCardInfo
 import com.project.ui.StatusCard
@@ -30,6 +32,7 @@ internal fun StatusCardsContent(
             key = { it.title }
         ) { info ->
             StatusCard(
+                modifier = Modifier.size(120.dp),
                 icon = info.icon,
                 iconBackgroundColor = info.iconBackgroundColor,
                 count = when (info.title) {

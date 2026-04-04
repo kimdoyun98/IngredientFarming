@@ -20,7 +20,7 @@ import com.project.model.ingredient.IngredientCategory
 
 @Composable
 fun CategorySmallIconBox(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     category: IngredientCategory
 ) {
     CategoryIconBox(
@@ -32,7 +32,7 @@ fun CategorySmallIconBox(
 
 @Composable
 fun CategoryMediumIconBox(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     category: IngredientCategory
 ) {
     CategoryIconBox(
@@ -44,7 +44,7 @@ fun CategoryMediumIconBox(
 
 @Composable
 fun CategoryLargeIconBox(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     category: IngredientCategory
 ) {
     CategoryIconBox(
@@ -68,7 +68,7 @@ internal fun CategoryIconBox(
         when (category) {
             IngredientCategory.CONDIMENT -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     imageVector = Icons.Outlined.PropaneTank,
                     contentDescription = stringResource(R.string.condiment_icon_description),
                     tint = Color(category.color)
@@ -77,7 +77,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.VEGETABLE -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     painter = painterResource(id = R.drawable.ic_vegetable),
                     contentDescription = stringResource(R.string.vegetable_icon_description),
                     tint = Color(category.color)
@@ -86,7 +86,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.FRUIT -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     painter = painterResource(id = R.drawable.ic_apple),
                     contentDescription = stringResource(R.string.fruit_icon_description),
                     tint = Color(category.color)
@@ -95,7 +95,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.MEAT -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     imageVector = Icons.Outlined.EggAlt,
                     contentDescription = stringResource(R.string.meat_icon_description),
                     tint = Color(category.color)
@@ -104,7 +104,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.DAIRY -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     painter = painterResource(id = R.drawable.ic_milk),
                     contentDescription = stringResource(R.string.dairy_icon_description),
                     tint = Color(category.color)
@@ -113,7 +113,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.GRAIN -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     imageVector = Icons.Outlined.Spa,
                     contentDescription = stringResource(R.string.grain_icon_description),
                     tint = Color(category.color)
@@ -122,7 +122,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.BEVERAGE -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     imageVector = Icons.Outlined.LocalCafe,
                     contentDescription = stringResource(R.string.beverage_icon_description),
                     tint = Color(category.color)
@@ -131,7 +131,7 @@ internal fun CategoryIconBox(
 
             IngredientCategory.SNACK -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     imageVector = Icons.Outlined.Cookie,
                     contentDescription = stringResource(R.string.snack_icon_description),
                     tint = Color(category.color)
@@ -140,7 +140,7 @@ internal fun CategoryIconBox(
 
             else -> {
                 Icon(
-                    modifier = modifier.size(iconBoxSize.iconSize.dp),
+                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
                     imageVector = Icons.Default.MoreHoriz,
                     contentDescription = stringResource(R.string.other_icon_description),
                     tint = Color(category.color)
