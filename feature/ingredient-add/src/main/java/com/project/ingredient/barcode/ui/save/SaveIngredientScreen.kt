@@ -130,31 +130,31 @@ internal fun SaveIngredientScreen(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            Row(modifier = modifier.align(Alignment.End)) {
+            Row(
+                modifier = Modifier
+                    .align(Alignment.End)
+            ) {
                 TextButton(
-                    modifier = modifier,
                     onClick = onPlusButtonClick
                 ) {
                     Text(stringResource(R.string.add))
                 }
             }
 
-            Box(modifier = modifier.weight(1f)) {
-                LazyColumn(
-                    modifier = modifier
-                ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
+                LazyColumn {
                     items(
                         count = ingredientList.size,
                         key = { idx -> ingredientList[idx].name }
                     ) { idx ->
                         Box {
-                            IngredientCard(
-                                modifier = modifier,
-                                item = ingredientList[idx]
-                            )
+                            IngredientCard(item = ingredientList[idx])
 
                             IconButton(
-                                modifier = modifier
+                                modifier = Modifier
                                     .align(Alignment.BottomEnd)
                                     .padding(12.dp),
                                 onClick = { onUpdateButtonClick(idx) },
@@ -183,7 +183,6 @@ internal fun SaveIngredientScreen(
                 onDismissRequest = onDismissRequestToUpdate
             ) {
                 UpdateBottomSheetContent(
-                    modifier = modifier,
                     updateIngredient = updateIngredient,
                     onCloseButtonClick = onDismissRequestToUpdate,
                     changeNameValue = changeNameValue,
@@ -232,12 +231,15 @@ private fun UpdateBottomSheetContent(
     clickCategoryFilterChip: (Int) -> Unit,
     clickUpdateButton: () -> Unit
 ) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Box(
-            modifier = modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
         ) {
             IconButton(
-                modifier = modifier
+                modifier = Modifier
                     .align(Alignment.TopEnd),
                 onClick = onCloseButtonClick
             ) {
@@ -248,7 +250,6 @@ private fun UpdateBottomSheetContent(
             }
 
             IngredientInputContent(
-                modifier = modifier,
                 name = updateIngredient.name,
                 count = updateIngredient.count,
                 expirationDate = updateIngredient.expirationDate,
