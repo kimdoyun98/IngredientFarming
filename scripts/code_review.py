@@ -12,6 +12,58 @@ class GeminiCodeReview:
         if not all([self.github_token, self.gemini_api_key, self.pr_number, self.repo]):
             raise ValueError("환경 변수가 제대로 설정되지 않았습니다.")
 
+    # 1. PR 파일 목록 가져오기
+    def get_pr_files(self):
+        url = f"https://api.github.com/repos/{self.repo}/pulls/{self.pr_number}/files"
+        headers = {
+            "Authorization": f"token {self.github_token}",
+            "Accept": "application/vnd.github.v3+json"
+        }
+
+        res = requests.get(url, headers=headers)
+        if res.status_code != 200:
+            raise Exception(f"PR 파일 조회 실패: {res.text}")
+
+        return res.json()
+
+    # 2. 파일 diff 묶기 (chunking)
+    def chunk_files(self, files, max_length=3000):
+        chunks = []
+        current_chunk = []
+        current_length = 0
+
+        for file in files:
+            patch = file.get("patch")
+            if not patch:
+                continue
+
+            patch_length = len(patch)
+
+            # 큰 파일은 단독 처리
+            if patch_length > max_length:
+                if current_chunk:
+                    chunks.append(current_chunk)
+                    current_chunk = []
+                    current_length = 0
+
+                chunks.append([file])
+                continue
+
+            # 현재 chunk에 추가 가능하면 추가
+            if current_length + patch_length <= max_length:
+                current_chunk.append(file)
+                current_length += patch_length
+            else:
+                chunks.append(current_chunk)
+                current_chunk = [file]
+                current_length = patch_length
+
+        if current_chunk:
+            chunks.append(current_chunk)
+
+        return chunks
+
+
     # 1. PR diff 가져오기
     def get_diff(self):
         url = f"https://api.github.com/repos/{self.repo}/pulls/{self.pr_number}"
@@ -55,6 +107,44 @@ class GeminiCodeReview:
                     # 다른 에러는 바로 실패
                     raise
 
+    # 3. Gemini 호출
+    def call_gemini2(self, files_chunk):
+        client = genai.Client(api_key=self.gemini_api_key)
+
+        diff_text = ""
+        for f in files_chunk:
+            filename = f.get("filename")
+            patch = f.get("patch", "")
+            diff_text += f"\n\n### File: {filename}\n{patch}"
+
+        prompt = f"""
+            You are a senior Android developer.
+            리뷰는 한국어로 부탁해.
+            Review this PR diff:
+            
+            {diff_text}
+            
+            Focus on:
+            - MVI 구조
+            - Coroutine / Flow misuse
+            - 메모리 누수
+            - 성능 문제
+            - 코드 가독성
+            
+            Return:
+            1. 🔴 Critical Issues
+            2. 🟡 Improvements
+            3. ✅ Good Points
+        """
+
+        def request():
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt
+            )
+            return getattr(response, "text", "❌ AI 응답 없음")
+
+        return self.retry_with_backoff(request)
     def call_gemini(self, diff):
         client = genai.Client(api_key=self.gemini_api_key)
 
@@ -109,13 +199,26 @@ class GeminiCodeReview:
     def run(self):
         print("🚀 AI 코드 리뷰 시작")
 
-        diff = self.get_diff()
-        print("✅ diff 가져오기 완료")
+        # diff = self.get_diff()
+        # print("✅ diff 가져오기 완료")
+        #
+        # review = self.call_gemini(diff)
+        # print("✅ AI 리뷰 생성 완료")
 
-        review = self.call_gemini(diff)
-        print("✅ AI 리뷰 생성 완료")
+        files = self.get_pr_files()
+        print(f"✅ 파일 {len(files)}개 가져오기 완료")
 
-        self.comment_pr(review)
+        chunks = self.chunk_files(files)
+        print(f"✅ {len(chunks)}개의 chunk로 분할")
+
+        final_review = ""
+
+        for i, chunk in enumerate(chunks):
+            print(f"🤖 Gemini 요청 중... ({i+1}/{len(chunks)})")
+            review = self.call_gemini2(chunk)
+            final_review += f"\n\n---\n\n### 🔹 Chunk {i+1}\n{review}"
+
+        self.comment_pr(final_review)
         print("✅ PR 코멘트 등록 완료")
 
 
