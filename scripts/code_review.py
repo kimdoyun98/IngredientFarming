@@ -33,6 +33,28 @@ class GeminiCodeReview:
         return diff_res.text
 
     # 2. Gemini API 호출
+    def retry_with_backoff(self, func, max_retries=5, base_delay=1):
+        for attempt in range(max_retries):
+            try:
+                return func()
+            except Exception as e:
+                is_last = attempt == max_retries - 1
+
+                # 503 / UNAVAILABLE 같은 경우만 retry
+                if "503" in str(e) or "UNAVAILABLE" in str(e):
+                    if is_last:
+                        raise
+
+                    delay = base_delay * (2 ** attempt)
+                    jitter = random.uniform(0, 0.5)  # thundering herd 방지
+                    sleep_time = delay + jitter
+
+                    print(f"⚠️ Gemini 과부하, {sleep_time:.2f}s 후 재시도 ({attempt+1}/{max_retries})")
+                    time.sleep(sleep_time)
+                else:
+                    # 다른 에러는 바로 실패
+                    raise
+
     def call_gemini(self, diff):
         client = genai.Client(api_key=self.gemini_api_key)
 
@@ -56,11 +78,14 @@ class GeminiCodeReview:
             3. ✅ Good Points
         """
 
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview", contents=prompt
-        )
+        def request():
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview", contents=prompt
+            )
 
-        return getattr(response, "text", "❌ AI 응답 없음")
+            return getattr(response, "text", "❌ AI 응답 없음")
+
+        return self.retry_with_backoff(request)
 
     # 3. PR 코멘트 등록
     def comment_pr(self, review):
