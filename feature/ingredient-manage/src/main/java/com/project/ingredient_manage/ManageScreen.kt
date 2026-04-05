@@ -114,11 +114,11 @@ internal fun ManageScreen(
     ) { innerPadding ->
         Box(
             modifier = modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             Column(
-                modifier = modifier
-                    .padding(innerPadding)
+                modifier = Modifier
                     .fillMaxSize()
             ) {
                 IngredientFarmingSearchBar(
@@ -136,7 +136,6 @@ internal fun ManageScreen(
 
                 if (deleteOptionsState) {
                     DeleteOptionContent(
-                        modifier = modifier,
                         allSelectedState = allSelectedState,
                         onAllSelectClick = onAllSelectClick,
                         onCancelClick = onCancelClick
@@ -149,7 +148,6 @@ internal fun ManageScreen(
                         key = { ingredient -> ingredient.id }
                     ) { ingredient ->
                         IconIngredientCard(
-                            modifier = modifier,
                             item = ingredient,
                             borderColor =
                                 if (deleteOptionsState && selectedItems[ingredient.id] ?: false) Color.Blue
@@ -163,12 +161,11 @@ internal fun ManageScreen(
 
             if (deleteOptionsState) {
                 Row(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
                 ) {
                     IngredientFarmingWideButton(
-                        modifier = modifier,
                         onClick = onDeleteClick
                     ) { Text("재료 소진/폐기") }
                 }
@@ -189,7 +186,6 @@ private fun CategoryFilterChipGroup(
     ) {
         item {
             FilterChip(
-                modifier = modifier,
                 label = { Text(stringResource(R.string.total)) },
                 leadingIcon = if (selectedCategoryIndex == 0) {
                     {
@@ -209,7 +205,6 @@ private fun CategoryFilterChipGroup(
 
         items(IngredientCategory.entries) { category ->
             FilterChip(
-                modifier = modifier,
                 label = { Text(category.n) },
                 leadingIcon = if (selectedCategoryIndex - 1 == category.ordinal) {
                     {
@@ -243,7 +238,7 @@ private fun DeleteOptionContent(
             .padding(vertical = 4.dp)
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .align(Alignment.CenterStart)
                 .singleClickable(onClick = onAllSelectClick),
         ) {
@@ -252,14 +247,14 @@ private fun DeleteOptionContent(
                 onClick = null
             )
             Text(
+                modifier = Modifier.padding(start = 8.dp),
                 text = "전체 선택",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 8.dp)
+                style = MaterialTheme.typography.bodyLarge
             )
         }
 
         TextButton(
-            modifier = modifier.align(Alignment.CenterEnd),
+            modifier = Modifier.align(Alignment.CenterEnd),
             onClick = onCancelClick
         ) {
             Text(
