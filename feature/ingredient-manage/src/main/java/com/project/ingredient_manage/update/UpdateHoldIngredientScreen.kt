@@ -49,8 +49,6 @@ import com.project.ui.IngredientFarmingTopAppBar
 import com.project.ui.MediumIconBox
 import com.project.ui.R
 import com.project.ui.modifier.singleClickEvent
-import com.project.ui.util.UNKNOWN_DATE
-import com.project.ui.util.daysLeft
 import com.project.ui.util.getLocalDateText
 import java.time.LocalDate
 
@@ -96,22 +94,20 @@ internal fun UpdateHoldIngredientScreen(
         onClickNavigation = onTopAppBarNavigationClick
     ) { innerPadding ->
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
             Column(
-                modifier
+                Modifier
                     .padding(32.dp)
             ) {
                 HeadContent(
-                    modifier = modifier,
                     name = name,
                     category = category,
                 )
 
                 BodyContent(
-                    modifier = modifier,
                     count = count,
                     store = store,
                     enterDate = enterDate,
@@ -121,13 +117,14 @@ internal fun UpdateHoldIngredientScreen(
             }
 
             Row(
-                modifier = modifier
+                modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
             ) {
                 singleClickEvent { singleEvent ->
                     IngredientFarmingButton(
-                        modifier = modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f),
                         background = Red,
                         onClick = {
                             singleEvent.event {
@@ -137,7 +134,8 @@ internal fun UpdateHoldIngredientScreen(
                     ) { Text(stringResource(com.project.ingredient_manage.R.string.delete_button_text)) }
 
                     IngredientFarmingButton(
-                        modifier = modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f),
                         onClick = {
                             singleEvent.event {
                                 onUpdateButtonClick()
@@ -157,13 +155,11 @@ private fun HeadContent(
     category: IngredientCategory,
 ) {
     Row(
-        modifier = modifier.padding(bottom = 32.dp),
+        modifier = modifier
+            .padding(bottom = 32.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        CategoryLargeIconBox(
-            modifier = modifier,
-            category = category
-        )
+        CategoryLargeIconBox(category = category)
 
         Column {
             Text(
@@ -190,28 +186,29 @@ private fun BodyContent(
     onCountMinusButtonClick: () -> Unit,
 ) {
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         CountContent(
-            modifier = modifier,
             count = count,
             onCountMinusButtonClick = onCountMinusButtonClick
         )
 
         HorizontalDivider(
-            modifier = modifier.padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(vertical = 8.dp),
             thickness = 0.5.dp,
             color = Color.LightGray
         )
 
         BodyContentItem(
-            modifier = modifier,
             itemTitle = stringResource(R.string.store_type),
             itemContent = store.n,
             iconBackGroundColor = MoreLightBlue
         ) {
             Icon(
-                modifier = modifier.size(IconBoxSize.MEDIUM.iconSize.dp),
+                modifier = Modifier
+                    .size(IconBoxSize.MEDIUM.iconSize.dp),
                 painter = painterResource(id = R.drawable.ic_refrigerator),
                 contentDescription = stringResource(com.project.ingredient_manage.R.string.store_icon_description),
                 tint = Blue
@@ -219,19 +216,20 @@ private fun BodyContent(
         }
 
         HorizontalDivider(
-            modifier = modifier.padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(vertical = 8.dp),
             thickness = 0.5.dp,
             color = Color.LightGray
         )
 
         BodyContentItem(
-            modifier = modifier,
             itemTitle = stringResource(R.string.expiration_date),
             itemContent = getLocalDateText(expirationDate),
             iconBackGroundColor = Purple80
         ) {
             Icon(
-                modifier = modifier.size(IconBoxSize.MEDIUM.iconSize.dp),
+                modifier = Modifier
+                    .size(IconBoxSize.MEDIUM.iconSize.dp),
                 imageVector = Icons.Outlined.CalendarToday,
                 contentDescription = stringResource(com.project.ingredient_manage.R.string.expiration_date_icon_description),
                 tint = Purple40
@@ -239,19 +237,20 @@ private fun BodyContent(
         }
 
         HorizontalDivider(
-            modifier = modifier.padding(vertical = 8.dp),
+            modifier = Modifier
+                .padding(vertical = 8.dp),
             thickness = 0.5.dp,
             color = Color.LightGray
         )
 
         BodyContentItem(
-            modifier = modifier,
             itemTitle = stringResource(R.string.enter_date),
             itemContent = enterDate.toString(),
             iconBackGroundColor = MoreLightOrange
         ) {
             Icon(
-                modifier = modifier.size(IconBoxSize.MEDIUM.iconSize.dp),
+                modifier = Modifier
+                    .size(IconBoxSize.MEDIUM.iconSize.dp),
                 imageVector = Icons.Outlined.WatchLater,
                 contentDescription = stringResource(com.project.ingredient_manage.R.string.store_icon_description),
                 tint = DeepOrange
@@ -273,13 +272,13 @@ private fun CountContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         BodyContentItem(
-            modifier = modifier,
             itemTitle = stringResource(R.string.count),
             itemContent = "$count",
             iconBackGroundColor = MoreLightGreen
         ) {
             Icon(
-                modifier = modifier.size(IconBoxSize.MEDIUM.iconSize.dp),
+                modifier = Modifier
+                    .size(IconBoxSize.MEDIUM.iconSize.dp),
                 painter = painterResource(id = R.drawable.ic_3d_box),
                 contentDescription = stringResource(com.project.ingredient_manage.R.string.count_icon_description),
                 tint = Green
@@ -287,7 +286,6 @@ private fun CountContent(
         }
 
         IconButton(
-            modifier = modifier,
             onClick = onCountMinusButtonClick
         ) {
             Icon(
@@ -307,17 +305,18 @@ private fun BodyContentItem(
     icon: @Composable () -> Unit,
 ) {
     Row(
-        modifier = modifier.height(IconBoxSize.MEDIUM.boxSize.dp),
+        modifier = modifier
+            .height(IconBoxSize.MEDIUM.boxSize.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         MediumIconBox(
-            modifier = modifier,
             iconBackgroundColor = iconBackGroundColor,
             icon = icon
         )
 
         Column(
-            modifier = modifier.fillMaxHeight(),
+            modifier = Modifier
+                .fillMaxHeight(),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
