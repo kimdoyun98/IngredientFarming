@@ -24,7 +24,6 @@ import com.project.designsystem.theme.MoreLightOrange
 import com.project.designsystem.theme.MoreLightPink
 import com.project.ui.R
 
-
 @Composable
 internal fun NavigateButtonsContent(
     modifier: Modifier = Modifier,
@@ -34,11 +33,11 @@ internal fun NavigateButtonsContent(
     onShoppingCartButtonClick: () -> Unit,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         NavigateButton(
-            modifier = modifier,
             title = stringResource(com.project.home.R.string.manage),
             backgroundColor = MoreLightBlue,
             onClick = { onManageButtonClick() }
@@ -51,7 +50,6 @@ internal fun NavigateButtonsContent(
         }
 
         NavigateButton(
-            modifier = modifier,
             title = stringResource(com.project.home.R.string.add),
             backgroundColor = MoreLightOrange,
             onClick = { onAddButtonClick() }
@@ -64,7 +62,6 @@ internal fun NavigateButtonsContent(
         }
 
         NavigateButton(
-            modifier = modifier,
             title = stringResource(com.project.home.R.string.recipe),
             backgroundColor = MoreLightGreen,
             onClick = { onRecipeButtonClick() }
@@ -77,7 +74,6 @@ internal fun NavigateButtonsContent(
         }
 
         NavigateButton(
-            modifier = modifier,
             title = stringResource(com.project.home.R.string.shopping_cart),
             backgroundColor = MoreLightPink,
             onClick = { onShoppingCartButtonClick() }
@@ -104,7 +100,6 @@ private fun NavigateButton(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IngredientFarmingRoundedIconButton(
-            modifier = modifier,
             backgroundColor = backgroundColor,
             onClick = { onClick() }
         ) {
