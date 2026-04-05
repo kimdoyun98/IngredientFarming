@@ -95,17 +95,13 @@ internal fun HomeScreen(
             )
 
             NavigateButtonsContent(
-                modifier = modifier,
                 onManageButtonClick = { onManageButtonClick() },
                 onAddButtonClick = { onAddButtonClick() },
                 onRecipeButtonClick = { onRecipeButtonClick() },
                 onShoppingCartButtonClick = { onShoppingCartButtonClick() }
             )
 
-            ExpirationDateSoonContent(
-                modifier = modifier,
-                items = expirationDateSoonItems
-            )
+            ExpirationDateSoonContent(items = expirationDateSoonItems)
         }
     }
 
@@ -115,7 +111,6 @@ internal fun HomeScreen(
             onDismissRequest = { onDismissRequestToAdd() }
         ) {
             AddTypeSelectBottomSheetContent(
-                modifier = modifier,
                 onBarcodeScannerClick = {
                     onBarcodeScannerButtonClick()
                     scope.launch { sheetState.hide() }
@@ -143,10 +138,7 @@ private fun ExpirationDateSoonContent(
         fontWeight = FontWeight.Bold
     )
 
-    ExpirationDateSoonBox(
-        modifier = modifier,
-        items = items
-    )
+    ExpirationDateSoonBox(items = items)
 }
 
 @Preview

@@ -32,13 +32,10 @@ fun ExpirationDateSoonItem(
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CategorySmallIconBox(
-            modifier = modifier,
-            category = item.category
-        )
+        CategorySmallIconBox(category = item.category)
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .weight(1F)
                 .padding(start = 12.dp)
         ) {
@@ -75,7 +72,6 @@ fun ExpirationDateSoonItem(
 @Composable
 private fun ExpirationDateSoonContentPreview() {
     ExpirationDateSoonItem(
-        modifier = Modifier,
         item = ExpirationDateSoonIngredient(
             id = 1,
             name = "사과",

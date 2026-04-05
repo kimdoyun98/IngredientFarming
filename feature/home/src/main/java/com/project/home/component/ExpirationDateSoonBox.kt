@@ -28,7 +28,7 @@ fun ExpirationDateSoonBox(
     items: ImmutableList<ExpirationDateSoonIngredient>
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .padding(4.dp)
             .border(
                 width = 2.dp,
@@ -39,7 +39,7 @@ fun ExpirationDateSoonBox(
             .shadow(elevation = 8.dp),
     ) {
         LazyColumn(
-            modifier = modifier
+            modifier = Modifier
                 .padding(4.dp)
                 .border(
                     width = 2.dp,
@@ -53,10 +53,7 @@ fun ExpirationDateSoonBox(
                 items = items,
                 key = { _, item -> item.id }
             ) { idx, item ->
-                ExpirationDateSoonItem(
-                    modifier = modifier,
-                    item = item
-                )
+                ExpirationDateSoonItem(item = item)
 
                 if (items.size > 1 && idx < items.lastIndex) {
                     HorizontalDivider(
