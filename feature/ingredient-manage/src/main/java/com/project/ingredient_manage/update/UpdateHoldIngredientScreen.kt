@@ -88,13 +88,12 @@ internal fun UpdateHoldIngredientScreen(
     onUpdateButtonClick: () -> Unit,
 ) {
     IngredientFarmingTopAppBar(
-        modifier = modifier,
         title = stringResource(com.project.ingredient_manage.R.string.update_hold_screen_title),
         type = AppBarType.Navigation,
         onClickNavigation = onTopAppBarNavigationClick
     ) { innerPadding ->
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
