@@ -38,7 +38,7 @@ class GeminiCodeReview:
 
         prompt = f"""
             You are a senior Android developer.
-            
+            리뷰는 한국어로 부탁해.
             Review this PR diff:
             
             {diff[:8000]}
