@@ -72,7 +72,7 @@ internal fun BarcodeScannerScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BarcodeScannerScreen(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     scanStatus: BarcodeScanStatus,
     barcodeScan: (String) -> Unit,
     selectIngredient: (Product) -> Unit,
@@ -87,14 +87,16 @@ internal fun BarcodeScannerScreen(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) { innerPadding ->
         CameraXScreen(
-            modifier = modifier.padding(innerPadding),
+            modifier = modifier
+                .padding(innerPadding),
             barcodeScan = { barcodeScan(it) },
         )
 
         when (val status = scanStatus) {
             is BarcodeScanStatus.Scanning -> {
                 Box(
-                    modifier = modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     IngredientFarmingCenterLoading()
@@ -115,7 +117,6 @@ internal fun BarcodeScannerScreen(
                     selectIngredient(status.products.first())
                 } else {
                     SelectIngredientBottomSheet(
-                        modifier = modifier,
                         sheetState = sheetState,
                         products = status.products,
                         onNameClick = {
@@ -156,7 +157,10 @@ private fun CameraXScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
         AndroidView(
             factory = { context ->
                 val previewView = PreviewView(context)
@@ -245,9 +249,12 @@ private fun SelectIngredientBottomSheet(
         dragHandle = null
     ) {
         Column {
-            Box(modifier = modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 IconButton(
-                    modifier = modifier
+                    modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp),
                     onClick = { onDismissed() }
@@ -262,14 +269,16 @@ private fun SelectIngredientBottomSheet(
             LazyColumn {
                 items(products) {
                     TextButton(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         onClick = { onNameClick(it) }
                     ) { Text(it.name) }
                 }
 
                 item {
                     TextButton(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         onClick = { onDirectInputClick() }
                     ) { Text(stringResource(R.string.directInput)) }
                 }

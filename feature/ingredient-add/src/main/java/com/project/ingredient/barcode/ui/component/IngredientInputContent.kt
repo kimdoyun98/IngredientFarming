@@ -45,7 +45,7 @@ internal fun IngredientInputContent(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         OutlinedTextField(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             label = { Text(text = stringResource(R.string.name)) },
             value = name,
@@ -56,7 +56,7 @@ internal fun IngredientInputContent(
         )
 
         OutlinedTextField(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             label = { Text(text = stringResource(R.string.count)) },
             value = count,
@@ -68,7 +68,7 @@ internal fun IngredientInputContent(
         )
 
         OutlinedTextField(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth(),
             label = { Text(text = stringResource(R.string.expiration)) },
             placeholder = { Text(text = stringResource(R.string.expiration_text_field_placeholder)) },
@@ -84,7 +84,6 @@ internal fun IngredientInputContent(
         )
 
         FilterChipGroup(
-            modifier = modifier,
             groupName = stringResource(R.string.store),
             groupList = IngredientStore.entries.map { it.n }.toImmutableList(),
             onClick = { selected -> clickStoreFilterChip(selected) },
@@ -92,7 +91,6 @@ internal fun IngredientInputContent(
         )
 
         FilterChipGroup(
-            modifier = modifier,
             groupName = stringResource(R.string.category),
             groupList = IngredientCategory.entries.map { it.n }.toImmutableList(),
             onClick = { selected -> clickCategoryFilterChip(selected) },
