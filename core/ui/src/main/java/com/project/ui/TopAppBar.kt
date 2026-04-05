@@ -32,13 +32,14 @@ fun IngredientFarmingTopAppBar(
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBar(
                 title = { Text(title) },
                 navigationIcon = {
                     if (type == AppBarType.All || type == AppBarType.Navigation) {
                         IconButton(
-                            modifier = modifier.semantics { testTag = "test" },
+                            modifier = Modifier.semantics { testTag = "test" },
                             onClick = { onClickNavigation() }
                         ) {
                             Icon(
@@ -51,7 +52,6 @@ fun IngredientFarmingTopAppBar(
                 actions = {
                     if (type == AppBarType.All || type == AppBarType.Action) {
                         IconButton(
-                            modifier = modifier,
                             onClick = { onClickAction() }
                         ) {
                             actionIcon?.invoke() ?: Icon(
