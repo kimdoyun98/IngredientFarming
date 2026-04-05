@@ -114,11 +114,11 @@ internal fun ManageScreen(
     ) { innerPadding ->
         Box(
             modifier = modifier
+                .padding(innerPadding)
                 .fillMaxSize()
         ) {
             Column(
                 modifier = Modifier
-                    .padding(innerPadding)
                     .fillMaxSize()
             ) {
                 IngredientFarmingSearchBar(
