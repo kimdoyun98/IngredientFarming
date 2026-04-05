@@ -74,11 +74,10 @@ internal fun DirectInputScreen(
                 .padding(innerPadding)
         ) {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f)
             ) {
                 IngredientInputContent(
-                    modifier = modifier,
                     name = name,
                     count = count,
                     expirationDate = expirationDate,
