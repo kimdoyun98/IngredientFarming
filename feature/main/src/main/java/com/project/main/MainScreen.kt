@@ -23,6 +23,7 @@ internal fun MainScreen(
     ingredientFarmingPermission: IngredientFarmingPermission = rememberIngredientFarmingPermission(),
 ) {
     NavHost(
+        modifier = modifier,
         navController = navigator.navController,
         startDestination = IngredientRoute.Home
     ) {
