@@ -86,7 +86,7 @@ internal fun ShoppingCartItem(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
-                    text = category.n,
+                    text = category.title,
                     style = MaterialTheme.typography.labelLarge,
                     color = if (success) Green else Gray
                 )

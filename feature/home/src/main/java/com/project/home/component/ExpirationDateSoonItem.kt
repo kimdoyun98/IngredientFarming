@@ -44,7 +44,7 @@ fun ExpirationDateSoonItem(
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = item.category.n,
+                text = item.category.title,
                 color = Color.Gray
             )
         }

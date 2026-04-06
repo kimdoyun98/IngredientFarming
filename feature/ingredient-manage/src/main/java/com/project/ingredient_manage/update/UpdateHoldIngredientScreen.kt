@@ -168,7 +168,7 @@ private fun HeadContent(
             )
 
             Text(
-                text = category.n,
+                text = category.title,
                 style = MaterialTheme.typography.bodyLarge
             )
         }
@@ -202,7 +202,7 @@ private fun BodyContent(
 
         BodyContentItem(
             itemTitle = stringResource(R.string.store_type),
-            itemContent = store.n,
+            itemContent = store.title,
             iconBackGroundColor = MoreLightBlue
         ) {
             Icon(
