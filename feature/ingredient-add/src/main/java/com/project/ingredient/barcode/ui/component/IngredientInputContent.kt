@@ -85,14 +85,14 @@ internal fun IngredientInputContent(
 
         FilterChipGroup(
             groupName = stringResource(R.string.store),
-            groupList = IngredientStore.entries.map { it.n }.toImmutableList(),
+            groupList = IngredientStore.entries.map { it.title }.toImmutableList(),
             onClick = { selected -> clickStoreFilterChip(selected) },
             selectedChipIndex = storeChipSelectIndex ?: -1,
         )
 
         FilterChipGroup(
             groupName = stringResource(R.string.category),
-            groupList = IngredientCategory.entries.map { it.n }.toImmutableList(),
+            groupList = IngredientCategory.entries.map { it.title }.toImmutableList(),
             onClick = { selected -> clickCategoryFilterChip(selected) },
             selectedChipIndex = categoryChipSelectIndex ?: -1,
         )

@@ -54,7 +54,7 @@ internal fun ShoppingItemAddContent(
         FilterChipGroup(
             modifier = Modifier
                 .padding(4.dp),
-            groupList = IngredientCategory.entries.toList().map { it.n }.toImmutableList(),
+            groupList = IngredientCategory.entries.toList().map { it.title }.toImmutableList(),
             onClick = { idx -> onCategorySelect(idx) },
             selectedChipIndex = addItemCategorySelected
         )

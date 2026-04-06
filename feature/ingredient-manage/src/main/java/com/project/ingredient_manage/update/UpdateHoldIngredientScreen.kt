@@ -168,7 +168,7 @@ private fun HeadContent(
             )
 
             Text(
-                text = category.n,
+                text = category.title,
                 style = MaterialTheme.typography.bodyLarge
             )
         }

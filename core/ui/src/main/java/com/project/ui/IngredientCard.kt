@@ -138,7 +138,7 @@ private fun IngredientCardContent(
                     Text(
                         text =
                             if (isIconCard) getLeftDateText(leftDays)
-                            else item.category.n,
+                            else item.category.title,
                         style = MaterialTheme.typography.labelMedium
                     )
                 },

@@ -1,7 +1,7 @@
 package com.project.model.ingredient
 
 enum class IngredientCategory(
-    val n: String,
+    val title: String,
     val color: Long,
     val background: Long
 ) {
