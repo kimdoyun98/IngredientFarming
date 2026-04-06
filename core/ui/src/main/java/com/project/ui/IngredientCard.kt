@@ -193,7 +193,7 @@ private fun IngredientCardContent(
                 )
             },
             title = stringResource(R.string.store_type),
-            content = item.store.n
+            content = item.store.title
         )
 
         IngredientAttrItem(
