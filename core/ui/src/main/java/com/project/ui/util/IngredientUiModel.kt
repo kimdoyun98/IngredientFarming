@@ -38,7 +38,7 @@ fun rememberIngredientStoreTitles() = remember {
 fun rememberCardContentList(item: Ingredient): ImmutableList<CardContent> {
     val expirationDate = getLocalDateText(item.expirationDate)
 
-    return remember {
+    return remember(item) {
         persistentListOf(
             CardContent(
                 iconResource = IconResource.PainterIcon(id = R.drawable.ic_3d_box),
