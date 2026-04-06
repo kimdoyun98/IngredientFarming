@@ -114,6 +114,8 @@ class GeminiCodeReview:
             1. 🔴 Critical Issues
             2. 🟡 Improvements
             3. ✅ Good Points
+            
+            리뷰 시 시작하는 말은 생략해주고, 어떤 파일의 리뷰인지 파일 이름을 알려주고 리뷰해줬으면 좋겠어.
         """
 
         def request():
