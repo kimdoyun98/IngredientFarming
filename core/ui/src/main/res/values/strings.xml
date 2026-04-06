@@ -29,4 +29,5 @@
     <string name="store_icon_description">보관 방법 아이콘</string>
     <string name="expiration_date_icon_description">유통 기한 아이콘</string>
     <string name="enter_date_icon_description">등록 일자 아이콘</string>
+    <string name="icon_description">%1$s 아이콘</string>
 </resources>
