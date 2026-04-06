@@ -17,7 +17,7 @@ fun LocarmIcon(
     tint: Color = LocalContentColor.current
 ) {
     when (iconResource) {
-        is IconResource.IsPainter -> {
+        is IconResource.PainterIcon -> {
             Icon(
                 modifier = modifier,
                 painter = painterResource(iconResource.id),
@@ -26,7 +26,7 @@ fun LocarmIcon(
             )
         }
 
-        is IconResource.IsImageVector -> {
+        is IconResource.ImageVectorIcon -> {
             Icon(
                 modifier = modifier,
                 imageVector = iconResource.resource,
@@ -38,7 +38,7 @@ fun LocarmIcon(
 }
 
 sealed interface IconResource {
-    data class IsPainter(@DrawableRes val id: Int) : IconResource
+    data class PainterIcon(@DrawableRes val id: Int) : IconResource
 
-    data class IsImageVector(val resource: ImageVector) : IconResource
+    data class ImageVectorIcon(val resource: ImageVector) : IconResource
 }

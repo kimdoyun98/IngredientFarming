@@ -12,40 +12,40 @@ import com.project.ui.IconResource
 import com.project.ui.R
 
 val IngredientCategory.iconResource: IconResource
-    get() = when(this){
+    get() = when (this) {
         IngredientCategory.CONDIMENT -> {
-            IconResource.IsImageVector(Icons.Outlined.PropaneTank)
+            IconResource.ImageVectorIcon(Icons.Outlined.PropaneTank)
         }
 
         IngredientCategory.VEGETABLE -> {
-            IconResource.IsPainter(id = R.drawable.ic_vegetable)
+            IconResource.PainterIcon(id = R.drawable.ic_vegetable)
         }
 
         IngredientCategory.FRUIT -> {
-            IconResource.IsPainter(id = R.drawable.ic_apple)
+            IconResource.PainterIcon(id = R.drawable.ic_apple)
         }
 
         IngredientCategory.MEAT -> {
-            IconResource.IsImageVector(Icons.Outlined.EggAlt)
+            IconResource.ImageVectorIcon(Icons.Outlined.EggAlt)
         }
 
         IngredientCategory.DAIRY -> {
-            IconResource.IsPainter(id = R.drawable.ic_milk)
+            IconResource.PainterIcon(id = R.drawable.ic_milk)
         }
 
         IngredientCategory.GRAIN -> {
-            IconResource.IsImageVector(Icons.Outlined.Spa)
+            IconResource.ImageVectorIcon(Icons.Outlined.Spa)
         }
 
         IngredientCategory.BEVERAGE -> {
-            IconResource.IsImageVector(Icons.Outlined.LocalCafe)
+            IconResource.ImageVectorIcon(Icons.Outlined.LocalCafe)
         }
 
         IngredientCategory.SNACK -> {
-            IconResource.IsImageVector(Icons.Outlined.Cookie)
+            IconResource.ImageVectorIcon(Icons.Outlined.Cookie)
         }
 
         IngredientCategory.OTHER -> {
-            IconResource.IsImageVector(Icons.Default.MoreHoriz)
+            IconResource.ImageVectorIcon(Icons.Default.MoreHoriz)
         }
     }

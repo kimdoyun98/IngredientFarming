@@ -41,17 +41,17 @@ fun rememberCardContentList(item: Ingredient): ImmutableList<CardContent> {
     return remember {
         persistentListOf(
             CardContent(
-                iconResource = IconResource.IsPainter(id = R.drawable.ic_3d_box),
+                iconResource = IconResource.PainterIcon(id = R.drawable.ic_3d_box),
                 title = R.string.count,
                 content = item.count.toString()
             ),
             CardContent(
-                iconResource = IconResource.IsPainter(id = R.drawable.ic_refrigerator),
+                iconResource = IconResource.PainterIcon(id = R.drawable.ic_refrigerator),
                 title = R.string.store_type,
                 content = item.store.title
             ),
             CardContent(
-                iconResource = IconResource.IsImageVector(resource = Icons.Default.CalendarToday),
+                iconResource = IconResource.ImageVectorIcon(resource = Icons.Default.CalendarToday),
                 title = R.string.expiration_date,
                 content = expirationDate
             )
@@ -73,7 +73,7 @@ fun rememberUpdateContentList(
                 title = R.string.store_type,
                 content = store.title,
                 background = MoreLightBlue,
-                iconResource = IconResource.IsPainter(id = R.drawable.ic_refrigerator),
+                iconResource = IconResource.PainterIcon(id = R.drawable.ic_refrigerator),
                 iconContentDescription = R.string.store_icon_description,
                 iconTint = Blue
             ),
@@ -82,7 +82,7 @@ fun rememberUpdateContentList(
                 title = R.string.expiration_date,
                 content = expirationDate,
                 background = Purple80,
-                iconResource = IconResource.IsImageVector(resource = Icons.Outlined.CalendarToday),
+                iconResource = IconResource.ImageVectorIcon(resource = Icons.Outlined.CalendarToday),
                 iconContentDescription = R.string.expiration_date_icon_description,
                 iconTint = Purple40
             ),
@@ -91,7 +91,7 @@ fun rememberUpdateContentList(
                 title = R.string.enter_date,
                 content = enterDate.toString(),
                 background = MoreLightOrange,
-                iconResource = IconResource.IsImageVector(resource = Icons.Outlined.WatchLater),
+                iconResource = IconResource.ImageVectorIcon(resource = Icons.Outlined.WatchLater),
                 iconContentDescription = R.string.enter_date_icon_description,
                 iconTint = DeepOrange
             ),
