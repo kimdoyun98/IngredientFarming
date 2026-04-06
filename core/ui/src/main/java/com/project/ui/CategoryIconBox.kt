@@ -8,12 +8,9 @@ import androidx.compose.material.icons.outlined.EggAlt
 import androidx.compose.material.icons.outlined.LocalCafe
 import androidx.compose.material.icons.outlined.PropaneTank
 import androidx.compose.material.icons.outlined.Spa
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.model.ingredient.IngredientCategory
@@ -65,88 +62,48 @@ internal fun CategoryIconBox(
         iconBackgroundColor = Color(category.background),
         iconBoxSize = iconBoxSize,
     ) {
-        when (category) {
-            IngredientCategory.CONDIMENT -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    imageVector = Icons.Outlined.PropaneTank,
-                    contentDescription = stringResource(R.string.condiment_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+        LocarmIcon(
+            modifier = Modifier.size(iconBoxSize.iconSize.dp),
+            iconResource = when (category) {
+                IngredientCategory.CONDIMENT -> {
+                    IconResource.IsImageVector(Icons.Outlined.PropaneTank)
+                }
 
-            IngredientCategory.VEGETABLE -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    painter = painterResource(id = R.drawable.ic_vegetable),
-                    contentDescription = stringResource(R.string.vegetable_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.VEGETABLE -> {
+                    IconResource.IsPainter(id = R.drawable.ic_vegetable)
+                }
 
-            IngredientCategory.FRUIT -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    painter = painterResource(id = R.drawable.ic_apple),
-                    contentDescription = stringResource(R.string.fruit_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.FRUIT -> {
+                    IconResource.IsPainter(id = R.drawable.ic_apple)
+                }
 
-            IngredientCategory.MEAT -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    imageVector = Icons.Outlined.EggAlt,
-                    contentDescription = stringResource(R.string.meat_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.MEAT -> {
+                    IconResource.IsImageVector(Icons.Outlined.EggAlt)
+                }
 
-            IngredientCategory.DAIRY -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    painter = painterResource(id = R.drawable.ic_milk),
-                    contentDescription = stringResource(R.string.dairy_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.DAIRY -> {
+                    IconResource.IsPainter(id = R.drawable.ic_milk)
+                }
 
-            IngredientCategory.GRAIN -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    imageVector = Icons.Outlined.Spa,
-                    contentDescription = stringResource(R.string.grain_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.GRAIN -> {
+                    IconResource.IsImageVector(Icons.Outlined.Spa)
+                }
 
-            IngredientCategory.BEVERAGE -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    imageVector = Icons.Outlined.LocalCafe,
-                    contentDescription = stringResource(R.string.beverage_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.BEVERAGE -> {
+                    IconResource.IsImageVector(Icons.Outlined.LocalCafe)
+                }
 
-            IngredientCategory.SNACK -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    imageVector = Icons.Outlined.Cookie,
-                    contentDescription = stringResource(R.string.snack_icon_description),
-                    tint = Color(category.color)
-                )
-            }
+                IngredientCategory.SNACK -> {
+                    IconResource.IsImageVector(Icons.Outlined.Cookie)
+                }
 
-            else -> {
-                Icon(
-                    modifier = Modifier.size(iconBoxSize.iconSize.dp),
-                    imageVector = Icons.Default.MoreHoriz,
-                    contentDescription = stringResource(R.string.other_icon_description),
-                    tint = Color(category.color)
-                )
-            }
-        }
+                IngredientCategory.OTHER -> {
+                    IconResource.IsImageVector(Icons.Default.MoreHoriz)
+                }
+            },
+            contentDescription = category.title,
+            tint = Color(category.color),
+        )
     }
 }
 

@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material.icons.outlined.CalendarToday
-import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,14 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.designsystem.compose.IngredientFarmingButton
-import com.project.designsystem.theme.Blue
-import com.project.designsystem.theme.DeepOrange
 import com.project.designsystem.theme.Green
-import com.project.designsystem.theme.MoreLightBlue
 import com.project.designsystem.theme.MoreLightGreen
-import com.project.designsystem.theme.MoreLightOrange
-import com.project.designsystem.theme.Purple40
-import com.project.designsystem.theme.Purple80
 import com.project.ingredient_manage.contract.update.UpdateIntent
 import com.project.ingredient_manage.contract.update.UpdateState
 import com.project.model.ingredient.IngredientCategory
@@ -46,10 +38,11 @@ import com.project.ui.AppBarType
 import com.project.ui.CategoryLargeIconBox
 import com.project.ui.IconBoxSize
 import com.project.ui.IngredientFarmingTopAppBar
+import com.project.ui.LocarmIcon
 import com.project.ui.MediumIconBox
 import com.project.ui.R
 import com.project.ui.modifier.singleClickEvent
-import com.project.ui.util.getLocalDateText
+import com.project.ui.util.rememberUpdateContentList
 import java.time.LocalDate
 
 @Composable
@@ -184,6 +177,8 @@ private fun BodyContent(
     expirationDate: LocalDate,
     onCountMinusButtonClick: () -> Unit,
 ) {
+    val bodyContentList = rememberUpdateContentList(store, expirationDate, enterDate)
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -193,67 +188,27 @@ private fun BodyContent(
             onCountMinusButtonClick = onCountMinusButtonClick
         )
 
-        HorizontalDivider(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            thickness = 0.5.dp,
-            color = Color.LightGray
-        )
-
-        BodyContentItem(
-            itemTitle = stringResource(R.string.store_type),
-            itemContent = store.title,
-            iconBackGroundColor = MoreLightBlue
-        ) {
-            Icon(
+        bodyContentList.forEach {
+            HorizontalDivider(
                 modifier = Modifier
-                    .size(IconBoxSize.MEDIUM.iconSize.dp),
-                painter = painterResource(id = R.drawable.ic_refrigerator),
-                contentDescription = stringResource(com.project.ingredient_manage.R.string.store_icon_description),
-                tint = Blue
+                    .padding(vertical = 8.dp),
+                thickness = 0.5.dp,
+                color = Color.LightGray
             )
-        }
 
-        HorizontalDivider(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            thickness = 0.5.dp,
-            color = Color.LightGray
-        )
-
-        BodyContentItem(
-            itemTitle = stringResource(R.string.expiration_date),
-            itemContent = getLocalDateText(expirationDate),
-            iconBackGroundColor = Purple80
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(IconBoxSize.MEDIUM.iconSize.dp),
-                imageVector = Icons.Outlined.CalendarToday,
-                contentDescription = stringResource(com.project.ingredient_manage.R.string.expiration_date_icon_description),
-                tint = Purple40
-            )
-        }
-
-        HorizontalDivider(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            thickness = 0.5.dp,
-            color = Color.LightGray
-        )
-
-        BodyContentItem(
-            itemTitle = stringResource(R.string.enter_date),
-            itemContent = enterDate.toString(),
-            iconBackGroundColor = MoreLightOrange
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(IconBoxSize.MEDIUM.iconSize.dp),
-                imageVector = Icons.Outlined.WatchLater,
-                contentDescription = stringResource(com.project.ingredient_manage.R.string.store_icon_description),
-                tint = DeepOrange
-            )
+            BodyContentItem(
+                itemTitle = stringResource(it.title),
+                itemContent = it.content,
+                iconBackGroundColor = it.background
+            ) {
+                LocarmIcon(
+                    modifier = Modifier
+                        .size(IconBoxSize.MEDIUM.iconSize.dp),
+                    iconResource = it.iconResource,
+                    contentDescription = stringResource(it.iconContentDescription),
+                    tint = it.iconTint
+                )
+            }
         }
     }
 }

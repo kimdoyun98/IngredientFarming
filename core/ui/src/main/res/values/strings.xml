@@ -24,4 +24,9 @@
     <string name="beverage_icon_description">음료 아이콘</string>
     <string name="snack_icon_description">과자 아이콘</string>
     <string name="other_icon_description">기타 아이콘</string>
+
+    <string name="count_icon_description">수량 아이콘</string>
+    <string name="store_icon_description">보관 방법 아이콘</string>
+    <string name="expiration_date_icon_description">유통 기한 아이콘</string>
+    <string name="enter_date_icon_description">등록 일자 아이콘</string>
 </resources>

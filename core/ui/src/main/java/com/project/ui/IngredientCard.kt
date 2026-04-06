@@ -12,11 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
@@ -27,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Red
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,8 +37,8 @@ import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.util.daysLeft
 import com.project.ui.util.getLeftDateText
-import com.project.ui.util.getLocalDateText
 import com.project.ui.util.getLuminanceTextColor
+import com.project.ui.util.rememberCardContentList
 import java.time.LocalDate
 
 @Composable
@@ -112,6 +108,7 @@ private fun IngredientCardContent(
     item: Ingredient,
     isIconCard: Boolean,
 ) {
+    val cardContentList = rememberCardContentList(item)
     val leftDays = remember(item.expirationDate) {
         daysLeft(item.expirationDate)
     }
@@ -170,44 +167,20 @@ private fun IngredientCardContent(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        IngredientAttrItem(
-            icon = {
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    painter = painterResource(id = R.drawable.ic_3d_box),
-                    contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
-                    tint = Color.Gray
-                )
-            },
-            title = stringResource(R.string.count),
-            content = item.count.toString()
-        )
-
-        IngredientAttrItem(
-            icon = {
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    painter = painterResource(id = R.drawable.ic_refrigerator),
-                    contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
-                    tint = Color.Gray
-                )
-            },
-            title = stringResource(R.string.store_type),
-            content = item.store.title
-        )
-
-        IngredientAttrItem(
-            icon = {
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.Default.CalendarToday,
-                    contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
-                    tint = Color.Gray
-                )
-            },
-            title = stringResource(R.string.expiration_date),
-            content = getLocalDateText(item.expirationDate),
-        )
+        cardContentList.forEach {
+            IngredientAttrItem(
+                icon = {
+                    LocarmIcon(
+                        modifier = Modifier.size(20.dp),
+                        iconResource = it.iconResource,
+                        contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
+                        tint = Color.Gray
+                    )
+                },
+                title = stringResource(it.title),
+                content = it.content
+            )
+        }
     }
 }
 
