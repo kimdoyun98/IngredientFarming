@@ -14,11 +14,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.project.designsystem.compose.IngredientFarmingButton
 import com.project.designsystem.theme.Purple500
-import com.project.model.ingredient.IngredientCategory
 import com.project.shopping_cart.R
 import com.project.ui.FilterChipGroup
 import com.project.ui.modifier.shadowLayout
-import kotlinx.collections.immutable.toImmutableList
+import com.project.ui.util.rememberIngredientCategoryImmutableList
 
 @Composable
 internal fun ShoppingItemAddContent(
@@ -54,7 +53,7 @@ internal fun ShoppingItemAddContent(
         FilterChipGroup(
             modifier = Modifier
                 .padding(4.dp),
-            groupList = IngredientCategory.entries.toList().map { it.title }.toImmutableList(),
+            groupList = rememberIngredientCategoryImmutableList(),
             onClick = { idx -> onCategorySelect(idx) },
             selectedChipIndex = addItemCategorySelected
         )
