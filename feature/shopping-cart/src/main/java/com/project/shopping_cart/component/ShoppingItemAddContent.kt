@@ -17,7 +17,7 @@ import com.project.designsystem.theme.Purple500
 import com.project.shopping_cart.R
 import com.project.ui.FilterChipGroup
 import com.project.ui.modifier.shadowLayout
-import com.project.ui.util.rememberIngredientCategoryImmutableList
+import com.project.ui.util.rememberIngredientCategoryTitles
 
 @Composable
 internal fun ShoppingItemAddContent(
@@ -53,7 +53,7 @@ internal fun ShoppingItemAddContent(
         FilterChipGroup(
             modifier = Modifier
                 .padding(4.dp),
-            groupList = rememberIngredientCategoryImmutableList(),
+            groupList = rememberIngredientCategoryTitles(),
             onClick = { idx -> onCategorySelect(idx) },
             selectedChipIndex = addItemCategorySelected
         )

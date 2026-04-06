@@ -7,11 +7,11 @@ import com.project.model.ingredient.IngredientStore
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun rememberIngredientCategoryImmutableList() = remember(IngredientCategory.entries) {
+fun rememberIngredientCategoryTitles() = remember {
     IngredientCategory.entries.toList().map { it.title }.toImmutableList()
 }
 
 @Composable
-fun rememberIngredientStoreImmutableList() = remember(IngredientStore.entries) {
+fun rememberIngredientStoreTitles() = remember {
     IngredientStore.entries.toList().map { it.title }.toImmutableList()
 }

@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.ui.util.rememberIngredientStoreImmutableList
+import com.project.ui.util.rememberIngredientStoreTitles
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -67,7 +67,7 @@ fun FilterChipGroup(
 private fun FilterChipGroupPreview() {
     FilterChipGroup(
         groupName = "보관방법",
-        groupList = rememberIngredientStoreImmutableList(),
+        groupList = rememberIngredientStoreTitles(),
         onClick = {},
         selectedChipIndex = 1,
     )
