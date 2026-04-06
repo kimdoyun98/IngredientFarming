@@ -39,14 +39,12 @@ internal fun ShoppingItemAddContent(
             .padding(16.dp)
     ) {
         ItemAddOutlinedTextField(
-            modifier = modifier,
             value = addItemNameQuery,
             onValueChange = onQueryChange,
             placeholder = { Text(stringResource(R.string.shopping_cart_item_query_placeholder)) },
         )
 
         ItemAddOutlinedTextField(
-            modifier = modifier,
             value = addItemCount,
             onValueChange = onItemCountChange,
             placeholder = { Text(stringResource(R.string.shopping_cart_item_count_query_placeholder)) },
@@ -54,7 +52,7 @@ internal fun ShoppingItemAddContent(
         )
 
         FilterChipGroup(
-            modifier = modifier
+            modifier = Modifier
                 .padding(4.dp),
             groupList = IngredientCategory.entries.toList().map { it.n }.toImmutableList(),
             onClick = { idx -> onCategorySelect(idx) },
@@ -63,7 +61,7 @@ internal fun ShoppingItemAddContent(
 
         Row {
             IngredientFarmingButton(
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f),
                 onClick = onCancelButtonClick,
                 background = LightGray
@@ -75,7 +73,7 @@ internal fun ShoppingItemAddContent(
             }
 
             IngredientFarmingButton(
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f),
                 onClick = onAddButtonClick,
                 background = Purple500

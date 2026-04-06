@@ -64,13 +64,13 @@ internal fun ShoppingCartItem(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Checkbox(
-            modifier = modifier,
             onCheckedChange = { onClick() },
             checked = success
         )
 
         Column(
-            modifier = modifier.weight(1f)
+            modifier = Modifier
+                .weight(1f)
         ) {
             Text(
                 text = name,
@@ -92,7 +92,7 @@ internal fun ShoppingCartItem(
                 )
 
                 Icon(
-                    modifier = modifier.size(4.dp),
+                    modifier = Modifier.size(4.dp),
                     imageVector = Icons.Default.Circle,
                     contentDescription = null,
                     tint = if (success) Green else Gray,
