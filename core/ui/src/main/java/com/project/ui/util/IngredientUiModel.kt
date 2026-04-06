@@ -65,7 +65,7 @@ fun rememberUpdateContentList(
     expirationDate: LocalDate,
     enterDate: LocalDate,
 ): ImmutableList<UpdateBodyContent> {
-    val expirationDate = getLocalDateText(expirationDate)
+    val expirationDateText = getLocalDateText(expirationDate)
 
     return remember {
         persistentListOf(
@@ -80,7 +80,7 @@ fun rememberUpdateContentList(
 
             UpdateBodyContent(
                 title = R.string.expiration_date,
-                content = expirationDate,
+                content = expirationDateText,
                 background = Purple80,
                 iconResource = IconResource.ImageVectorIcon(resource = Icons.Outlined.CalendarToday),
                 iconContentDescription = R.string.expiration_date_icon_description,
