@@ -1,6 +1,7 @@
 package com.project.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,6 +64,7 @@ fun IngredientCard(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun IconIngredientCard(
     modifier: Modifier = Modifier,
