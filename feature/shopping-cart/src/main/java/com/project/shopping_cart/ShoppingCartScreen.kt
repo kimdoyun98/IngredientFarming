@@ -93,20 +93,19 @@ internal fun ShoppingCartScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             ShoppingProgress(
-                modifier = modifier,
                 cartCount = cartList.size,
                 buyCount = cartList.count { it.success }
             )
 
             if (!addState) {
                 Row(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
                     if (saveSuccessItemState) {
                         Button(
-                            modifier = modifier
+                            modifier = Modifier
                                 .weight(1f)
                                 .padding(horizontal = 4.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = LightGreen),
@@ -130,7 +129,6 @@ internal fun ShoppingCartScreen(
 
             if (addState) {
                 ShoppingItemAddContent(
-                    modifier = modifier,
                     addItemNameQuery = addItemNameQuery,
                     addItemCount = addItemCount,
                     addItemCategorySelected = addItemCategorySelected,
@@ -143,7 +141,7 @@ internal fun ShoppingCartScreen(
             }
 
             LazyColumn(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -153,7 +151,6 @@ internal fun ShoppingCartScreen(
                     key = { idx, item -> item.name }
                 ) { index, item ->
                     ShoppingCartItem(
-                        modifier = modifier,
                         name = item.name,
                         count = item.count,
                         category = item.category,

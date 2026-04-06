@@ -63,14 +63,15 @@ internal fun ShoppingProgress(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                modifier = modifier.size(28.dp),
+                modifier = Modifier
+                    .size(28.dp),
                 imageVector = Icons.Outlined.ShoppingBag,
                 contentDescription = null,
                 tint = White
             )
 
             Text(
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp),
                 text = stringResource(R.string.shopping_progress),
@@ -87,7 +88,7 @@ internal fun ShoppingProgress(
         }
 
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
                 .height(16.dp)
