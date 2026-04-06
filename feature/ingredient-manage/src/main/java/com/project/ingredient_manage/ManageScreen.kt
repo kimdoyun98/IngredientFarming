@@ -205,7 +205,7 @@ private fun CategoryFilterChipGroup(
 
         items(IngredientCategory.entries) { category ->
             FilterChip(
-                label = { Text(category.n) },
+                label = { Text(category.title) },
                 leadingIcon = if (selectedCategoryIndex - 1 == category.ordinal) {
                     {
                         Icon(

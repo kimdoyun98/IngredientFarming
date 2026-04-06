@@ -18,11 +18,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.ingredient.R
-import com.project.model.ingredient.IngredientCategory
-import com.project.model.ingredient.IngredientStore
 import com.project.ui.FilterChipGroup
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
+import com.project.ui.util.rememberIngredientCategoryTitles
+import com.project.ui.util.rememberIngredientStoreTitles
 
 @Composable
 internal fun IngredientInputContent(
@@ -85,14 +83,14 @@ internal fun IngredientInputContent(
 
         FilterChipGroup(
             groupName = stringResource(R.string.store),
-            groupList = IngredientStore.entries.map { it.n }.toImmutableList(),
+            groupList = rememberIngredientStoreTitles(),
             onClick = { selected -> clickStoreFilterChip(selected) },
             selectedChipIndex = storeChipSelectIndex ?: -1,
         )
 
         FilterChipGroup(
             groupName = stringResource(R.string.category),
-            groupList = IngredientCategory.entries.map { it.n }.toImmutableList(),
+            groupList = rememberIngredientCategoryTitles(),
             onClick = { selected -> clickCategoryFilterChip(selected) },
             selectedChipIndex = categoryChipSelectIndex ?: -1,
         )

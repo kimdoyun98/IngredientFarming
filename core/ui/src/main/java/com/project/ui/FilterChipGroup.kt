@@ -15,8 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.ui.util.rememberIngredientStoreTitles
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun FilterChipGroup(
@@ -67,7 +67,7 @@ fun FilterChipGroup(
 private fun FilterChipGroupPreview() {
     FilterChipGroup(
         groupName = "보관방법",
-        groupList = persistentListOf("실온", "냉장", "냉동"),
+        groupList = rememberIngredientStoreTitles(),
         onClick = {},
         selectedChipIndex = 1,
     )
