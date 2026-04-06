@@ -1,5 +1,6 @@
 package com.project.ingredient_manage
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -171,6 +172,11 @@ internal fun ManageScreen(
                 }
             }
         }
+    }
+
+    BackHandler {
+        if (deleteOptionsState) onCancelClick()
+        else onClickTopAppBarNavigation()
     }
 }
 
