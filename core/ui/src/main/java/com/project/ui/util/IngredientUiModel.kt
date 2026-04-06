@@ -17,6 +17,8 @@ import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.IconResource
 import com.project.ui.R
+import com.project.ui.model.CardContent
+import com.project.ui.model.UpdateBodyContent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

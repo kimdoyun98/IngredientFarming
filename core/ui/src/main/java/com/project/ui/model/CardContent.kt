@@ -1,4 +1,4 @@
-package com.project.ui.util
+package com.project.ui.model
 
 import androidx.annotation.StringRes
 import com.project.ui.IconResource
