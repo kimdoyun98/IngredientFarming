@@ -21,11 +21,15 @@ jobs:
       - name: Gradle 캐시
         uses: gradle/gradle-build-action@v2
 
+      - name: Create local.properties
+        run: |
+          echo "BARCODE_API_KEY=${{ secrets.BARCODE_API_KEY }}" >> local.properties
+
       - name: 권한 설정
         run: chmod +x gradlew
 
       - name: 빌드
-        run: ./gradlew build -x assembleRelease
+        run: ./gradlew build
 
       - name: 테스트
         run: ./gradlew test
