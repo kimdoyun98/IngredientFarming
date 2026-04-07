@@ -27,7 +27,7 @@ class GeminiCodeReview:
         return res.json()
 
     # 2. 파일 diff 묶기 (chunking)
-    def chunk_files(self, files, max_length=3000):
+    def chunk_files(self, files, max_length=8000):
         chunks = []
         current_chunk = []
         current_length = 0
