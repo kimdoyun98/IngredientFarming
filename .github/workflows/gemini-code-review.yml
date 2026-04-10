@@ -2,7 +2,7 @@ name: Gemini Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened] # synchronize는 변경 사항
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}
@@ -41,4 +41,4 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python scripts/code_review.py
+        run: python scripts/gemini_code_review.py
