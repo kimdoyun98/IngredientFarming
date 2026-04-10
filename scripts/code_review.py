@@ -97,7 +97,7 @@ class GeminiCodeReview:
 
         prompt = f"""
             You are a senior Android developer.
-            리뷰는 한국어로 부탁해.
+            서론은 생략, 리뷰는 한국어
             Review this PR diff:
             
             {diff_text}
@@ -111,11 +111,7 @@ class GeminiCodeReview:
             - Compose 구조
             
             Return:
-            1. 🔴 Critical Issues
-            2. 🟡 Improvements
-            3. ✅ Good Points
-            
-            리뷰 시 시작하는 말은 생략해주고, 어떤 파일의 리뷰인지 파일 이름을 알려주고 리뷰해줬으면 좋겠어.
+            🔴 Critical Issues
         """
 
         def request():
