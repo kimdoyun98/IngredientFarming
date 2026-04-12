@@ -1,4 +1,4 @@
-package com.project.ingredient.usecase
+package com.project.ingredient.usecase.manage
 
 import com.project.ingredient.repository.HoldIngredientRepository
 import javax.inject.Inject
