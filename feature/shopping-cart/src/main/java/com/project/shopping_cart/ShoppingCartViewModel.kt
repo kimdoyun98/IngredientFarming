@@ -9,10 +9,10 @@ import com.project.model.ingredient.getIndexToIngredientCategory
 import com.project.shopping_cart.contract.ShoppingCartEffect
 import com.project.shopping_cart.contract.ShoppingCartIntent
 import com.project.shopping_cart.contract.ShoppingCartState
-import com.project.ingredient.usecase.DeleteShoppingCartItemUseCase
-import com.project.ingredient.usecase.GetAllShoppingCartItemsUseCase
-import com.project.ingredient.usecase.InsertShoppingCartItemUseCase
-import com.project.ingredient.usecase.SaveCartSuccessItemsUseCase
+import com.project.ingredient.usecase.shopping.DeleteShoppingCartItemUseCase
+import com.project.ingredient.usecase.shopping.GetAllShoppingCartItemsUseCase
+import com.project.ingredient.usecase.shopping.InsertShoppingCartItemUseCase
+import com.project.ingredient.usecase.shopping.SaveCartSuccessItemsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview

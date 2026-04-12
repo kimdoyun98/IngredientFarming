@@ -1,4 +1,4 @@
-package com.project.ingredient.usecase
+package com.project.ingredient.usecase.shopping
 
 import com.project.ingredient.repository.IngredientRepository
 import com.project.model.cart.ShoppingCart
