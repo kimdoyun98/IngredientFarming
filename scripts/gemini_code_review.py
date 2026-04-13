@@ -236,7 +236,7 @@ class GeminiCodeReview2:
 
                 all_reviews.append(f"### 📄 {file_name}\n{review}")
 
-        print(f"✅ Gemini 코드 리뷰 완료 \n {all_reviews}")
+        print(f"✅ Gemini 코드 리뷰 완료")
 
         # 결과 코멘트 작성
         if all_reviews:
