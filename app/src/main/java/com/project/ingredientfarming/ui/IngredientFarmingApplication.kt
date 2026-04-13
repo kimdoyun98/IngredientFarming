@@ -31,12 +31,11 @@ class IngredientFarmingApplication : Application() {
     }
 
     private fun loadJson(): RootJson {
+        val json = Json { ignoreUnknownKeys = true }
         val jsonString = assets.open("ingredients.json")
             .bufferedReader()
             .use { it.readText() }
 
-        return Json {
-            ignoreUnknownKeys = true
-        }.decodeFromString(jsonString)
+        return json.decodeFromString(jsonString)
     }
 }
