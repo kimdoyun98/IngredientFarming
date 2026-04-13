@@ -1,9 +1,9 @@
 import os
 import requests
 from typing import List, Dict
+from google import genai
 
-class GeminiCodeReview:
-
+class GeminiCodeReview2:
     def __init__(self):
         # -------------------------
         # 환경 변수
@@ -14,13 +14,6 @@ class GeminiCodeReview:
         self.repo = os.getenv("GITHUB_REPOSITORY")
 
         # -------------------------
-        # API URL
-        # -------------------------
-        self.github_api_base = "https://api.github.com"
-        self.gemini_model = "gemini-3-flash-preview"
-        self.gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.gemini_model}:generateContent?key={self.api_key}"
-
-        # -------------------------
         # 우선순위
         # -------------------------
         self.priority = {
@@ -29,21 +22,24 @@ class GeminiCodeReview:
             "presentation_ui": 3
         }
 
+        if not all([self.github_token, self.api_key, self.pr_number, self.repo]):
+            raise ValueError("환경 변수가 제대로 설정되지 않았습니다.")
+
     # -------------------------
     # 1. PR 파일 가져오기
     # -------------------------
     def get_pr_files(self) -> List[Dict]:
-        url = f"{self.github_api_base}/repos/{self.repo}/pulls/{self.pr_number}/files"
-
+        url = f"https://api.github.com/repos/{self.repo}/pulls/{self.pr_number}/files"
         headers = {
-            "Authorization": f"Bearer {self.github_token}",
-            "Accept": "application/vnd.github+json"
+            "Authorization": f"token {self.github_token}",
+            "Accept": "application/vnd.github.v3+json"
         }
 
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
+        res = requests.get(url, headers=headers)
+        if res.status_code != 200:
+            raise Exception(f"PR 파일 조회 실패: {res.text}")
 
-        return response.json()
+        return res.json()
 
     # -------------------------
     # 2. 파일 분류
@@ -112,6 +108,11 @@ class GeminiCodeReview:
                 - 비즈니스 로직이 올바른지
                 - Domain 책임 위반 여부
             """
+        elif category == "data":
+            rule = """
+                [Data 리뷰]
+                - 클린 아키텍처의 Data 모듈에 대한 경계와 책임 위반 여부
+            """
         elif category == "presentation_vm":
             rule = """
                 [ViewModel 리뷰]
@@ -130,51 +131,71 @@ class GeminiCodeReview:
 
         return base + rule + "\n\n[코드]\n" + code
 
+    def retry_with_backoff(self, func, max_retries=5, base_delay=1):
+        for attempt in range(max_retries):
+            try:
+                return func()
+            except Exception as e:
+                is_last = attempt == max_retries - 1
+
+                # 503 / UNAVAILABLE 같은 경우만 retry
+                if "503" in str(e) or "UNAVAILABLE" in str(e):
+                    if is_last:
+                        raise
+
+                    delay = base_delay * (2 ** attempt)
+                    jitter = random.uniform(0, 0.5)  # thundering herd 방지
+                    sleep_time = delay + jitter
+
+                    print(f"⚠️ Gemini 과부하, {sleep_time:.2f}s 후 재시도 ({attempt+1}/{max_retries})")
+                    time.sleep(sleep_time)
+                else:
+                    # 다른 에러는 바로 실패
+                    raise
+
     # -------------------------
     # 6. Gemini 호출
     # -------------------------
     def call_gemini(self, prompt: str) -> str:
-        data = {
-            "contents": [
-                {
-                    "parts": [{"text": prompt}]
-                }
-            ]
-        }
+        client = genai.Client(api_key=self.api_key)
 
-        try:
-            response = requests.post(self.gemini_url, json=data)
-            response.raise_for_status()
-            result = response.json()
+        def request():
+            response = client.models.generate_content(
+                model="gemini-3-flash-preview",
+                contents=prompt
+            )
 
-            return result["candidates"][0]["content"]["parts"][0]["text"]
+            return getattr(response, "text", "❌ AI 응답 없음")
 
-        except Exception as e:
-            return f"[Gemini Error] {str(e)}"
+        return self.retry_with_backoff(request)
 
     # -------------------------
     # 7. GitHub PR 코멘트 작성
     # -------------------------
-    def create_review_comment(self, body: str):
-        url = f"{self.github_api_base}/repos/{self.repo}/issues/{self.pr_number}/comments"
+    def create_review_comment(self, review):
+        url = f"https://api.github.com/repos/{self.repo}/issues/{self.pr_number}/comments"
 
         headers = {
-            "Authorization": f"Bearer {self.github_token}",
-            "Accept": "application/vnd.github+json"
+            "Authorization": f"token {self.github_token}",
+            "Accept": "application/vnd.github.v3+json"
         }
 
         data = {
-            "body": body
+            "body": f"## 🤖 AI Code Review\n\n{review}"
         }
 
-        requests.post(url, headers=headers, json=data)
+        res = requests.post(url, headers=headers, json=data)
+
+        if res.status_code != 201:
+            raise Exception(f"PR 코멘트 등록 실패: {res.text}")
 
     # -------------------------
     # 8. 메인 실행
     # -------------------------
     def run(self):
+        print("🚀 AI 코드 리뷰 시작")
         files = self.get_pr_files()
-
+        print("✅ 파일 가져오기 완료")
         filtered = []
 
         # 1차 필터
@@ -192,36 +213,41 @@ class GeminiCodeReview:
         # 우선순위 정렬
         filtered.sort(key=lambda x: self.priority.get(x[0], 999))
 
+        print("✅ 파일 필터 완료")
+
         all_reviews = []
 
         # 리뷰 실행
         for category, file in filtered:
             diff = self.extract_meaningful_diff(file.get("patch", ""))
-
             if not diff.strip():
                 continue
 
             chunks = self.split_chunks(diff)
-
-            for chunk in chunks:
+            for i, chunk in enumerate(chunks):
                 prompt = self.build_prompt(chunk, category)
 
                 if not prompt:
+                    print("❌ Not Prompt")
                     continue
 
                 review = self.call_gemini(prompt)
 
-                all_reviews.append(f"### 📄 {file['filename']}\n{review}")
+                all_reviews.append(f"### 📄 {file["filename"].split("/")[-1]}\n{review}")
+
+        print(f"✅ Gemini 코드 리뷰 완료 \n {all_reviews}")
 
         # 결과 코멘트 작성
         if all_reviews:
             final_comment = "\n\n".join(all_reviews)
             self.create_review_comment(final_comment)
+            print("✅ PR 코멘트 작성 완료")
+        else:
+            print("🚀 리뷰가 없습니다.")
 
 
 # -------------------------
 # 실행
 # -------------------------
 if __name__ == "__main__":
-    reviewer = GeminiCodeReview()
-    reviewer.run()
+    GeminiCodeReview2().run()
