@@ -21,11 +21,13 @@ interface HoldIngredientDao {
          IngredientEntity.name as name,
          HoldIngredientEntity.count as count,
          IngredientEntity.category as category,
+         IngredientCategoryGroupEntity.groupType as categoryGroup,
          IngredientEntity.store as store,
          HoldIngredientEntity.enterDate as enterDate,
          HoldIngredientEntity.expirationDate as expirationDate
         FROM IngredientEntity
         JOIN HoldIngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
+        LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
     """
     )
     fun getAllHoldIngredient(): Flow<List<Ingredient>>
@@ -37,11 +39,13 @@ interface HoldIngredientDao {
          IngredientEntity.name as name,
          HoldIngredientEntity.count as count,
          IngredientEntity.category as category,
+         IngredientCategoryGroupEntity.groupType as categoryGroup,
          IngredientEntity.store as store,
          HoldIngredientEntity.enterDate as enterDate,
          HoldIngredientEntity.expirationDate as expirationDate
         FROM HoldIngredientEntity
         JOIN IngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
+        LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
         WHERE HoldIngredientEntity.id =:id
     """
     )

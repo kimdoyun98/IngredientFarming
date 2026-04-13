@@ -1,0 +1,134 @@
+{
+  "ingredients": [
+    { "category": "VEGETABLE", "ingredient": "두부", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "콩나물", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "버섯", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "나물", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "고구마", "store": "ROOM_TEMPERATURE" },
+    { "category": "VEGETABLE", "ingredient": "감자", "store": "ROOM_TEMPERATURE" },
+    { "category": "VEGETABLE", "ingredient": "당근", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "양파", "store": "ROOM_TEMPERATURE" },
+    { "category": "VEGETABLE", "ingredient": "대파", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "마늘", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "배추", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "무", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "고추", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "옥수수", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "밤", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "오이", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "가지", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "호박", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "브로콜리", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "파프리카", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "양배추", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "인삼", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "더덕", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "새싹삼", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "수삼", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "우엉", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "연근", "store": "REFRIGERATED" },
+    { "category": "VEGETABLE", "ingredient": "마", "store": "REFRIGERATED" },
+
+    { "category": "FRUIT", "ingredient": "사과", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "배", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "오렌지", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "자몽", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "레몬", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "망고", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "복숭아", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "자두", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "감귤", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "만감류", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "토마토", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "방울토마토", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "수박", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "메론", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "참외", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "감", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "곶감", "store": "ROOM_TEMPERATURE" },
+    { "category": "FRUIT", "ingredient": "딸기", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "키위", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "블루베리", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "체리", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "포도", "store": "REFRIGERATED" },
+    { "category": "FRUIT", "ingredient": "청포도", "store": "REFRIGERATED" },
+
+    { "category": "CONDIMENT", "ingredient": "진간장", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "국간장", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "액젓", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "맛술", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "올리고당", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "식용유", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "소금", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "설탕", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "맛소금", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "참기름", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "꿀", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "식초", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "초장", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "고추장", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "된장", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "쌈장", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "버터", "store": "REFRIGERATED" },
+    { "category": "CONDIMENT", "ingredient": "마요네즈", "store": "REFRIGERATED" },
+    { "category": "CONDIMENT", "ingredient": "케찹", "store": "REFRIGERATED" },
+    { "category": "CONDIMENT", "ingredient": "통깨", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "굴소스", "store": "REFRIGERATED" },
+    { "category": "CONDIMENT", "ingredient": "고춧가루", "store": "ROOM_TEMPERATURE" },
+    { "category": "CONDIMENT", "ingredient": "후추", "store": "ROOM_TEMPERATURE" },
+
+    { "category": "DAIRY", "ingredient": "우유", "store": "REFRIGERATED" },
+    { "category": "DAIRY", "ingredient": "요거트", "store": "REFRIGERATED" },
+    { "category": "DAIRY", "ingredient": "요구르트", "store": "REFRIGERATED" },
+    { "category": "DAIRY", "ingredient": "치즈", "store": "REFRIGERATED" },
+    { "category": "DAIRY", "ingredient": "버터", "store": "REFRIGERATED" },
+    { "category": "DAIRY", "ingredient": "생크림", "store": "REFRIGERATED" },
+    { "category": "DAIRY", "ingredient": "연유", "store": "REFRIGERATED" },
+
+    { "category": "GRAIN", "ingredient": "쌀", "store": "ROOM_TEMPERATURE" },
+    { "category": "GRAIN", "ingredient": "밀가루", "store": "ROOM_TEMPERATURE" },
+
+    { "category": "BEVERAGE", "ingredient": "탄산수", "store": "REFRIGERATED" },
+    { "category": "BEVERAGE", "ingredient": "콜라", "store": "REFRIGERATED" },
+    { "category": "BEVERAGE", "ingredient": "사이다", "store": "REFRIGERATED" },
+    { "category": "BEVERAGE", "ingredient": "환타", "store": "REFRIGERATED" }
+  ],
+
+  "meat": {
+    "category": "MEAT",
+    "types": [
+      {
+        "name": "돼지고기",
+        "parts": [
+          { "name": "삼겹살", "store": "REFRIGERATED" },
+          { "name": "목살", "store": "REFRIGERATED" },
+          { "name": "등심", "store": "REFRIGERATED" },
+          { "name": "앞다리살", "store": "REFRIGERATED" }
+        ]
+      },
+      {
+        "name": "소고기",
+        "parts": [
+          { "name": "등심", "store": "REFRIGERATED" },
+          { "name": "안심", "store": "REFRIGERATED" },
+          { "name": "갈비", "store": "REFRIGERATED" },
+          { "name": "양지", "store": "REFRIGERATED" }
+        ]
+      },
+      {
+        "name": "닭고기",
+        "parts": [
+          { "name": "닭가슴살", "store": "REFRIGERATED" },
+          { "name": "닭다리", "store": "REFRIGERATED" },
+          { "name": "닭날개", "store": "REFRIGERATED" }
+        ]
+      },
+      {
+        "name": "오리고기",
+        "parts": [
+          { "name": "오리로스", "store": "REFRIGERATED" }
+        ]
+      }
+    ]
+  }
+}

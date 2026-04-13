@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.project.ingredient.usecase.DeleteHoldIngredientUseCase
-import com.project.ingredient.usecase.GetHoldIngredientUseCase
-import com.project.ingredient.usecase.UpdateHoldIngredientCountUseCase
+import com.project.ingredient.usecase.manage.DeleteHoldIngredientUseCase
+import com.project.ingredient.usecase.manage.GetHoldIngredientUseCase
+import com.project.ingredient.usecase.manage.UpdateHoldIngredientCountUseCase
 import com.project.ingredient_manage.contract.update.UpdateEffect
 import com.project.ingredient_manage.contract.update.UpdateIntent
 import com.project.ingredient_manage.contract.update.UpdateState

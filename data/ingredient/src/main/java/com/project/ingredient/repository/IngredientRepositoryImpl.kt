@@ -1,16 +1,13 @@
 package com.project.ingredient.repository
 
-import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
-import com.project.database.model.asExternalModel
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +17,7 @@ class IngredientRepositoryImpl @Inject constructor(
     private val holdIngredientDao: HoldIngredientDao,
 ) : IngredientRepository {
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
-        return ingredientDao.getIngredientByName(name)?.asExternalModel()
+        return ingredientDao.getIngredientByName(name)
     }
 
     override fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>> {
@@ -41,7 +38,7 @@ class IngredientRepositoryImpl @Inject constructor(
             }
         }
     }
-    
+
     private suspend fun insertIngredient(igd: Ingredient): Int {
         ingredientDao.insertIngredient(igd.asIngredientEntity())
 

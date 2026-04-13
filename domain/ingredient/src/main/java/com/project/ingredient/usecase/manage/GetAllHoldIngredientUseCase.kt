@@ -1,9 +1,7 @@
-package com.project.ingredient.usecase
+package com.project.ingredient.usecase.manage
 
 import com.project.ingredient.repository.HoldIngredientRepository
-import com.project.ingredient.repository.IngredientRepository
 import com.project.model.ingredient.Ingredient
-import com.project.model.ingredient.IngredientCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

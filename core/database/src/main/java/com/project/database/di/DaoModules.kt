@@ -1,6 +1,7 @@
 package com.project.database.di
 
 import com.project.database.IngredientFarmingDatabase
+import com.project.database.dao.CategoryGroupDao
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
 import com.project.database.dao.ShoppingCartDao
@@ -31,4 +32,10 @@ internal object DaoModules {
     fun provideShoppingCartDao(
         database: IngredientFarmingDatabase
     ): ShoppingCartDao = database.getShoppingCardDao()
+
+    @Singleton
+    @Provides
+    fun provideDefaultIngredientSettingDao(
+        database: IngredientFarmingDatabase
+    ): CategoryGroupDao = database.getCategoryGroupDao()
 }

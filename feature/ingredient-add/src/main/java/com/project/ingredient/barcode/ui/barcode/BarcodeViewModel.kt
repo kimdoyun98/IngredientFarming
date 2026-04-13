@@ -6,7 +6,7 @@ import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
 import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
-import com.project.ingredient.usecase.GetBarcodeInfoUseCase
+import com.project.ingredient.usecase.insert.GetBarcodeInfoUseCase
 import com.project.ingredient.usecase.GetIngredientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList

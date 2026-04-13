@@ -21,3 +21,22 @@ fun getIndexToIngredientCategory(index: Int?): IngredientCategory =
 
 fun getIndexByIngredientCategory(category: IngredientCategory): Int =
     IngredientCategory.entries.indexOf(category)
+
+fun getIngredientCategory(name: String): IngredientCategory {
+    return try {
+        IngredientCategory.valueOf(name)
+    } catch (e: IllegalArgumentException) {
+        when (name) {
+            "양념" -> IngredientCategory.CONDIMENT
+            "채소" -> IngredientCategory.VEGETABLE
+            "과일" -> IngredientCategory.FRUIT
+            "육류" -> IngredientCategory.MEAT
+            "유제품" -> IngredientCategory.DAIRY
+            "곡물" -> IngredientCategory.GRAIN
+            "음료" -> IngredientCategory.BEVERAGE
+            "간식" -> IngredientCategory.SNACK
+            "기타" -> IngredientCategory.OTHER
+            else -> throw e
+        }
+    }
+}
