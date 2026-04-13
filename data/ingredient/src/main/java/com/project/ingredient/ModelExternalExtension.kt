@@ -10,6 +10,8 @@ import com.project.model.barcode.Product
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
+import com.project.model.ingredient.getIngredientCategory
+import com.project.model.ingredient.getIngredientStore
 import com.project.network.retrofit.model.BarcodeResponse
 
 fun BarcodeResponse.asExternalModel(): List<Product> {
@@ -37,8 +39,8 @@ fun Ingredient.asHoldIngredientEntity(id: Int) = HoldIngredientEntity(
 
 fun IngredientJson.asIngredientEntity() = IngredientEntity(
     name = ingredient,
-    category = IngredientCategory.valueOf(category),
-    store = IngredientStore.valueOf(store),
+    category = getIngredientCategory(category),
+    store = getIngredientStore(store),
     categoryGroupId = null,
     holdState = false
 )
