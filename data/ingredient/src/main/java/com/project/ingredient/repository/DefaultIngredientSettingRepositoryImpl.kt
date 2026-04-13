@@ -2,50 +2,33 @@ package com.project.ingredient.repository
 
 import com.project.database.dao.CategoryGroupDao
 import com.project.database.dao.IngredientDao
-import com.project.database.model.IngredientCategoryGroupEntity
-import com.project.database.model.IngredientEntity
+import com.project.ingredient.asIngredientCategoryGroupEntity
+import com.project.ingredient.asIngredientEntity
 import com.project.model.RootJson
-import com.project.model.ingredient.IngredientCategory
-import com.project.model.ingredient.IngredientStore
 import javax.inject.Inject
 
 class DefaultIngredientSettingRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao,
     private val categoryGroupDao: CategoryGroupDao,
-): DefaultIngredientSettingRepository {
+) : DefaultIngredientSettingRepository {
 
     override suspend fun prepopulate(
         rootJson: RootJson
     ) {
-        rootJson.ingredients.forEach {
+        rootJson.ingredients.forEach { ingredientJson ->
             ingredientDao.insertIngredient(
-                IngredientEntity(
-                    name = it.ingredient,
-                    category = IngredientCategory.valueOf(it.category),
-                    store = IngredientStore.valueOf(it.store),
-                    categoryGroupId = null,
-                    holdState = false
-                )
+                ingredientJson.asIngredientEntity()
             )
         }
 
         rootJson.meat.types.forEach { type ->
             val groupId = categoryGroupDao.insert(
-                IngredientCategoryGroupEntity(
-                    groupType = type.name,
-                    category = IngredientCategory.MEAT
-                )
+                type.asIngredientCategoryGroupEntity()
             ).toInt()
 
             type.parts.forEach { part ->
                 ingredientDao.insertIngredient(
-                    IngredientEntity(
-                        name = part.name,
-                        category = IngredientCategory.MEAT,
-                        store = IngredientStore.valueOf(part.store),
-                        categoryGroupId = groupId,
-                        holdState = false
-                    )
+                    part.asIngredientEntity(groupId)
                 )
             }
         }
