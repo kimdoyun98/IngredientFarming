@@ -232,8 +232,9 @@ class GeminiCodeReview2:
                     continue
 
                 review = self.call_gemini(prompt)
+                file_name = file["filename"].split("/")[-1]
 
-                all_reviews.append(f"### 📄 {file["filename"].split("/")[-1]}\n{review}")
+                all_reviews.append(f"### 📄 {file_name}\n{review}")
 
         print(f"✅ Gemini 코드 리뷰 완료 \n {all_reviews}")
 
