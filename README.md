@@ -95,6 +95,8 @@
 ## 자동화
 
 ### 1. AI PR 리뷰 자동화
+<img width="917" height="512" alt="Image" src="https://github.com/user-attachments/assets/91f31d3e-557c-48ce-aa60-9b67a02ac009" />   
+
 - 개인 프로젝트를 진행하면서 코드 개선을 하고 싶은 상황에서 매번 코드를 복사하여 AI에게 물어보는 과정이 반복
 - GithubActions와 Gemini를 이용해 PR을 올리면 자동으로 AI가 PR 리뷰를 달아주는 로직 구현
 
