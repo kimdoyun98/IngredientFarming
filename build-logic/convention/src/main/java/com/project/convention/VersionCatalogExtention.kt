@@ -1,6 +1,7 @@
 package com.project.convention
 
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ExternalModuleDependencyBundle
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -13,3 +14,8 @@ val Project.libs: VersionCatalog
 fun VersionCatalog.getLibrary(alias: String): Provider<MinimalExternalModuleDependency> {
     return findLibrary(alias).get()
 }
+
+fun VersionCatalog.getBundle(bundleName: String): Provider<ExternalModuleDependencyBundle> =
+    findBundle(bundleName).orElseThrow {
+        NoSuchElementException("Bundle with name $bundleName not found in the catalog")
+    }

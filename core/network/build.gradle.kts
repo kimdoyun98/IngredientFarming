@@ -26,9 +26,5 @@ android {
 }
 
 dependencies {
-    implementation(libs.retrofit)
-    implementation(libs.logging.interceptor)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-    implementation(libs.kotlinx.serialization.json)
-
+    implementation(libs.bundles.network)
 }

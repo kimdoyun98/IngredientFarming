@@ -12,15 +12,9 @@ internal fun Project.configureCompose(commonExtension: BaseExtension) {
         }
 
         dependencies {
-            implementation(libs.getLibrary("androidx-activity-compose"))
+            implementation(libs.getBundle("compose"))
+            implementation(libs.getBundle("navigation"))
             implementation(platform(libs.getLibrary("androidx-compose-bom")))
-            implementation(libs.getLibrary("androidx-ui"))
-            implementation(libs.getLibrary("androidx-ui-graphics"))
-            implementation(libs.getLibrary("androidx-material3"))
-            implementation(libs.getLibrary("androidx-ui-tooling-preview"))
-            implementation(libs.getLibrary("androidx-navigation-compose"))
-            implementation(libs.getLibrary("androidx-hilt-navigation-compose"))
-            implementation(libs.getLibrary("androidx-material-icons-extended"))
             debugImplementation(libs.getLibrary("androidx-ui-tooling"))
         }
     }
