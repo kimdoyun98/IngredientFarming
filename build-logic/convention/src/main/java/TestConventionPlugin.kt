@@ -1,5 +1,6 @@
 import com.project.convention.androidTestImplementation
 import com.project.convention.debugImplementation
+import com.project.convention.getBundle
 import com.project.convention.getLibrary
 import com.project.convention.libs
 import com.project.convention.testImplementation
@@ -13,11 +14,8 @@ class TestConventionPlugin : Plugin<Project> {
 
             dependencies {
                 testImplementation(libs.getLibrary("junit"))
-                androidTestImplementation(libs.getLibrary("androidx-junit"))
-                androidTestImplementation(libs.getLibrary("androidx-espresso-core"))
-                androidTestImplementation(libs.getLibrary("androidx-ui-test-junit4"))
                 debugImplementation(libs.getLibrary("androidx-ui-test-manifest"))
-                androidTestImplementation(libs.getLibrary("androidx-compose-bom"))
+                androidTestImplementation(libs.getBundle("android-test"))
             }
         }
     }

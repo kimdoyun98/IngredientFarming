@@ -1,3 +1,4 @@
+import com.project.convention.getBundle
 import com.project.convention.getLibrary
 import com.project.convention.implementation
 import com.project.convention.ksp
@@ -14,9 +15,8 @@ class RoomPlugin: Plugin<Project> {
             }
 
             dependencies {
-                implementation(libs.getLibrary("androidx.room.ktx"))
-                implementation(libs.getLibrary("androidx.room.runtime"))
-                ksp(libs.getLibrary("androidx.room.compiler"))
+                implementation(libs.getBundle("room"))
+                ksp(libs.getLibrary("androidx-room-compiler"))
             }
         }
     }
