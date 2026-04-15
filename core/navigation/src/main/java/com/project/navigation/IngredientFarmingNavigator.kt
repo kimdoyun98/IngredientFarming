@@ -34,6 +34,9 @@ class IngredientFarmingNavigator(
 
     fun navigateToShoppingCart() =
         navController.navigate(IngredientRoute.ShoppingCart)
+
+    fun navigateToRecipe() =
+        navController.navigate(IngredientRoute.Recipe)
 }
 
 @Composable
