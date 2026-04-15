@@ -11,3 +11,16 @@ fun getIndexToIngredientStore(index: Int?): IngredientStore =
 
 fun getIndexByIngredientStore(store: IngredientStore): Int =
     IngredientStore.entries.indexOf(store)
+
+fun getIngredientStore(name: String): IngredientStore {
+    return try {
+        IngredientStore.valueOf(name)
+    } catch (e: IllegalArgumentException) {
+        when (name) {
+            "실온" -> IngredientStore.ROOM_TEMPERATURE
+            "냉장" -> IngredientStore.REFRIGERATED
+            "냉동" -> IngredientStore.FROZEN
+            else -> throw e
+        }
+    }
+}

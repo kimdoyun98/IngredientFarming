@@ -94,12 +94,21 @@
 
 ## 자동화
 
-### AI PR 리뷰 자동화
+### 1. AI PR 리뷰 자동화
+<img width="917" height="512" alt="Image" src="https://github.com/user-attachments/assets/91f31d3e-557c-48ce-aa60-9b67a02ac009" />   
+
 - 개인 프로젝트를 진행하면서 코드 개선을 하고 싶은 상황에서 매번 코드를 복사하여 AI에게 물어보는 과정이 반복
 - GithubActions와 Gemini를 이용해 PR을 올리면 자동으로 AI가 PR 리뷰를 달아주는 로직 구현
-- 제한적인 토큰을 얼마나 효율적으로 사용하는가? (구현중)
 
-### CI/CD
+#### 제한 된 토큰을 얼마나 효율적으로 사용하는가?
+- 요청 프롬프트 최소화
+    - 전체적인 코드에 대한 리뷰가 아닌 아키텍처와 Compose 위주의 리뷰 범위 축소
+    - 파일명을 통해 핵심 파일만 추출 ex) *UseCase, *RepositoryImpl, *Screen
+    - 파일 내의 변경 된 코드 중 키워드를 통해 핵심 코드만 추출 ex) suspend, when, if, flow 등
+- 응답 최소화
+    - 서론 생략 및 문제와 개선 방향 위주로 간략하게 요청
+
+### 2. CI/CD
 당연히 레포지토리에 Push하는 경우 빌드 후 안전이 확인되면 Push하는게 당연하지만, 사람은 실수를 하기 마련이다. 리팩토링 시 간혹가다 빌드를 생략하고 Push 또는 Merge하는 경우를 미연에 방지하고자 PR을 올리면 빌드 & 테스트를 자동으로 수행하여 PR 단계에서 문제를 검출하도록 구현
 
 - GithubActions를 사용하여 PR이 올라오면 Build 및 테스트 자동 진행

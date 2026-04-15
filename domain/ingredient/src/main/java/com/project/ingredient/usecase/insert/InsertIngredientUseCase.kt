@@ -1,4 +1,4 @@
-package com.project.ingredient.usecase
+package com.project.ingredient.usecase.insert
 
 import com.project.ingredient.repository.IngredientRepository
 import com.project.model.ingredient.Ingredient

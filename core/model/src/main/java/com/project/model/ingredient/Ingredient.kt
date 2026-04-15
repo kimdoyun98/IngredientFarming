@@ -7,6 +7,7 @@ data class Ingredient(
     val name: String = UNKNOWN_NAME,
     val count: Int = 1,
     val category: IngredientCategory = IngredientCategory.OTHER,
+    val categoryGroup: String? = null,
     val enterDate: LocalDate = LocalDate.now(),
     val expirationDate: LocalDate = LocalDate.parse(UNKNOWN_DATE),
     val store: IngredientStore = IngredientStore.ROOM_TEMPERATURE,

@@ -1,7 +1,7 @@
-package com.project.ingredient.usecase
+package com.project.ingredient.usecase.shopping
 
-import com.project.model.cart.ShoppingCart
 import com.project.ingredient.repository.ShoppingCartRepository
+import com.project.model.cart.ShoppingCart
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

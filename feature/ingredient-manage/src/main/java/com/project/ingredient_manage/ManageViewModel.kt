@@ -2,8 +2,8 @@ package com.project.ingredient_manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.project.ingredient.usecase.DeleteHoldIngredientUseCase
-import com.project.ingredient.usecase.GetAllHoldIngredientUseCase
+import com.project.ingredient.usecase.manage.DeleteHoldIngredientUseCase
+import com.project.ingredient.usecase.manage.GetAllHoldIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
 import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState

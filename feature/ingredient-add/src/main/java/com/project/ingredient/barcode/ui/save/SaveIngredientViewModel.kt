@@ -6,7 +6,7 @@ import com.project.ingredient.barcode.contract.directInput.DirectInputState
 import com.project.ingredient.barcode.contract.save.SaveIngredientEffect
 import com.project.ingredient.barcode.contract.save.SaveIngredientIntent
 import com.project.ingredient.barcode.contract.save.SaveIngredientState
-import com.project.ingredient.usecase.InsertIngredientUseCase
+import com.project.ingredient.usecase.insert.InsertIngredientUseCase
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore

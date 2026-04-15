@@ -2,7 +2,6 @@ package com.project.ingredient.repository
 
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
-import com.project.database.model.asExternalModel
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.model.ingredient.ExpirationDateSoonIngredient
@@ -18,7 +17,7 @@ class IngredientRepositoryImpl @Inject constructor(
     private val holdIngredientDao: HoldIngredientDao,
 ) : IngredientRepository {
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
-        return ingredientDao.getIngredientByName(name)?.asExternalModel()
+        return ingredientDao.getIngredientByName(name)
     }
 
     override fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>> {
