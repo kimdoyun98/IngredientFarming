@@ -1,6 +1,5 @@
 package com.project.ingredient.repository
 
-import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
 import com.project.database.model.asExternalModel
@@ -10,7 +9,6 @@ import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,7 +39,7 @@ class IngredientRepositoryImpl @Inject constructor(
             }
         }
     }
-    
+
     private suspend fun insertIngredient(igd: Ingredient): Int {
         ingredientDao.insertIngredient(igd.asIngredientEntity())
 
