@@ -5,6 +5,7 @@ import com.project.database.dao.IngredientDao
 import com.project.ingredient.asIngredientCategoryGroupEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.model.RootJson
+import com.project.model.ingredient.IngredientCategory
 import javax.inject.Inject
 
 class DefaultIngredientSettingRepositoryImpl @Inject constructor(
@@ -17,7 +18,10 @@ class DefaultIngredientSettingRepositoryImpl @Inject constructor(
     ) {
         rootJson.ingredients.forEach { ingredientJson ->
             ingredientDao.insertIngredient(
-                ingredientJson.asIngredientEntity()
+                ingredientJson.asIngredientEntity(
+                    !(ingredientJson.category == IngredientCategory.CONDIMENT.title ||
+                    ingredientJson.category == IngredientCategory.GRAIN.title)
+                )
             )
         }
 
