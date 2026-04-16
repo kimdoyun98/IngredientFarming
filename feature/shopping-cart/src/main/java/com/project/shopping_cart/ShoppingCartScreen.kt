@@ -172,14 +172,14 @@ private fun ShoppingCartScreenPreview() {
             cartList = persistentListOf(
                 ShoppingCart(
                     name = "사과",
-                    count = 5,
+                    count = 5.0,
                     category = IngredientCategory.FRUIT,
                     success = false
                 ),
 
                 ShoppingCart(
                     name = "삼겹살",
-                    count = 1,
+                    count = 1.0,
                     category = IngredientCategory.MEAT,
                     success = true
                 )
@@ -199,14 +199,14 @@ private fun ShoppingCartAddScreenPreview() {
             cartList = persistentListOf(
                 ShoppingCart(
                     name = "사과",
-                    count = 5,
+                    count = 5.0,
                     category = IngredientCategory.FRUIT,
                     success = false
                 ),
 
                 ShoppingCart(
                     name = "삼겹살",
-                    count = 1,
+                    count = 1.0,
                     category = IngredientCategory.MEAT,
                     success = true
                 )

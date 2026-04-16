@@ -22,20 +22,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.model.ingredient.IngredientCategory
-import com.project.shopping_cart.R
 import com.project.ui.modifier.shadowLayout
+import com.project.ui.util.format
 
 @Composable
 internal fun ShoppingCartItem(
     modifier: Modifier = Modifier,
     name: String,
-    count: Int,
+    count: Double,
     category: IngredientCategory,
     success: Boolean,
     onClick: () -> Unit,
@@ -99,7 +98,7 @@ internal fun ShoppingCartItem(
                 )
 
                 Text(
-                    text = stringResource(R.string.shopping_cart_item_count, count),
+                    text = count.format(),
                     style = MaterialTheme.typography.labelLarge,
                     color = if (success) Green else Gray
                 )

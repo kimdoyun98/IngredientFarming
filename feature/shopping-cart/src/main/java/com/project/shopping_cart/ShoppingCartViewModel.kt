@@ -130,7 +130,7 @@ class ShoppingCartViewModel @Inject constructor(
                 insertShoppingCartItemUseCase.invoke(
                     ShoppingCart(
                         name = state.addItemNameQuery,
-                        count = state.addItemCount.toInt(),
+                        count = state.addItemCount.toDouble(),
                         category = getIndexToIngredientCategory(state.addItemCategorySelected),
                         success = false
                     )
