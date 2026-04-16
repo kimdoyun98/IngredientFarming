@@ -151,7 +151,7 @@ class SaveIngredientViewModel @Inject constructor(
                 val changeList = state.ingredientList.toMutableList()
                 changeList[updateIngredientIndex] = Ingredient(
                     name = igd.name,
-                    count = igd.count.toInt(),
+                    count = igd.count.toDouble(),
                     expirationDate = LocalDate.parse(igd.expirationDate),
                     store = getIndexToIngredientStore(igd.storeSelected),
                     category = getIndexToIngredientCategory(igd.categorySelected),

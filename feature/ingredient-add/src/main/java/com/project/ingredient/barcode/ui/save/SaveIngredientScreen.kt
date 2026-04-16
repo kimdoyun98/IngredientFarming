@@ -281,14 +281,14 @@ private fun SaveIngredientScreenPreview() {
                 ingredientList = persistentListOf(
                     Ingredient(
                         name = "요구르트",
-                        count = 10,
+                        count = 10.0,
                         category = IngredientCategory.DAIRY,
                         store = IngredientStore.REFRIGERATED,
                         expirationDate = LocalDate.parse("2026-02-24")
                     ),
                     Ingredient(
                         name = "사과",
-                        count = 10,
+                        count = 10.0,
                         category = IngredientCategory.FRUIT,
                         store = IngredientStore.ROOM_TEMPERATURE,
                         expirationDate = LocalDate.parse("2026-02-24")
