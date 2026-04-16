@@ -5,18 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.compose.LocarmDateTextField
+import com.project.designsystem.compose.LocarmNumberTextField
+import com.project.designsystem.compose.LocarmTextField
 import com.project.ingredient.R
 import com.project.ui.FilterChipGroup
 import com.project.ui.util.rememberIngredientCategoryTitles
@@ -42,43 +38,30 @@ internal fun IngredientInputContent(
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        OutlinedTextField(
+
+        LocarmTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            label = { Text(text = stringResource(R.string.name)) },
             value = name,
-            onValueChange = { changeNameValue(it) },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-            ),
+            label = stringResource(R.string.name),
+            onValueChange = { changeNameValue(it) }
         )
 
-        OutlinedTextField(
+        LocarmNumberTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            label = { Text(text = stringResource(R.string.count)) },
             value = count,
+            label = stringResource(R.string.count),
             onValueChange = { changeCountValue(it) },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done,
-            ),
         )
 
-        OutlinedTextField(
+        LocarmDateTextField(
             modifier = Modifier
                 .fillMaxWidth(),
-            label = { Text(text = stringResource(R.string.expiration)) },
-            placeholder = { Text(text = stringResource(R.string.expiration_text_field_placeholder)) },
-            value = TextFieldValue(
-                text = expirationDate,
-                selection = TextRange(expirationDate.length)
-            ),
-            onValueChange = { changeExpirationDateValue(it.text) },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done,
-            ),
+            value = expirationDate,
+            label = stringResource(R.string.expiration),
+            placeholder = stringResource(R.string.expiration_text_field_placeholder),
+            onValueChange = { changeExpirationDateValue(it) },
         )
 
         FilterChipGroup(
