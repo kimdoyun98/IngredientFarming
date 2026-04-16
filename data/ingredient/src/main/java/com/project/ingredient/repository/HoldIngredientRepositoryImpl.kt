@@ -16,7 +16,7 @@ class HoldIngredientRepositoryImpl @Inject constructor(
         return holdIngredientDao.getHoldIngredientById(id)
     }
 
-    override suspend fun updateHoldIngredientCount(id: Int, count: Int) {
+    override suspend fun updateHoldIngredientCount(id: Int, count: Double) {
         holdIngredientDao.updateHoldIngredientCount(id, count)
     }
 

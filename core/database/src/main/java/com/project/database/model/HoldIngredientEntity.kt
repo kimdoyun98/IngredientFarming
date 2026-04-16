@@ -20,7 +20,7 @@ import java.time.LocalDate
 data class HoldIngredientEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "ingredient_id") val ingredientId: Int,
-    val count: Int,
+    val count: Double,
     val enterDate: LocalDate,
     val expirationDate: LocalDate,
 )

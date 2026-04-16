@@ -23,12 +23,19 @@ fun BarcodeResponse.asExternalModel(): List<Product> {
     }
 }
 
-fun Ingredient.asIngredientEntity() = IngredientEntity(
-    name = name,
-    category = category,
-    store = store,
-    holdState = true
-)
+fun Ingredient.asIngredientEntity(): IngredientEntity {
+    val isAutoDecrement =
+        category == IngredientCategory.GRAIN || category == IngredientCategory.CONDIMENT
+
+    return IngredientEntity(
+        name = name,
+        category = category,
+        store = store,
+        holdState = true,
+        isAutoDecrement = !isAutoDecrement,
+        step = if (!isAutoDecrement) 1.0 else 0.5
+    )
+}
 
 fun Ingredient.asHoldIngredientEntity(id: Int) = HoldIngredientEntity(
     ingredientId = id,
@@ -44,7 +51,7 @@ fun IngredientJson.asIngredientEntity(autoDecrement: Boolean = true) = Ingredien
     categoryGroupId = null,
     holdState = false,
     isAutoDecrement = autoDecrement,
-    step = if(autoDecrement) 1.0 else 0.5
+    step = if (autoDecrement) 1.0 else 0.5
 )
 
 fun MeatTypeJson.asIngredientCategoryGroupEntity() = IngredientCategoryGroupEntity(

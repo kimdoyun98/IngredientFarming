@@ -24,7 +24,8 @@ interface HoldIngredientDao {
          IngredientCategoryGroupEntity.groupType as categoryGroup,
          IngredientEntity.store as store,
          HoldIngredientEntity.enterDate as enterDate,
-         HoldIngredientEntity.expirationDate as expirationDate
+         HoldIngredientEntity.expirationDate as expirationDate,
+         IngredientEntity.step as step
         FROM IngredientEntity
         JOIN HoldIngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
         LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
@@ -42,7 +43,8 @@ interface HoldIngredientDao {
          IngredientCategoryGroupEntity.groupType as categoryGroup,
          IngredientEntity.store as store,
          HoldIngredientEntity.enterDate as enterDate,
-         HoldIngredientEntity.expirationDate as expirationDate
+         HoldIngredientEntity.expirationDate as expirationDate,
+         IngredientEntity.step as step
         FROM HoldIngredientEntity
         JOIN IngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
         LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
@@ -67,7 +69,7 @@ interface HoldIngredientDao {
         WHERE id =:id
     """
     )
-    suspend fun updateHoldIngredientCount(id: Int, count: Int)
+    suspend fun updateHoldIngredientCount(id: Int, count: Double)
 
     /**
      * DELETE

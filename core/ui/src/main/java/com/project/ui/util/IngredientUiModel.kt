@@ -43,7 +43,7 @@ fun rememberCardContentList(item: Ingredient): ImmutableList<CardContent> {
             CardContent(
                 iconResource = IconResource.PainterIcon(id = R.drawable.ic_3d_box),
                 title = R.string.count,
-                content = item.count.toString()
+                content = item.count.format()
             ),
             CardContent(
                 iconResource = IconResource.PainterIcon(id = R.drawable.ic_refrigerator),
