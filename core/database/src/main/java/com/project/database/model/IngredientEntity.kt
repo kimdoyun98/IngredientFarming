@@ -41,14 +41,10 @@ data class IngredientEntity(
     val categoryGroupId: Int? = null,
 
     @ColumnInfo(name = "hold_state")
-    val holdState: Boolean
-)
+    val holdState: Boolean,
 
-//fun IngredientEntity.asExternalModel(): IngredientInfo {
-//    return IngredientInfo(
-//        id = id,
-//        name = name,
-//        category = category,
-//        store = store,
-//    )
-//}
+    @ColumnInfo(name = "is_auto_decrement")
+    val isAutoDecrement: Boolean = true,
+
+    val step: Double = 1.0,
+)
