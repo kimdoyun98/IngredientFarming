@@ -1,4 +1,4 @@
-package com.project.recipe.addrecipe.model
+package com.project.recipe.addrecipe.util
 
 import androidx.annotation.StringRes
 import com.project.recipe.R
