@@ -2,12 +2,15 @@ package com.project.recipe.addrecipe
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.ingredient.usecase.recipe.SaveRecipeUseCase
 import com.project.recipe.addrecipe.contract.AddRecipeEffect
 import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import com.project.recipe.addrecipe.contract.AddRecipeState
-import com.project.recipe.addrecipe.model.AddRecipeBackStack
 import com.project.recipe.addrecipe.model.IngredientUiModel
 import com.project.recipe.addrecipe.model.RecipeStepUiModel
+import com.project.recipe.addrecipe.model.asRecipe
+import com.project.recipe.addrecipe.util.AddRecipeBackStack
+import com.project.recipe.addrecipe.util.RecipeSaveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,13 +18,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class AddRecipeViewModel @Inject constructor(
-
+    private val saveRecipeUseCase: SaveRecipeUseCase
 ) : ContainerHost<AddRecipeState, AddRecipeEffect>, ViewModel() {
     override val container = container<AddRecipeState, AddRecipeEffect>(AddRecipeState())
     private val backStack = ArrayDeque<AddRecipeBackStack>()
@@ -186,7 +190,18 @@ class AddRecipeViewModel @Inject constructor(
     private fun handleRecipStep(intent: AddRecipeIntent.RecipeStep) {
         when (intent) {
             is AddRecipeIntent.RecipeStep.RecipeSaveButtonClick -> intent {
+                viewModelScope.launch {
+                    reduce { state.copy(recipeSaveState = RecipeSaveState.Loading) }
 
+                    val isSuccess = saveRecipeUseCase.invoke(state.asRecipe())
+
+                    if (isSuccess) {
+                        postSideEffect(AddRecipeEffect.NavigateToRecipeList)
+
+                    } else {
+                        postSideEffect(AddRecipeEffect.SaveError())
+                    }
+                }
             }
 
             is AddRecipeIntent.RecipeStep.StepAddButtonClick -> {

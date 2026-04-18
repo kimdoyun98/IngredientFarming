@@ -1,0 +1,32 @@
+package com.project.recipe
+
+import com.project.database.model.recipe.RecipeEntity
+import com.project.database.model.recipe.RecipeIngredientEntity
+import com.project.database.model.recipe.RecipeStepEntity
+import com.project.model.recipe.Recipe
+import com.project.model.recipe.RecipeIngredient
+import com.project.model.recipe.RecipeStep
+
+internal fun Recipe.asRecipeEntity() =
+    RecipeEntity(
+        name = name,
+        imageUri = imageUri,
+        category = category,
+        minute = minute,
+        people = people
+    )
+
+internal fun RecipeIngredient.asRecipeIngredientEntity(recipeId: Int) =
+    RecipeIngredientEntity(
+        recipeId = recipeId,
+        name = name,
+        count = count,
+        unit = unit
+    )
+
+internal fun RecipeStep.asRecipeStepEntity(recipeId: Int) =
+    RecipeStepEntity(
+        recipeId = recipeId,
+        number = number,
+        description = description
+    )
