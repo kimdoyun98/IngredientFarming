@@ -46,6 +46,7 @@ internal fun RecipeBasicInfoScreen(
         cookTime = state.time,
         people = state.people,
         selectedCategory = state.selectedCategory,
+        nextButtonEnable = state.isEnableBasicInfoNextButton(),
         onNameValueChange = { onIntent(AddRecipeIntent.BasicInfo.RecipeNameChange(it)) },
         onSelectCategoryChip = { onIntent(AddRecipeIntent.BasicInfo.SelectCategoryChip(it)) },
         onCookTimeValueChange = { onIntent(AddRecipeIntent.BasicInfo.RecipeCookTimeChange(it)) },
@@ -61,6 +62,7 @@ internal fun RecipeBasicInfoScreen(
     cookTime: String,
     people: String,
     selectedCategory: RecipeCategory?,
+    nextButtonEnable: Boolean,
     onNameValueChange: (String) -> Unit,
     onSelectCategoryChip: (RecipeCategory) -> Unit,
     onCookTimeValueChange: (String) -> Unit,
@@ -108,7 +110,8 @@ internal fun RecipeBasicInfoScreen(
         IngredientFarmingWideButton(
             modifier = Modifier.align(Alignment.BottomCenter),
             onClick = onNextButtonClick,
-            background = Green
+            background = Green,
+            enabled = nextButtonEnable
         ) {
             Text(stringResource(R.string.add_recipe_next_button_title))
         }

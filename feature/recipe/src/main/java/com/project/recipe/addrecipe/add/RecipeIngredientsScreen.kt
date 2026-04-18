@@ -59,6 +59,7 @@ internal fun RecipeIngredientsScreen(
     RecipeIngredientsScreen(
         modifier = modifier,
         ingredients = state.ingredients,
+        nextButtonEnable = state.isEnableIngredientsNextButton(),
         onAddIngredientButtonClick = { onIntent(AddRecipeIntent.Ingredients.IngredientAddButtonClick) },
         onNextButtonClick = { onIntent(AddRecipeIntent.Ingredients.RecipeIngredientsNextButtonClick) },
         onIngredientNameChange = { ingredient, name ->
@@ -93,6 +94,7 @@ internal fun RecipeIngredientsScreen(
 internal fun RecipeIngredientsScreen(
     modifier: Modifier = Modifier,
     ingredients: ImmutableList<IngredientUiModel>,
+    nextButtonEnable: Boolean,
     onAddIngredientButtonClick: () -> Unit,
     onNextButtonClick: () -> Unit,
     onIngredientNameChange: (IngredientUiModel, String) -> Unit,
@@ -150,7 +152,8 @@ internal fun RecipeIngredientsScreen(
         IngredientFarmingWideButton(
             modifier = Modifier.align(Alignment.BottomCenter),
             onClick = onNextButtonClick,
-            background = Green
+            background = Green,
+            enabled = nextButtonEnable
         ) {
             Text(stringResource(R.string.add_recipe_next_button_title))
         }

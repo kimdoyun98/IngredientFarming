@@ -43,6 +43,7 @@ internal fun RecipeStepsScreen(
     RecipeStepsScreen(
         modifier = modifier,
         steps = state.recipeSteps,
+        saveButtonEnable = state.isEnableSaveButton(),
         onRecipeStepChange = { step, value ->
             onIntent(
                 AddRecipeIntent.RecipeStep.RecipeStepChange(
@@ -67,6 +68,7 @@ internal fun RecipeStepsScreen(
 internal fun RecipeStepsScreen(
     modifier: Modifier = Modifier,
     steps: ImmutableList<RecipeStepUiModel>,
+    saveButtonEnable: Boolean,
     onRecipeStepChange: (RecipeStepUiModel, String) -> Unit,
     onAddStepButtonClick: () -> Unit,
     onRecipeDeleteButtonClick: (RecipeStepUiModel) -> Unit,
@@ -119,7 +121,8 @@ internal fun RecipeStepsScreen(
         IngredientFarmingWideButton(
             modifier = Modifier.align(Alignment.BottomCenter),
             onClick = onSaveButtonClick,
-            background = Green
+            background = Green,
+            enabled = saveButtonEnable
         ) {
             Text(stringResource(R.string.add_recipe_save_button_title))
         }

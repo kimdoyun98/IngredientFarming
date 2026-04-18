@@ -3,9 +3,9 @@ package com.project.recipe.addrecipe.contract
 import android.net.Uri
 import androidx.compose.runtime.Stable
 import com.project.model.recipe.RecipeCategory
-import com.project.recipe.addrecipe.util.AddRecipeBackStack
 import com.project.recipe.addrecipe.model.IngredientUiModel
 import com.project.recipe.addrecipe.model.RecipeStepUiModel
+import com.project.recipe.addrecipe.util.AddRecipeBackStack
 import com.project.recipe.addrecipe.util.RecipeSaveState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -31,4 +31,23 @@ data class AddRecipeState(
             )
         ),
     val recipeSaveState: RecipeSaveState = RecipeSaveState.Idle
-)
+) {
+    fun isEnableBasicInfoNextButton(): Boolean {
+        return name.isNotBlank() &&
+                selectedCategory != null &&
+                time.isNotBlank() &&
+                people.isNotBlank()
+    }
+
+    fun isEnableIngredientsNextButton(): Boolean {
+        return ingredients.all {
+            it.name.isNotBlank() && it.amount.isNotBlank()
+        }
+    }
+
+    fun isEnableSaveButton(): Boolean {
+        return recipeSteps.all {
+            it.description.isNotBlank()
+        }
+    }
+}
