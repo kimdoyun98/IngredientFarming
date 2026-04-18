@@ -33,4 +33,7 @@ sealed interface IngredientRoute : Route {
 
     @Serializable
     data object Recipe: IngredientRoute
+
+    @Serializable
+    data object AddRecipe: IngredientRoute
 }
