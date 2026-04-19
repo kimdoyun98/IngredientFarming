@@ -6,7 +6,7 @@ import com.project.model.recipe.RecipeCategory
 
 @Entity(tableName = "RecipeEntity")
 data class RecipeEntity(
-    @PrimaryKey val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val imageUri: String,
     val category: RecipeCategory,
