@@ -9,7 +9,6 @@ import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
-import com.project.ui.flow.filterWith
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -55,13 +54,10 @@ class ManageViewModel @Inject constructor(
     private val selectedCategory: StateFlow<IngredientCategory?> = _selectedCategory.asStateFlow()
 
     init {
-        getAllHoldIngredientUseCase.invoke()
-            .filterWith(
-                categoryFlow = selectedCategory,
-                queryFlow = query,
-                getCategory = { it.category },
-                getName = { it.name }
-            )
+        getAllHoldIngredientUseCase.invoke(
+            categoryFlow = selectedCategory,
+            queryFlow = query,
+        )
             .onEach {
                 _items.value = it.toImmutableList()
             }

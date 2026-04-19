@@ -1,4 +1,4 @@
-package com.project.ui.flow
+package com.project.common_core
 
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
