@@ -199,6 +199,7 @@ class AddRecipeViewModel @Inject constructor(
                         postSideEffect(AddRecipeEffect.NavigateToRecipeList)
 
                     } else {
+                        reduce { state.copy(recipeSaveState = RecipeSaveState.Error) }
                         postSideEffect(AddRecipeEffect.SaveError())
                     }
                 }
