@@ -9,6 +9,7 @@ import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
+import com.project.ui.flow.filterWith
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -17,13 +18,12 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -40,31 +40,30 @@ class ManageViewModel @Inject constructor(
     private val items = _items.asStateFlow()
 
     private val _query = MutableStateFlow("")
-    private val query: StateFlow<String> = _query.asStateFlow()
+    private val query: StateFlow<String> =
+        _query
+            .onEach {
+                intent { reduce { state.copy(query = it) } }
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = ""
+            )
 
     private val _selectedCategory = MutableStateFlow<IngredientCategory?>(null)
     private val selectedCategory: StateFlow<IngredientCategory?> = _selectedCategory.asStateFlow()
 
     init {
         getAllHoldIngredientUseCase.invoke()
-            .flatMapLatest { ingredients ->
-                selectedCategory
-                    .combine(
-                        query
-                            .onEach { q ->
-                                intent { reduce { state.copy(query = q) } }
-                            }
-                            .debounce(300L)
-                    ) { category, q ->
-                        ingredients
-                            .filter { ingredient ->
-                                (category == null || ingredient.category == category) &&
-                                        ingredient.name.contains(q)
-                            }
-                    }
-            }
-            .onEach { filterIngredients ->
-                _items.value = filterIngredients.toImmutableList()
+            .filterWith(
+                categoryFlow = selectedCategory,
+                queryFlow = query,
+                getCategory = { it.category },
+                getName = { it.name }
+            )
+            .onEach {
+                _items.value = it.toImmutableList()
             }
             .launchIn(viewModelScope)
 
