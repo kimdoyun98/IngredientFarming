@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +24,7 @@ fun IngredientFarmingSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     onCloseClick: () -> Unit,
+    placeholder: String? = null,
 ) {
     var localText by remember { mutableStateOf(query) }
 
@@ -52,6 +54,7 @@ fun IngredientFarmingSearchBar(
             }
         },
         singleLine = true,
+        placeholder = placeholder?.let{ { Text(it) } }
     )
 }
 
