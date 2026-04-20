@@ -7,4 +7,6 @@ sealed interface BarcodeIntent {
     data class SelectIngredient(val product: Product) : BarcodeIntent
     object DirectInputClick : BarcodeIntent
     object SnackBarDismissed : BarcodeIntent
+    object BarcodeProductEmpty: BarcodeIntent
+    object BarcodeResultError: BarcodeIntent
 }

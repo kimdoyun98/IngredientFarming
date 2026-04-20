@@ -21,10 +21,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -47,15 +45,13 @@ import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
 import com.project.model.barcode.Product
 import com.project.ui.IngredientFarmingCenterLoading
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @Composable
 internal fun BarcodeScannerScreen(
     modifier: Modifier = Modifier,
-    state: () -> BarcodeState,
+    state: BarcodeState,
     onIntent: (BarcodeIntent) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
@@ -63,11 +59,13 @@ internal fun BarcodeScannerScreen(
     BarcodeScannerScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        scanStatus = state().scanStatus,
+        scanStatus = state.scanStatus,
         barcodeScan = { onIntent(BarcodeIntent.BarcodeScan(it)) },
         selectIngredient = { onIntent(BarcodeIntent.SelectIngredient(it)) },
         directInputClick = { onIntent(BarcodeIntent.DirectInputClick) },
         resetBarcodeScanStatus = { onIntent(BarcodeIntent.SnackBarDismissed) },
+        barcodeResultEmpty = { onIntent(BarcodeIntent.BarcodeProductEmpty) },
+        barcodeResultError = { onIntent(BarcodeIntent.BarcodeResultError) }
     )
 }
 
@@ -81,6 +79,8 @@ internal fun BarcodeScannerScreen(
     selectIngredient: (Product) -> Unit,
     directInputClick: () -> Unit,
     resetBarcodeScanStatus: () -> Unit,
+    barcodeResultEmpty: () -> Unit,
+    barcodeResultError: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
@@ -107,14 +107,7 @@ internal fun BarcodeScannerScreen(
 
             is BarcodeScanStatus.Success -> {
                 if (status.products.isEmpty()) {
-                    showSnackBar(
-                        scope = scope,
-                        snackBarHostState = snackbarHostState,
-                        message = stringResource(R.string.no_search_product),
-                        actionLabel = stringResource(R.string.directInput),
-                        onActionPerformed = { directInputClick() },
-                        onDismissed = { resetBarcodeScanStatus() }
-                    )
+                    barcodeResultEmpty()
                 } else if (status.products.size == 1) {
                     selectIngredient(status.products.first())
                 } else {
@@ -135,14 +128,7 @@ internal fun BarcodeScannerScreen(
             }
 
             is BarcodeScanStatus.Error -> {
-                showSnackBar(
-                    scope = scope,
-                    snackBarHostState = snackbarHostState,
-                    message = stringResource(R.string.no_search_product),
-                    actionLabel = stringResource(R.string.directInput),
-                    onActionPerformed = { directInputClick() },
-                    onDismissed = { resetBarcodeScanStatus() }
-                )
+                barcodeResultError()
             }
 
             else -> Unit
@@ -206,34 +192,6 @@ private fun CameraXScreen(
     }
 }
 
-private fun showSnackBar(
-    scope: CoroutineScope,
-    snackBarHostState: SnackbarHostState,
-    message: String,
-    actionLabel: String,
-    onActionPerformed: () -> Unit,
-    onDismissed: () -> Unit
-) {
-    scope.launch {
-        val result = snackBarHostState
-            .showSnackbar(
-                message = message,
-                actionLabel = actionLabel,
-                withDismissAction = true,
-                duration = SnackbarDuration.Long
-            )
-        when (result) {
-            SnackbarResult.ActionPerformed -> {
-                onActionPerformed()
-            }
-
-            SnackbarResult.Dismissed -> {
-                onDismissed()
-            }
-        }
-    }
-}
-
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun SelectIngredientBottomSheet(
@@ -293,17 +251,8 @@ private fun SelectIngredientBottomSheet(
 @Composable
 private fun BarcodeScannerScreenPreview() {
     BarcodeScannerScreen(
-        modifier = Modifier,
-        snackbarHostState = SnackbarHostState(),
-        scanStatus = BarcodeScanStatus.Success(
-            products = persistentListOf(
-                Product(barcode = "1234567890123", name = "Sample Product 1"),
-                Product(barcode = "1234567890124", name = "Sample Product 2")
-            )
-        ),
-        barcodeScan = {},
-        selectIngredient = {},
-        directInputClick = {},
-        resetBarcodeScanStatus = {}
+        state = BarcodeState(),
+        onIntent = {},
+        snackbarHostState = SnackbarHostState()
     )
 }

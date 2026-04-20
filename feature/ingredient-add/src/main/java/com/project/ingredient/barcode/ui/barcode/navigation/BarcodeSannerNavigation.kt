@@ -4,7 +4,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -14,6 +13,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.project.ingredient.R
 import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
+import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
 import com.project.ingredient.barcode.ui.barcode.BarcodeScannerScreen
 import com.project.ingredient.barcode.ui.barcode.BarcodeViewModel
 import com.project.model.ingredient.getIndexByIngredientCategory
@@ -21,6 +21,7 @@ import com.project.model.ingredient.getIndexByIngredientStore
 import com.project.model.permission.PermissionState
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -37,9 +38,12 @@ fun NavGraphBuilder.barcodeScannerGraph(
         val scope = rememberCoroutineScope()
         val snackbarHostState = remember { SnackbarHostState() }
 
-        val requireCameraPermissionMessage = stringResource(R.string.require_camera_permission_message)
+        val requireCameraPermissionMessage =
+            stringResource(R.string.require_camera_permission_message)
         val requestPermissionLabel = stringResource(R.string.request_permission_label)
         val openAppSettingsLabel = stringResource(R.string.open_app_settings_label)
+        val notFoundProductMessage = stringResource(R.string.no_search_product)
+        val directInputLabel = stringResource(R.string.directInput)
 
         barcodeViewModel.collectSideEffect { effect ->
             when (effect) {
@@ -58,60 +62,89 @@ fun NavGraphBuilder.barcodeScannerGraph(
                 is BarcodeEffect.NavigateDirectInputScreen -> {
                     navigator.navigateToDirectInput()
                 }
+
+                is BarcodeEffect.BarcodeProductEmpty, is BarcodeEffect.BarcodeResultError -> {
+                    showSnackBar(
+                        scope = scope,
+                        snackBarHostState = snackbarHostState,
+                        message = notFoundProductMessage,
+                        actionLabel = directInputLabel,
+                        withDismissAction = true,
+                        onActionPerformed = navigator::navigateToDirectInput,
+                        onDismissed = { barcodeViewModel.onIntent(BarcodeIntent.SnackBarDismissed) },
+                        duration = SnackbarDuration.Long
+                    )
+                }
             }
         }
 
         BarcodeScannerScreen(
-            state = { barcodeState },
+            state = barcodeState,
             onIntent = barcodeViewModel::onIntent,
             snackbarHostState = snackbarHostState,
         )
 
         LaunchedEffect(Unit) {
             cameraPermissionState.collect {
-                when(it){
+                when (it) {
                     is PermissionState.Granted -> Unit
 
                     is PermissionState.Denied -> {
-                        scope.launch {
-                            val result = snackbarHostState.showSnackbar(
-                                message = requireCameraPermissionMessage,
-                                actionLabel = requestPermissionLabel,
-                                duration = SnackbarDuration.Indefinite
+                        showSnackBar(
+                            scope = scope,
+                            snackBarHostState = snackbarHostState,
+                            message = requireCameraPermissionMessage,
+                            actionLabel = requestPermissionLabel,
+                            onActionPerformed = requestCameraPermission,
+
                             )
-
-                            when (result) {
-                                SnackbarResult.ActionPerformed -> {
-                                    requestCameraPermission()
-                                }
-
-                                SnackbarResult.Dismissed -> Unit
-                            }
-                        }
                     }
 
                     is PermissionState.PermanentlyDenied -> {
-                        scope.launch {
-                            val result = snackbarHostState.showSnackbar(
-                                message = requireCameraPermissionMessage,
-                                actionLabel = openAppSettingsLabel,
-                                duration = SnackbarDuration.Indefinite
+                        showSnackBar(
+                            scope = scope,
+                            snackBarHostState = snackbarHostState,
+                            message = requireCameraPermissionMessage,
+                            actionLabel = openAppSettingsLabel,
+                            onActionPerformed = it.openAppSettings,
+
                             )
-
-                            when (result) {
-                                SnackbarResult.ActionPerformed -> {
-                                    it.openAppSettings()
-                                }
-
-                                SnackbarResult.Dismissed -> Unit
-                            }
-                        }
                     }
 
                     else -> {
                         requestCameraPermission()
                     }
                 }
+            }
+        }
+    }
+}
+
+private fun showSnackBar(
+    scope: CoroutineScope,
+    snackBarHostState: SnackbarHostState,
+    message: String,
+    actionLabel: String,
+    withDismissAction: Boolean = false,
+    onActionPerformed: () -> Unit,
+    onDismissed: () -> Unit = {},
+    duration: SnackbarDuration = SnackbarDuration.Indefinite
+) {
+    scope.launch {
+        val result = snackBarHostState
+            .showSnackbar(
+                message = message,
+                actionLabel = actionLabel,
+                withDismissAction = withDismissAction,
+                duration = duration
+            )
+        when (result) {
+            SnackbarResult.ActionPerformed -> {
+                onActionPerformed()
+            }
+
+            SnackbarResult.Dismissed -> {
+                onDismissed()
             }
         }
     }

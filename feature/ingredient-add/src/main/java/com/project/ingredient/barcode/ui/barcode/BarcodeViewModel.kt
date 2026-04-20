@@ -91,6 +91,14 @@ class BarcodeViewModel @Inject constructor(
             is BarcodeIntent.SnackBarDismissed -> intent {
                 reduce { state.copy(scanStatus = BarcodeScanStatus.Idle) }
             }
+
+            is BarcodeIntent.BarcodeProductEmpty -> intent {
+                postSideEffect(BarcodeEffect.BarcodeProductEmpty)
+            }
+
+            is BarcodeIntent.BarcodeResultError -> intent {
+                postSideEffect(BarcodeEffect.BarcodeResultError)
+            }
         }
     }
 }
