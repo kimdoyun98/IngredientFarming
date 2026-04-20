@@ -12,6 +12,8 @@ sealed interface AddRecipeIntent {
     sealed interface Photo : AddRecipeIntent {
         object RecipePhotoNextButtonClick : Photo
         data class RecipePhotoSelect(val uri: Uri?) : Photo
+        object PermissionDenied : Photo
+        data class PermissionPermanentlyDenied(val openAppSettings: () -> Unit): Photo
     }
 
     sealed interface BasicInfo : AddRecipeIntent {

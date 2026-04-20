@@ -12,17 +12,16 @@ import com.project.ingredient_manage.navigation.updateHoldIngredientGraph
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import com.project.navigation.rememberIngredientFarmingNavigator
+import com.project.permission.IngredientFarmingPermission
 import com.project.recipe.addrecipe.navigation.addRecipeGraph
 import com.project.recipe.recipelist.navigation.recipeGraph
 import com.project.shopping_cart.navigation.shoppingCartGraph
-import com.project.ui.permission.IngredientFarmingPermission
-import com.project.ui.permission.rememberIngredientFarmingPermission
 
 @Composable
 internal fun MainScreen(
     modifier: Modifier = Modifier,
     navigator: IngredientFarmingNavigator = rememberIngredientFarmingNavigator(),
-    ingredientFarmingPermission: IngredientFarmingPermission = rememberIngredientFarmingPermission(),
+    ingredientFarmingPermission: IngredientFarmingPermission,
 ) {
     NavHost(
         modifier = modifier,
@@ -33,11 +32,7 @@ internal fun MainScreen(
 
         barcodeScannerGraph(
             navigator = navigator,
-            requestCameraPermission = {
-                ingredientFarmingPermission.requestPermission(
-                    IngredientFarmingPermission.Type.CAMERA
-                )
-            }
+            requestCameraPermission = ingredientFarmingPermission::launchCameraPermission
         )
 
         saveIngredientGraph(navigator = navigator)
@@ -52,6 +47,10 @@ internal fun MainScreen(
 
         recipeGraph(navigator = navigator)
 
-        addRecipeGraph(navigator = navigator)
+        addRecipeGraph(
+            navigator = navigator,
+            mediaImagePermissionState = ingredientFarmingPermission.mediaImagePermissionState,
+            launchMediaImagePermission = ingredientFarmingPermission::launchMediaImagesPermission,
+        )
     }
 }

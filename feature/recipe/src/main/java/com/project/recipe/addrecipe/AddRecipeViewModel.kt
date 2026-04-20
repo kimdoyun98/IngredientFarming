@@ -108,6 +108,14 @@ class AddRecipeViewModel @Inject constructor(
                     postSideEffect(AddRecipeEffect.UriIsNull)
                 }
             }
+
+            is AddRecipeIntent.Photo.PermissionDenied -> intent {
+                postSideEffect(AddRecipeEffect.PermissionDenied)
+            }
+
+            is AddRecipeIntent.Photo.PermissionPermanentlyDenied -> intent {
+                postSideEffect(AddRecipeEffect.PermissionPermanentlyDenied(intent.openAppSettings))
+            }
         }
     }
 
