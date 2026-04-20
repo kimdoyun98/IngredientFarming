@@ -32,6 +32,10 @@ internal fun MainScreen(
 
         barcodeScannerGraph(
             navigator = navigator,
+            isGrantedCameraPermission = ingredientFarmingPermission::isGrantedCameraPermission,
+            updateCameraPermissionState = { permissionState ->
+                ingredientFarmingPermission.updateCameraPermissionState(permissionState)
+            },
             cameraPermissionState = ingredientFarmingPermission.cameraPermissionState,
             requestCameraPermission = ingredientFarmingPermission::launchCameraPermission
         )

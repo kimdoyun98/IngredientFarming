@@ -31,6 +31,8 @@ fun NavGraphBuilder.barcodeScannerGraph(
     navigator: IngredientFarmingNavigator,
     cameraPermissionState: Flow<PermissionState?>,
     requestCameraPermission: () -> Unit,
+    isGrantedCameraPermission: () -> Boolean,
+    updateCameraPermissionState: (PermissionState) -> Unit,
 ) {
     composable<IngredientRoute.BarcodeScanner> { backStack ->
         val barcodeViewModel: BarcodeViewModel = hiltViewModel()
@@ -101,14 +103,18 @@ fun NavGraphBuilder.barcodeScannerGraph(
                     }
 
                     is PermissionState.PermanentlyDenied -> {
+                        if(isGrantedCameraPermission()){
+                            updateCameraPermissionState(PermissionState.Granted)
+                            return@collect
+                        }
+
                         showSnackBar(
                             scope = scope,
                             snackBarHostState = snackbarHostState,
                             message = requireCameraPermissionMessage,
                             actionLabel = openAppSettingsLabel,
                             onActionPerformed = it.openAppSettings,
-
-                            )
+                        )
                     }
 
                     else -> {

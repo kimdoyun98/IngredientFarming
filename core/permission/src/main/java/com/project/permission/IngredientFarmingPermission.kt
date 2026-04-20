@@ -2,7 +2,9 @@ package com.project.permission
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
@@ -11,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Stable
+import androidx.core.content.ContextCompat
 import com.project.model.permission.PermissionState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,6 +63,21 @@ class IngredientFarmingPermission(
 
     fun launchCameraPermission() {
         launcher.launch(arrayOf(CAMERA))
+    }
+
+    fun isGrantedCameraPermission(): Boolean {
+        return checkPermission(activity, CAMERA)
+    }
+
+    fun updateCameraPermissionState(state: PermissionState) {
+        _cameraPermissionState.value = state
+    }
+
+    private fun checkPermission(context: Context, permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            context,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun openAppSettingsForPermission() {
