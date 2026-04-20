@@ -57,10 +57,12 @@ internal fun BarcodeScannerScreen(
     modifier: Modifier = Modifier,
     state: () -> BarcodeState,
     onIntent: (BarcodeIntent) -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
 
     BarcodeScannerScreen(
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
         scanStatus = state().scanStatus,
         barcodeScan = { onIntent(BarcodeIntent.BarcodeScan(it)) },
         selectIngredient = { onIntent(BarcodeIntent.SelectIngredient(it)) },
@@ -73,6 +75,7 @@ internal fun BarcodeScannerScreen(
 @Composable
 internal fun BarcodeScannerScreen(
     modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState,
     scanStatus: BarcodeScanStatus,
     barcodeScan: (String) -> Unit,
     selectIngredient: (Product) -> Unit,
@@ -80,11 +83,10 @@ internal fun BarcodeScannerScreen(
     resetBarcodeScanStatus: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val snackBarHostState = remember { SnackbarHostState() }
     val sheetState = rememberModalBottomSheetState()
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         CameraXScreen(
             modifier = modifier
@@ -107,7 +109,7 @@ internal fun BarcodeScannerScreen(
                 if (status.products.isEmpty()) {
                     showSnackBar(
                         scope = scope,
-                        snackBarHostState = snackBarHostState,
+                        snackBarHostState = snackbarHostState,
                         message = stringResource(R.string.no_search_product),
                         actionLabel = stringResource(R.string.directInput),
                         onActionPerformed = { directInputClick() },
@@ -135,7 +137,7 @@ internal fun BarcodeScannerScreen(
             is BarcodeScanStatus.Error -> {
                 showSnackBar(
                     scope = scope,
-                    snackBarHostState = snackBarHostState,
+                    snackBarHostState = snackbarHostState,
                     message = stringResource(R.string.no_search_product),
                     actionLabel = stringResource(R.string.directInput),
                     onActionPerformed = { directInputClick() },
@@ -292,6 +294,7 @@ private fun SelectIngredientBottomSheet(
 private fun BarcodeScannerScreenPreview() {
     BarcodeScannerScreen(
         modifier = Modifier,
+        snackbarHostState = SnackbarHostState(),
         scanStatus = BarcodeScanStatus.Success(
             products = persistentListOf(
                 Product(barcode = "1234567890123", name = "Sample Product 1"),

@@ -32,6 +32,7 @@ internal fun MainScreen(
 
         barcodeScannerGraph(
             navigator = navigator,
+            cameraPermissionState = ingredientFarmingPermission.cameraPermissionState,
             requestCameraPermission = ingredientFarmingPermission::launchCameraPermission
         )
 

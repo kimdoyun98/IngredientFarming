@@ -37,7 +37,7 @@ class IngredientFarmingPermission(
 
                 if (isGranted) updateMediaImagePermissionState(permission, PermissionState.Granted)
 
-                if (isLimitsMediaImagePermission(activity)) {
+                if (isLimitsPermission(activity, permission)) {
                     updateMediaImagePermissionState(
                         permission, PermissionState.PermanentlyDenied({
                             openAppSettingsForPermission()
@@ -81,12 +81,8 @@ class IngredientFarmingPermission(
         }
     }
 
-    private fun isLimitsMediaImagePermission(activity: Activity): Boolean {
-        return if (isTiramisuVersionHigher()) {
-            !activity.shouldShowRequestPermissionRationale(READ_MEDIA_IMAGES)
-        } else {
-            !activity.shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE)
-        }
+    private fun isLimitsPermission(activity: Activity, permission: String): Boolean {
+        return !activity.shouldShowRequestPermissionRationale(permission)
     }
 
     companion object {
