@@ -41,7 +41,7 @@ data class AddRecipeState(
 
     fun isEnableIngredientsNextButton(): Boolean {
         return ingredients.all {
-            it.name.isNotBlank() && it.amount.isNotBlank()
+            it.name.isNotBlank() && it.amount.isNotBlank() && !it.name.any{ s -> s.isDigit()}
         }
     }
 
