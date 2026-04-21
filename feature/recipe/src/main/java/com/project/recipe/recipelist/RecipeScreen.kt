@@ -100,7 +100,7 @@ internal fun RecipeScreen(
                     key = { it.id }
                 ) {
                     RecipeCardItem(
-                        imageUri = it.photo,
+                        imagePath = it.image,
                         name = it.name,
                         category = it.category,
                         time = it.minute,
@@ -153,7 +153,7 @@ private fun RecipeScreenPreview() {
             recipeList = persistentListOf(
                 RecipeListItem(
                     id = 0,
-                    photo = "",
+                    image = "",
                     name = "비빔밥",
                     category = RecipeCategory.KOREAN_FOOD,
                     minute = 30,

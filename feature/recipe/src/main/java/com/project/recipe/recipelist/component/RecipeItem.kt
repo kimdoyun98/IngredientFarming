@@ -1,7 +1,5 @@
 package com.project.recipe.recipelist.component
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,11 +47,12 @@ import com.project.ui.IconResource
 import com.project.ui.LocarmIcon
 import com.project.ui.modifier.shadowLayout
 import com.project.ui.modifier.singleClickable
+import java.io.File
 
 @Composable
 internal fun RecipeCardItem(
     modifier: Modifier = Modifier,
-    imageUri: String,
+    imagePath: String?,
     category: RecipeCategory,
     name: String,
     time: Int,
@@ -71,7 +70,7 @@ internal fun RecipeCardItem(
     ) {
         Column {
             FoodImageBox(
-                imageUri = imageUri,
+                imagePath = imagePath,
                 category = category
             )
 
@@ -97,7 +96,7 @@ internal fun RecipeCardItem(
 
 @Composable
 private fun FoodImageBox(
-    imageUri: String,
+    imagePath: String?,
     category: RecipeCategory,
 ) {
     Box(
@@ -113,7 +112,7 @@ private fun FoodImageBox(
                 .aspectRatio(1f)
                 .clip(MaterialTheme.shapes.medium),
             model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUri)
+                .data(imagePath?.let{ File(imagePath) })
                 .placeholder(R.drawable.ic_default_image)
                 .build(),
             contentDescription = stringResource(R.string.add_recipe_photo_description),
@@ -235,7 +234,7 @@ private fun IngredientMatchProgress(
 @Composable
 private fun RecipeCardItemPreview() {
     RecipeCardItem(
-        imageUri = "",
+        imagePath = null,
         category = RecipeCategory.CHINESE_FOOD,
         name = "비빔밥",
         time = 30,

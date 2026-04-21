@@ -5,7 +5,7 @@ import com.project.model.recipe.RecipeIngredient
 import com.project.model.recipe.RecipeStep
 import com.project.recipe.addrecipe.contract.AddRecipeState
 
-fun AddRecipeState.asRecipe(): Recipe {
+fun AddRecipeState.asRecipe(path: String?): Recipe {
     val ingredients = ingredients.sortedBy { it.id }
     val steps = recipeSteps.sortedBy { it.id }
 
@@ -13,7 +13,7 @@ fun AddRecipeState.asRecipe(): Recipe {
     return Recipe(
         id = 0,
         name = name,
-        imageUri = photo.toString(),
+        imagePath = path,
         category = selectedCategory!!,
         minute = time.toInt(),
         people = people.toInt(),

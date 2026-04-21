@@ -41,7 +41,7 @@ sealed interface AddRecipeIntent {
     }
 
     sealed interface RecipeStep : AddRecipeIntent {
-        object RecipeSaveButtonClick : RecipeStep
+        data class RecipeSaveButtonClick(val filePath: String?) : RecipeStep
         object StepAddButtonClick : RecipeStep
         data class RecipeStepChange(val step: RecipeStepUiModel, val value: String) : RecipeStep
         data class StepDeleteButtonClick(val step: RecipeStepUiModel) : RecipeStep

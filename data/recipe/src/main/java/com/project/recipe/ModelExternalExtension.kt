@@ -12,7 +12,7 @@ import com.project.model.recipe.RecipeListItem
 internal fun Recipe.asRecipeEntity() =
     RecipeEntity(
         name = name,
-        imageUri = imageUri,
+        image = imagePath,
         category = category,
         minute = minute,
         people = people
@@ -36,7 +36,7 @@ internal fun RecipeStep.asRecipeStepEntity(recipeId: Int) =
 internal fun RecipeWithIngredients.asExternalModel(): RecipeListItem {
     return RecipeListItem(
         id = recipe.id,
-        photo = recipe.imageUri,
+        image = recipe.image,
         name = recipe.name,
         category = recipe.category,
         minute = recipe.minute,

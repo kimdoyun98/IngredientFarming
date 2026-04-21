@@ -8,7 +8,7 @@ import com.project.model.recipe.RecipeCategory
 data class RecipeEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val imageUri: String,
+    val image: String?,
     val category: RecipeCategory,
     val minute: Int,
     val people: Int

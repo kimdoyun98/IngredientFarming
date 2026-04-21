@@ -201,7 +201,7 @@ class AddRecipeViewModel @Inject constructor(
                 viewModelScope.launch {
                     reduce { state.copy(recipeSaveState = RecipeSaveState.Loading) }
 
-                    val isSuccess = saveRecipeUseCase.invoke(state.asRecipe())
+                    val isSuccess = saveRecipeUseCase.invoke(state.asRecipe(intent.filePath))
 
                     if (isSuccess) {
                         postSideEffect(AddRecipeEffect.NavigateToRecipeList)

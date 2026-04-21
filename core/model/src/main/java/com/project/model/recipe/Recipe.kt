@@ -3,7 +3,7 @@ package com.project.model.recipe
 data class Recipe(
     val id: Int,
     val name: String,
-    val imageUri: String,
+    val imagePath: String?,
     val category: RecipeCategory,
     val minute: Int,
     val people: Int,

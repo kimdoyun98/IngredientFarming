@@ -18,6 +18,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,7 @@ import com.project.recipe.addrecipe.component.MainTitleContent
 import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import com.project.recipe.addrecipe.contract.AddRecipeState
 import com.project.recipe.addrecipe.model.RecipeStepUiModel
+import com.project.recipe.addrecipe.util.copyToInternalStorage
 import com.project.ui.SmallIconBox
 import kotlinx.collections.immutable.ImmutableList
 
@@ -40,6 +42,7 @@ internal fun RecipeStepsScreen(
     state: AddRecipeState,
     onIntent: (AddRecipeIntent) -> Unit,
 ) {
+    val context = LocalContext.current
     RecipeStepsScreen(
         modifier = modifier,
         steps = state.recipeSteps,
@@ -60,7 +63,15 @@ internal fun RecipeStepsScreen(
                 )
             )
         },
-        onSaveButtonClick = { onIntent(AddRecipeIntent.RecipeStep.RecipeSaveButtonClick) }
+        onSaveButtonClick = {
+            onIntent(
+                AddRecipeIntent.RecipeStep.RecipeSaveButtonClick(
+                    filePath = state.photo?.copyToInternalStorage(
+                        context
+                    )
+                )
+            )
+        }
     )
 }
 

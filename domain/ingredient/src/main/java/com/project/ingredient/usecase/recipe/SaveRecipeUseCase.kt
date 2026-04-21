@@ -26,5 +26,4 @@ class SaveRecipeUseCase @Inject constructor(
             .trim()
             .lowercase()
             .replace(" ", "")
-
 }
