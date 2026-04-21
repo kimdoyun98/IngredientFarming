@@ -25,7 +25,10 @@ data class IngredientCategoryGroupEntity(
             onDelete = ForeignKey.SET_NULL
         )
     ],
-    indices = [Index("group_id")]
+    indices = [
+        Index("group_id"),
+        Index(value = ["name"], unique = true)
+    ]
 )
 data class IngredientEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,

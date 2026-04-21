@@ -13,6 +13,7 @@ data class Recipe(
 
 data class RecipeIngredient(
     val id: Int,
+    val ingredientId: Int,
     val name: String,
     val count: Double,
     val unit: IngredientUnit,

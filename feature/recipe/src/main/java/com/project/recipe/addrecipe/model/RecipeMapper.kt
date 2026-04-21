@@ -28,6 +28,7 @@ fun AddRecipeState.asRecipe(): Recipe {
 
 fun IngredientUiModel.asRecipeIngredient() = RecipeIngredient(
     id = 0,
+    ingredientId = -1,
     name = name,
     count = amount.toDouble(),
     unit = unit

@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.project.database.model.IngredientEntity
 import com.project.model.recipe.IngredientUnit
 
 @Entity(
@@ -14,6 +15,12 @@ import com.project.model.recipe.IngredientUnit
             parentColumns = ["id"],
             childColumns = ["recipeId"],
             onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = IngredientEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["ingredientId"],
+            onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [Index("recipeId")]
@@ -22,7 +29,7 @@ data class RecipeIngredientEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val recipeId: Int,
-    val name: String,
+    val ingredientId: Int,
     val count: Double,
     val unit: IngredientUnit
 )

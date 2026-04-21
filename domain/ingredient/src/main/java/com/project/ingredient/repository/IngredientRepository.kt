@@ -12,4 +12,5 @@ interface IngredientRepository {
     suspend fun insertIngredient(igdList: List<Ingredient>)
     fun getIngredientCount(): Flow<Int>
     fun getCountExpiringInThreeDays(): Flow<Int>
+    suspend fun insertUnknownIngredient(name: String): Int
 }

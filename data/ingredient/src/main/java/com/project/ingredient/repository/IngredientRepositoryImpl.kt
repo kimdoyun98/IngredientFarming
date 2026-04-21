@@ -4,6 +4,7 @@ import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
+import com.project.ingredient.asUnknownIngredientEntity
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientInfo
@@ -52,5 +53,12 @@ class IngredientRepositoryImpl @Inject constructor(
 
     override fun getCountExpiringInThreeDays(): Flow<Int> {
         return ingredientDao.getExpirationDateSoonCount()
+    }
+
+    override suspend fun insertUnknownIngredient(name: String): Int {
+
+        return ingredientDao.insertIngredient(
+            name.asUnknownIngredientEntity()
+        ).toInt()
     }
 }

@@ -158,32 +158,7 @@ private fun RecipeScreenPreview() {
                     category = RecipeCategory.KOREAN_FOOD,
                     minute = 30,
                     people = 2,
-                    ingredients = listOf(
-                        RecipeIngredient(
-                            id = 0,
-                            name = "당근",
-                            count = 1.0,
-                            unit = IngredientUnit.COUNT
-                        ),
-                        RecipeIngredient(
-                            id = 1,
-                            name = "계란",
-                            count = 1.0,
-                            unit = IngredientUnit.COUNT
-                        ),
-                        RecipeIngredient(
-                            id = 2,
-                            name = "고추장",
-                            count = 1.0,
-                            unit = IngredientUnit.TABLESPOON
-                        ),
-                        RecipeIngredient(
-                            id = 3,
-                            name = "참기름",
-                            count = 1.0,
-                            unit = IngredientUnit.TABLESPOON
-                        )
-                    )
+                    ingredients = listOf(0,1,2)
                 )
             )
         ),

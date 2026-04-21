@@ -7,5 +7,5 @@ data class RecipeListItem(
     val category: RecipeCategory,
     val minute: Int,
     val people: Int,
-    val ingredients: List<RecipeIngredient>,
+    val ingredients: List<Int>,
 )

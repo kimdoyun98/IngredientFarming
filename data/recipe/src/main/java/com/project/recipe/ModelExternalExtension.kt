@@ -6,8 +6,8 @@ import com.project.database.model.recipe.RecipeStepEntity
 import com.project.database.relation.RecipeWithIngredients
 import com.project.model.recipe.Recipe
 import com.project.model.recipe.RecipeIngredient
-import com.project.model.recipe.RecipeListItem
 import com.project.model.recipe.RecipeStep
+import com.project.model.recipe.RecipeListItem
 
 internal fun Recipe.asRecipeEntity() =
     RecipeEntity(
@@ -21,7 +21,7 @@ internal fun Recipe.asRecipeEntity() =
 internal fun RecipeIngredient.asRecipeIngredientEntity(recipeId: Int) =
     RecipeIngredientEntity(
         recipeId = recipeId,
-        name = name,
+        ingredientId = ingredientId,
         count = count,
         unit = unit
     )
@@ -41,13 +41,6 @@ internal fun RecipeWithIngredients.asExternalModel(): RecipeListItem {
         category = recipe.category,
         minute = recipe.minute,
         people = recipe.people,
-        ingredients = ingredients.map {
-            RecipeIngredient(
-                id = it.id,
-                name = it.name,
-                count = it.count,
-                unit = it.unit
-            )
-        }
+        ingredients = ingredients.map { it.ingredientId }
     )
 }
