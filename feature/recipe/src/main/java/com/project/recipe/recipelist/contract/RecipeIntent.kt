@@ -9,5 +9,5 @@ sealed interface RecipeIntent {
     data class SearchRecipeQueryChange(val query: String) : RecipeIntent
     object SearchRecipeQueryReset : RecipeIntent
     data class SelectCategoryChip(val category: RecipeCategory?) : RecipeIntent
-    data class RecipeItemClick(val itemIndex: Int) : RecipeIntent
+    data class RecipeItemClick(val recipeId: Int) : RecipeIntent
 }

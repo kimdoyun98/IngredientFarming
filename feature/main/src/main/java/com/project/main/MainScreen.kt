@@ -15,6 +15,7 @@ import com.project.navigation.rememberIngredientFarmingNavigator
 import com.project.permission.IngredientFarmingPermission
 import com.project.recipe.addrecipe.navigation.addRecipeGraph
 import com.project.recipe.recipelist.navigation.recipeGraph
+import com.project.recipe.recipinfo.navigation.recipeInfoGraph
 import com.project.shopping_cart.navigation.shoppingCartGraph
 
 @Composable
@@ -57,5 +58,7 @@ internal fun MainScreen(
             mediaImagePermissionState = ingredientFarmingPermission.mediaImagePermissionState,
             launchMediaImagePermission = ingredientFarmingPermission::launchMediaImagesPermission,
         )
+
+        recipeInfoGraph(navigator = navigator)
     }
 }

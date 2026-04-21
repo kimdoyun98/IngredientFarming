@@ -40,6 +40,9 @@ class IngredientFarmingNavigator(
 
     fun navigateToAddRecipe() =
         navController.navigate(IngredientRoute.AddRecipe)
+
+    fun navigateToRecipeInfo(recipeId: Int) =
+        navController.navigate(IngredientRoute.RecipeInfo(recipeId))
 }
 
 @Composable

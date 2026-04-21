@@ -62,7 +62,7 @@ class RecipeViewModel @Inject constructor(
             }
 
             is RecipeIntent.RecipeItemClick -> intent {
-                postSideEffect(RecipeEffect.NavigateToRecipeInfo)
+                postSideEffect(RecipeEffect.NavigateToRecipeInfo(intent.recipeId))
             }
 
             is RecipeIntent.SearchRecipeQueryChange -> intent {

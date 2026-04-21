@@ -36,4 +36,7 @@ sealed interface IngredientRoute : Route {
 
     @Serializable
     data object AddRecipe: IngredientRoute
+
+    @Serializable
+    data class RecipeInfo(val recipeId: Int): IngredientRoute
 }

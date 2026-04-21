@@ -31,6 +31,7 @@ fun NavGraphBuilder.recipeGraph(
 
                 is RecipeEffect.NavigateToRecipeInfo -> {
                     //TODO NavigateToRecipeInfo
+                    navigator.navigateToRecipeInfo(effect.recipeId)
                 }
             }
         }
