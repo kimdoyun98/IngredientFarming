@@ -21,7 +21,7 @@ fun AddRecipeState.asRecipe(path: String?): Recipe {
             ingredient.asRecipeIngredient()
         },
         recipeSteps = steps.mapIndexed { idx, step ->
-            step.asRecipeSteps(idx)
+            step.asRecipeSteps(idx+1)
         }
     )
 }
