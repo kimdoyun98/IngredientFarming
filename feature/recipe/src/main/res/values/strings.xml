@@ -43,11 +43,13 @@
     <string name="add_recipe_ingredients_cooking_step">조리 순서</string>
     <string name="add_recipe_ingredients_cooking_step_placeholder">조리 과정을 입력해주세요</string>
 
-
-
-
-
     <string name="add_recipe_add_text_button_title">추가</string>
     <string name="add_recipe_next_button_title">다음</string>
     <string name="add_recipe_save_button_title">저장</string>
+
+    <string name="recipe_info_top_app_bar_title">레시피 상세</string>
+    <string name="recipe_info_require_ingredient">필요한 재료</string>
+    <string name="recipe_info_check_circle_icon_description">재료 보유 아이콘</string>
+    <string name="recipe_info_cancel_circle_icon_description">재료 미보유 아이콘</string>
+    <string name="recipe_info_ingredients_cooking_step">조리 순서</string>
 </resources>

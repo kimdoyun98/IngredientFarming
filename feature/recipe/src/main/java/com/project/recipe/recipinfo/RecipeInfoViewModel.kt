@@ -1,27 +1,51 @@
 package com.project.recipe.recipinfo
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.project.ingredient.usecase.recipe.GetRecipeInfoUseCase
 import com.project.navigation.IngredientRoute
+import com.project.recipe.recipinfo.contract.RecipeInfoEffect
+import com.project.recipe.recipinfo.contract.RecipeInfoIntent
+import com.project.recipe.recipinfo.contract.RecipeInfoState
+import com.project.recipe.recipinfo.model.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.collections.immutable.toImmutableList
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class RecipeInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeInfoUseCase: GetRecipeInfoUseCase,
-): ViewModel() {
+) : ContainerHost<RecipeInfoState, RecipeInfoEffect>, ViewModel() {
     private val route: IngredientRoute.RecipeInfo = savedStateHandle.toRoute()
+    override val container = container<RecipeInfoState, RecipeInfoEffect>(RecipeInfoState())
 
     init {
-        viewModelScope.launch {
-            val info = getRecipeInfoUseCase.invoke(route.recipeId)
-            Log.e("Test", info.toString())
+        intent {
+            val recipe = getRecipeInfoUseCase.invoke(route.recipeId)
+
+            reduce {
+                state.copy(
+                    name = recipe.name,
+                    imagePath = recipe.imagePath,
+                    category = recipe.category,
+                    minute = recipe.minute,
+                    people = recipe.people,
+                    ingredients = recipe.ingredients.map { it.asUiModel() }.toImmutableList(),
+                    recipeSteps = recipe.recipeSteps.toImmutableList()
+                )
+            }
+        }
+    }
+
+    fun onIntent(intent: RecipeInfoIntent) {
+        when(intent){
+            is RecipeInfoIntent.OnTopAppBarNavigationClick -> intent {
+                postSideEffect(RecipeInfoEffect.NavigateToBack)
+            }
         }
     }
 }
