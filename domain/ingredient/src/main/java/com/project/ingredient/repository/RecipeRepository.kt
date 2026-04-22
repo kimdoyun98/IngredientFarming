@@ -8,4 +8,6 @@ interface RecipeRepository {
     suspend fun saveRecipe(recipe: Recipe): Result<Unit>
 
     fun getAllRecipe(): Flow<List<RecipeListItem>>
+
+    suspend fun getRecipeInfoById(recipeId: Int): Recipe
 }

@@ -41,4 +41,8 @@ class RecipeRepositoryImpl @Inject constructor(
             }
 
     }
+
+    override suspend fun getRecipeInfoById(recipeId: Int): Recipe {
+        return recipeDao.getRecipeDetail(recipeId).asExternalModel()
+    }
 }

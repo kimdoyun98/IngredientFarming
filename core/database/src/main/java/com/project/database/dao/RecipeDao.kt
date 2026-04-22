@@ -8,6 +8,7 @@ import androidx.room.Transaction
 import com.project.database.model.recipe.RecipeEntity
 import com.project.database.model.recipe.RecipeIngredientEntity
 import com.project.database.model.recipe.RecipeStepEntity
+import com.project.database.relation.RecipeInfoRelation
 import com.project.database.relation.RecipeWithIngredients
 import kotlinx.coroutines.flow.Flow
 
@@ -17,6 +18,10 @@ interface RecipeDao {
     @Transaction
     @Query("SELECT * FROM RecipeEntity")
     fun getAllRecipe(): Flow<List<RecipeWithIngredients>>
+
+    @Transaction
+    @Query("SELECT * FROM RecipeEntity WHERE id = :recipeId")
+    suspend fun getRecipeDetail(recipeId: Int): RecipeInfoRelation
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(entity: RecipeEntity): Long
