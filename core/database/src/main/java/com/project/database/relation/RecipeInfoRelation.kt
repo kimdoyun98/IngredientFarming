@@ -1,5 +1,6 @@
 package com.project.database.relation
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.project.database.model.IngredientEntity
@@ -27,7 +28,9 @@ data class RecipeInfoRelation (
 
 data class IngredientNameOnly(
     val id: Int,
-    val name: String
+    val name: String,
+    @ColumnInfo(name = "is_auto_decrement")
+    val isAutoDecrement: Boolean
 )
 
 data class RecipeIngredientWithDetail(

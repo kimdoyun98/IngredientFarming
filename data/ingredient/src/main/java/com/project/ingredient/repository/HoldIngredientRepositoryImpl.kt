@@ -20,6 +20,10 @@ class HoldIngredientRepositoryImpl @Inject constructor(
         holdIngredientDao.updateHoldIngredientCount(id, count)
     }
 
+    override suspend fun getHoldIngredientCountByIngredientId(id: Int): Double {
+        return holdIngredientDao.getHoldIngredientCountByIngredientId(id) ?: 0.0
+    }
+
     override fun getAllHoldIngredient(): Flow<List<Ingredient>> {
         return holdIngredientDao.getAllHoldIngredient()
     }

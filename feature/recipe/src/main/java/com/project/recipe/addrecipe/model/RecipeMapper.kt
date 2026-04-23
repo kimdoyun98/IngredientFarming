@@ -5,7 +5,7 @@ import com.project.model.recipe.RecipeIngredient
 import com.project.model.recipe.RecipeStep
 import com.project.recipe.addrecipe.contract.AddRecipeState
 
-fun AddRecipeState.asRecipe(path: String?): Recipe {
+internal fun AddRecipeState.asRecipe(path: String?): Recipe {
     val ingredients = ingredients.sortedBy { it.id }
     val steps = recipeSteps.sortedBy { it.id }
 
@@ -26,15 +26,16 @@ fun AddRecipeState.asRecipe(path: String?): Recipe {
     )
 }
 
-fun IngredientUiModel.asRecipeIngredient() = RecipeIngredient(
+internal fun IngredientUiModel.asRecipeIngredient() = RecipeIngredient(
     id = 0,
     ingredientId = -1,
     name = name,
     count = amount.toDouble(),
-    unit = unit
+    unit = unit,
+    isAutoDecrement = true
 )
 
-fun RecipeStepUiModel.asRecipeSteps(number: Int) = RecipeStep(
+internal fun RecipeStepUiModel.asRecipeSteps(number: Int) = RecipeStep(
     id = 0,
     number = number,
     description = description

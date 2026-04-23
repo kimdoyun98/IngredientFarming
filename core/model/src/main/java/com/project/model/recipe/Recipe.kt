@@ -17,6 +17,7 @@ data class RecipeIngredient(
     val name: String,
     val count: Double,
     val unit: IngredientUnit,
+    val isAutoDecrement: Boolean,
 )
 
 data class RecipeStep(

@@ -21,13 +21,14 @@ internal fun RecipeWithIngredients.asExternalModel(): RecipeListItem {
     )
 }
 
-internal fun RecipeIngredientEntity.asExternalModel(name: String) =
+internal fun RecipeIngredientEntity.asExternalModel(name: String, isAutoDecrement: Boolean) =
     RecipeIngredient(
         id = id,
         ingredientId = ingredientId,
         name = name,
         count = count,
-        unit = unit
+        unit = unit,
+        isAutoDecrement = isAutoDecrement
     )
 
 internal fun RecipeStepEntity.asExternalModel() =
@@ -46,8 +47,10 @@ internal fun RecipeInfoRelation.asExternalModel(): Recipe =
         minute = recipe.minute,
         people = recipe.people,
         ingredients = ingredients.map {
-            val name = it.ingredient.name
-            it.recipeIngredient.asExternalModel(name)
+            it.recipeIngredient.asExternalModel(
+                name = it.ingredient.name,
+                isAutoDecrement = it.ingredient.isAutoDecrement
+            )
         },
         recipeSteps = steps.map { it.asExternalModel() }
     )

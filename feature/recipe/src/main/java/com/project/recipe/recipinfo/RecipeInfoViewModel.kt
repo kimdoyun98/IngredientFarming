@@ -3,6 +3,7 @@ package com.project.recipe.recipinfo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
+import com.project.ingredient.usecase.recipe.CheckRecipeIngredientsAvailabilityUseCase
 import com.project.ingredient.usecase.recipe.GetRecipeInfoUseCase
 import com.project.navigation.IngredientRoute
 import com.project.recipe.recipinfo.contract.RecipeInfoEffect
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class RecipeInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeInfoUseCase: GetRecipeInfoUseCase,
+    private val checkRecipeIngredientsAvailabilityUseCase: CheckRecipeIngredientsAvailabilityUseCase,
 ) : ContainerHost<RecipeInfoState, RecipeInfoEffect>, ViewModel() {
     private val route: IngredientRoute.RecipeInfo = savedStateHandle.toRoute()
     override val container = container<RecipeInfoState, RecipeInfoEffect>(RecipeInfoState())
@@ -26,6 +28,8 @@ class RecipeInfoViewModel @Inject constructor(
     init {
         intent {
             val recipe = getRecipeInfoUseCase.invoke(route.recipeId)
+            val ingredientAvailability =
+                checkRecipeIngredientsAvailabilityUseCase.invoke(recipe.ingredients)
 
             reduce {
                 state.copy(
@@ -34,7 +38,17 @@ class RecipeInfoViewModel @Inject constructor(
                     category = recipe.category,
                     minute = recipe.minute,
                     people = recipe.people,
-                    ingredients = recipe.ingredients.map { it.asUiModel() }.toImmutableList(),
+                    ingredients =
+                        recipe.ingredients
+                            .map { ingredient ->
+                                ingredient.asUiModel(
+                                    ingredientAvailability
+                                        .find {
+                                            it.ingredientId == ingredient.ingredientId
+                                        }?.isAvailability ?: false
+                                )
+                            }
+                            .toImmutableList(),
                     recipeSteps = recipe.recipeSteps.toImmutableList()
                 )
             }

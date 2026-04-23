@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.project.database.model.HoldIngredientEntity
 import com.project.model.ingredient.Ingredient
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface HoldIngredientDao {
@@ -52,6 +53,18 @@ interface HoldIngredientDao {
     """
     )
     suspend fun getHoldIngredientById(id: Int): Ingredient
+
+    @Query(
+        """
+            SELECT SUM(count)
+            FROM HoldIngredientEntity
+            WHERE ingredient_id =:id AND expirationDate >= :today
+        """
+    )
+    suspend fun getHoldIngredientCountByIngredientId(
+        id: Int,
+        today: String = LocalDate.now().toString()
+    ): Double?
 
     /**
      * INSERT
