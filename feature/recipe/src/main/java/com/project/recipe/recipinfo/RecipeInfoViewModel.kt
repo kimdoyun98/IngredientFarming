@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import com.project.ingredient.usecase.recipe.CheckRecipeIngredientsAvailabilityUseCase
 import com.project.ingredient.usecase.recipe.GetRecipeInfoUseCase
+import com.project.ingredient.usecase.recipe.SaveRequireIngredientsToCartUseCase
 import com.project.navigation.IngredientRoute
 import com.project.recipe.recipinfo.contract.RecipeInfoEffect
 import com.project.recipe.recipinfo.contract.RecipeInfoIntent
 import com.project.recipe.recipinfo.contract.RecipeInfoState
+import com.project.recipe.recipinfo.model.asRecipeIngredient
 import com.project.recipe.recipinfo.model.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
@@ -21,6 +23,7 @@ class RecipeInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeInfoUseCase: GetRecipeInfoUseCase,
     private val checkRecipeIngredientsAvailabilityUseCase: CheckRecipeIngredientsAvailabilityUseCase,
+    private val saveRequireIngredientsToCartUseCase: SaveRequireIngredientsToCartUseCase,
 ) : ContainerHost<RecipeInfoState, RecipeInfoEffect>, ViewModel() {
     private val route: IngredientRoute.RecipeInfo = savedStateHandle.toRoute()
     override val container = container<RecipeInfoState, RecipeInfoEffect>(RecipeInfoState())
@@ -59,6 +62,14 @@ class RecipeInfoViewModel @Inject constructor(
         when(intent){
             is RecipeInfoIntent.OnTopAppBarNavigationClick -> intent {
                 postSideEffect(RecipeInfoEffect.NavigateToBack)
+            }
+
+            is RecipeInfoIntent.OnAddRequireIngredientButtonClick -> intent {
+                val requireIngredients = state.ingredients.filter { !it.isAvailable }
+
+                saveRequireIngredientsToCartUseCase.invoke(
+                    requireIngredients.map { it.asRecipeIngredient() }
+                )
             }
         }
     }

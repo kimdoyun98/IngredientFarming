@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.compose.IngredientFarmingWideButton
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.model.recipe.IngredientUnit
@@ -61,7 +62,8 @@ internal fun RecipeInfoScreen(
         people = state.people,
         ingredients = state.ingredients,
         recipeSteps = state.recipeSteps,
-        onClickNavigation = { onIntent(RecipeInfoIntent.OnTopAppBarNavigationClick) }
+        onClickNavigation = { onIntent(RecipeInfoIntent.OnTopAppBarNavigationClick) },
+        onClickAddRequireIngredientButton = { onIntent(RecipeInfoIntent.OnAddRequireIngredientButtonClick) },
     )
 }
 
@@ -76,6 +78,7 @@ internal fun RecipeInfoScreen(
     ingredients: ImmutableList<RecipeIngredientUiModel>,
     recipeSteps: ImmutableList<RecipeStep>,
     onClickNavigation: () -> Unit,
+    onClickAddRequireIngredientButton: () -> Unit,
 ) {
     IngredientFarmingTopAppBar(
         type = AppBarType.Navigation,
@@ -108,7 +111,10 @@ internal fun RecipeInfoScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            RecipeIngredientsContent(ingredients = ingredients)
+            RecipeIngredientsContent(
+                ingredients = ingredients,
+                onClickAddRequireIngredientButton = onClickAddRequireIngredientButton
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -142,7 +148,8 @@ private fun RecipeTitleContent(
 
 @Composable
 private fun RecipeIngredientsContent(
-    ingredients: ImmutableList<RecipeIngredientUiModel>
+    ingredients: ImmutableList<RecipeIngredientUiModel>,
+    onClickAddRequireIngredientButton: () -> Unit,
 ) {
     Text(
         text = stringResource(R.string.recipe_info_require_ingredient),
@@ -191,6 +198,13 @@ private fun RecipeIngredientsContent(
                 )
             }
         }
+    }
+
+    if(ingredients.any { !it.isAvailable }){
+        IngredientFarmingWideButton(
+            onClick = onClickAddRequireIngredientButton,
+            background = Red
+        ) { Text("부족한 재료 장보기 목록에 추가") }
     }
 }
 
@@ -269,7 +283,7 @@ private fun RecipeInfoScreenPreview() {
             recipeSteps = persistentListOf(
                 RecipeStep(
                     id = 0,
-                    number = 0,
+                    number = 1,
                     description = "소고기는 얇게 채 썰어 간장, 설탕, 다진 마늘로 밑간합니다."
                 ),
                 RecipeStep(

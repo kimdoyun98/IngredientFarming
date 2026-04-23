@@ -11,6 +11,7 @@ data class RecipeIngredientUiModel(
     val name: String,
     val count: Double,
     val unit: IngredientUnit,
+    val isAutoDecrement: Boolean = true,
     val isAvailable: Boolean
 )
 
@@ -21,5 +22,16 @@ internal fun RecipeIngredient.asUiModel(isAvailable: Boolean = false) =
         name = name,
         count = count,
         unit = unit,
+        isAutoDecrement = isAutoDecrement,
         isAvailable = isAvailable
+    )
+
+internal fun RecipeIngredientUiModel.asRecipeIngredient() =
+    RecipeIngredient(
+        id = id,
+        ingredientId = ingredientId,
+        name = name,
+        count = count,
+        unit = unit,
+        isAutoDecrement = isAutoDecrement
     )

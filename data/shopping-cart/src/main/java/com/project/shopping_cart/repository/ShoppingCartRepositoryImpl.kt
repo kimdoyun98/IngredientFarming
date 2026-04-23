@@ -13,7 +13,16 @@ class ShoppingCartRepositoryImpl @Inject constructor(
     private val shoppingCartDao: ShoppingCartDao
 ) : ShoppingCartRepository {
     override suspend fun insertShoppingCartItem(item: ShoppingCart) {
-        shoppingCartDao.insertShoppingCartItem(item.asShoppingCartEntity())
+        val cart = getShoppingCartItemByName(item.name)
+
+        if (cart == null) {
+            shoppingCartDao.insertShoppingCartItem(item.asShoppingCartEntity())
+        }
+        else {
+            shoppingCartDao.updateShoppingCartItemCount(
+                cart.copy(count = cart.count + item.count).asShoppingCartEntity()
+            )
+        }
     }
 
     override fun getAllShoppingCartItems(): Flow<List<ShoppingCart>> {
@@ -27,5 +36,9 @@ class ShoppingCartRepositoryImpl @Inject constructor(
 
     override suspend fun deleteShoppingCartItem(item: ShoppingCart) {
         shoppingCartDao.deleteShoppingCartItem(item.asShoppingCartEntity())
+    }
+
+    override suspend fun getShoppingCartItemByName(name: String): ShoppingCart? {
+        return shoppingCartDao.getShoppingCartItemByName(name)?.asExternalModel()
     }
 }
