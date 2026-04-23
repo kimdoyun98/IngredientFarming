@@ -17,10 +17,12 @@ class DefaultIngredientSettingRepositoryImpl @Inject constructor(
         rootJson: RootJson
     ) {
         rootJson.ingredients.forEach { ingredientJson ->
+            val isAutoDecrement = !(ingredientJson.category == IngredientCategory.CONDIMENT.name ||
+                    ingredientJson.category == IngredientCategory.GRAIN.name)
+
             ingredientDao.insertIngredient(
                 ingredientJson.asIngredientEntity(
-                    !(ingredientJson.category == IngredientCategory.CONDIMENT.title ||
-                    ingredientJson.category == IngredientCategory.GRAIN.title)
+                    autoDecrement = isAutoDecrement
                 )
             )
         }
