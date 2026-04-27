@@ -2,7 +2,7 @@ name: Gemini Code Review
 
 on:
   pull_request:
-    types: [opened] # synchronize는 변경 사항
+    types: [opened, synchronize] # synchronize는 변경 사항
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}

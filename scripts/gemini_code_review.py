@@ -213,7 +213,7 @@ class GeminiCodeReview2:
         # 우선순위 정렬
         filtered.sort(key=lambda x: self.priority.get(x[0], 999))
 
-        print("✅ 파일 필터 완료")
+        print(f"✅ 파일 필터 완료 / 결과: {len(filtered)}개")
 
         all_reviews = []
 
@@ -236,7 +236,7 @@ class GeminiCodeReview2:
 
                 all_reviews.append(f"### 📄 {file_name}\n{review}")
 
-        print(f"✅ Gemini 코드 리뷰 완료")
+        print(f"✅ Gemini 코드 리뷰 {len(all_reviews)}개 완료")
 
         # 결과 코멘트 작성
         if all_reviews:
