@@ -1,5 +1,7 @@
 import os
 import requests
+import random
+import time
 from typing import List, Dict
 from google import genai
 
@@ -29,17 +31,32 @@ class GeminiCodeReview2:
     # 1. PR 파일 가져오기
     # -------------------------
     def get_pr_files(self) -> List[Dict]:
-        url = f"https://api.github.com/repos/{self.repo}/pulls/{self.pr_number}/files"
-        headers = {
-            "Authorization": f"token {self.github_token}",
-            "Accept": "application/vnd.github.v3+json"
-        }
+        files = []
+        page = 1
 
-        res = requests.get(url, headers=headers)
-        if res.status_code != 200:
-            raise Exception(f"PR 파일 조회 실패: {res.text}")
+        while True:
+            url = f"https://api.github.com/repos/{self.repo}/pulls/{self.pr_number}/files?per_page=100&page={page}"
+            headers = {
+                "Authorization": f"token {self.github_token}",
+                "Accept": "application/vnd.github.v3+json"
+            }
 
-        return res.json()
+            res = requests.get(url, headers=headers)
+            if res.status_code != 200:
+                raise Exception(f"PR 파일 조회 실패: {res.text}")
+
+            data = res.json()
+            if not data:
+                break
+
+            files.extend(data)
+
+            if len(data) < 100:
+                break
+
+            page += 1
+
+        return files
 
     # -------------------------
     # 2. 파일 분류
