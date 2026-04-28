@@ -1,5 +1,6 @@
 package com.project.recipe.addrecipe.model
 
+import com.project.common_core.normalize
 import com.project.model.recipe.Recipe
 import com.project.model.recipe.RecipeIngredient
 import com.project.model.recipe.RecipeStep
@@ -29,7 +30,7 @@ internal fun AddRecipeState.asRecipe(path: String?): Recipe {
 internal fun IngredientUiModel.asRecipeIngredient() = RecipeIngredient(
     id = 0,
     ingredientId = -1,
-    name = name,
+    name = name.normalize(),
     count = amount.toDouble(),
     unit = unit,
     isAutoDecrement = true

@@ -10,9 +10,9 @@ class SaveRecipeUseCase @Inject constructor(
     private val ingredientRepository: IngredientRepository,
 ) {
     suspend operator fun invoke(recipe: Recipe): Boolean {
-        val normalizeIngredients = recipe.ingredients.map { it.copy(name = it.name.normalize()) }
 
-        val newIngredients = normalizeIngredients.map {
+        //TODO 반복 호출 개선 방안 고려
+        val newIngredients = recipe.ingredients.map {
             val id = ingredientRepository.getIngredientByName(it.name)?.id
                 ?: ingredientRepository.insertUnknownIngredient(it.name)
             it.copy(ingredientId = id)
@@ -20,10 +20,4 @@ class SaveRecipeUseCase @Inject constructor(
 
         return recipeRepository.saveRecipe(recipe.copy(ingredients = newIngredients)).isSuccess
     }
-
-    private fun String.normalize() =
-        this
-            .trim()
-            .lowercase()
-            .replace(" ", "")
 }
