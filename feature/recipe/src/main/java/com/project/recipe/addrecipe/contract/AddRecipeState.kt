@@ -12,6 +12,8 @@ import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 data class AddRecipeState(
+    val recentIngredientNumber: Int = 0,
+    val recentRecipeStepNumber: Int = 0,
     val currentBackstack: AddRecipeBackStack = AddRecipeBackStack.RecipePhotoScreen(),
     val photo: Uri? = null,
     val name: String = "",

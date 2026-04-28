@@ -13,11 +13,12 @@ import com.project.recipe.addrecipe.util.AddRecipeBackStack
 import com.project.recipe.addrecipe.util.RecipeSaveState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -29,12 +30,20 @@ class AddRecipeViewModel @Inject constructor(
 ) : ContainerHost<AddRecipeState, AddRecipeEffect>, ViewModel() {
     override val container = container<AddRecipeState, AddRecipeEffect>(AddRecipeState())
     private val backStack = ArrayDeque<AddRecipeBackStack>()
-    private val _recentIngredientNumber = MutableStateFlow(0)
-    private val recentIngredientNumber = _recentIngredientNumber.asStateFlow()
-
-    private val _recentRecipeStepNumber = MutableStateFlow(0)
-    private val recentRecipeStepNumber = _recentRecipeStepNumber.asStateFlow()
-
+    private val recentIngredientNumber = container.stateFlow
+        .map { it.recentIngredientNumber }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = 0
+        )
+    private val recentRecipeStepNumber = container.stateFlow
+        .map { it.recentRecipeStepNumber }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = 0
+        )
 
     init {
         backStack.add(AddRecipeBackStack.RecipePhotoScreen())
@@ -174,8 +183,8 @@ class AddRecipeViewModel @Inject constructor(
                 reduce { state.copy(ingredients = ingredients.toImmutableList()) }
             }
 
-            is AddRecipeIntent.Ingredients.IngredientAddButtonClick -> {
-                _recentIngredientNumber.value = _recentIngredientNumber.value + 1
+            is AddRecipeIntent.Ingredients.IngredientAddButtonClick -> intent {
+                reduce { state.copy(recentIngredientNumber = state.recentIngredientNumber + 1) }
             }
 
             is AddRecipeIntent.Ingredients.IngredientDeleteButtonClick -> intent {
@@ -213,8 +222,8 @@ class AddRecipeViewModel @Inject constructor(
                 }
             }
 
-            is AddRecipeIntent.RecipeStep.StepAddButtonClick -> {
-                _recentRecipeStepNumber.value = _recentRecipeStepNumber.value + 1
+            is AddRecipeIntent.RecipeStep.StepAddButtonClick -> intent {
+                reduce { state.copy(recentRecipeStepNumber = state.recentRecipeStepNumber + 1) }
             }
 
             is AddRecipeIntent.RecipeStep.RecipeStepChange -> intent {
