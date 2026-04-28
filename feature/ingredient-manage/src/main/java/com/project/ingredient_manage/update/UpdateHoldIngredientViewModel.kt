@@ -53,7 +53,7 @@ class UpdateHoldIngredientViewModel @Inject constructor(
             }
 
             is UpdateIntent.OnCountMinusButtonClick -> intent {
-                if (state.count - state.step == 0.0) return@intent
+                if (state.count <= state.step) return@intent
 
                 reduce { state.copy(count = state.count - 1) }
             }
