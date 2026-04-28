@@ -4,18 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.common_core.filterWith
 import com.project.ingredient.usecase.recipe.GetRecipeListUseCase
-import com.project.model.recipe.RecipeCategory
 import com.project.recipe.recipelist.contract.RecipeEffect
 import com.project.recipe.recipelist.contract.RecipeIntent
 import com.project.recipe.recipelist.contract.RecipeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -26,20 +22,8 @@ class RecipeViewModel @Inject constructor(
 ) : ContainerHost<RecipeState, RecipeEffect>, ViewModel() {
     override val container = container<RecipeState, RecipeEffect>(RecipeState())
 
-    private val _query = MutableStateFlow("")
-    private val query =
-        _query
-            .onEach {
-                intent { reduce { state.copy(query = it) } }
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = ""
-            )
-
-    private val _category = MutableStateFlow<RecipeCategory?>(null)
-    private val category = _category.asStateFlow()
+    private val query = container.stateFlow.map { it.query }
+    private val category = container.stateFlow.map { it.selectedCategory }
 
     init {
         getRecipeListUseCase.invoke()
@@ -70,17 +54,14 @@ class RecipeViewModel @Inject constructor(
             }
 
             is RecipeIntent.SearchRecipeQueryChange -> intent {
-                _query.value = intent.query
                 reduce { state.copy(query = intent.query) }
             }
 
             is RecipeIntent.SearchRecipeQueryReset -> intent {
-                _query.value = ""
                 reduce { state.copy(query = "") }
             }
 
             is RecipeIntent.SelectCategoryChip -> intent {
-                _category.value = intent.category
                 reduce { state.copy(selectedCategory = intent.category) }
             }
         }
