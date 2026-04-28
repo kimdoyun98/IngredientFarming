@@ -155,20 +155,26 @@ class GeminiCodeReview2:
             except Exception as e:
                 is_last = attempt == max_retries - 1
 
+                if is_last:
+                    return None
+
                 # 503 / UNAVAILABLE 같은 경우만 retry
                 if "503" in str(e) or "UNAVAILABLE" in str(e):
-                    if is_last:
-                        raise
-
                     delay = base_delay * (2 ** attempt)
                     jitter = random.uniform(0, 0.5)  # thundering herd 방지
                     sleep_time = delay + jitter
 
                     print(f"⚠️ Gemini 과부하, {sleep_time:.2f}s 후 재시도 ({attempt+1}/{max_retries})")
                     time.sleep(sleep_time)
+
+                elif "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    wait = 40
+                    print(f"Quota exceeded. retry after {wait}s")
+                    time.sleep(wait)
+
                 else:
-                    # 다른 에러는 바로 실패
-                    raise
+                    print(f"❌ Gemini 실패: {e}")
+                    return None
 
     # -------------------------
     # 6. Gemini 호출
@@ -249,8 +255,11 @@ class GeminiCodeReview2:
                     continue
 
                 review = self.call_gemini(prompt)
-                file_name = file["filename"].split("/")[-1]
 
+                if not review:
+                    continue
+
+                file_name = file["filename"].split("/")[-1]
                 all_reviews.append(f"### 📄 {file_name}\n{review}")
 
         print(f"✅ Gemini 코드 리뷰 {len(all_reviews)}개 완료")
