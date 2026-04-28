@@ -16,14 +16,16 @@ class SaveRequireIngredientsToCartUseCase @Inject constructor(
     suspend operator fun invoke(requireIngredients: List<RecipeIngredient>) {
         //현재는 보유 중인 장보기 식재료 + 레시피 부족 식재료
 
+        //TODO forEach를 통해 반복적인 로직 처리 과정에 대해 개선 고려
         requireIngredients.forEach { ingredient ->
             val category =
                 getIngredientUseCase.invoke(ingredient.name)?.category ?: IngredientCategory.OTHER
             val holdIngredientCount =
                 holdIngredientRepository.getHoldIngredientCountByIngredientId(ingredient.ingredientId)
-            val isInShoppingCart = shoppingCartRepository.getShoppingCartItemByName(ingredient.name) != null
+            val isInShoppingCart =
+                shoppingCartRepository.getShoppingCartItemByName(ingredient.name) != null
 
-            if(!(isInShoppingCart && !ingredient.isAutoDecrement)){
+            if (!isInShoppingCart || ingredient.isAutoDecrement) {
                 shoppingCartRepository.insertShoppingCartItem(
                     ShoppingCart(
                         name = ingredient.name,
