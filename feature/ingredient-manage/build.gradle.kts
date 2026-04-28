@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(projects.domain.ingredient)
+    implementation(projects.core.commonCore)
 }

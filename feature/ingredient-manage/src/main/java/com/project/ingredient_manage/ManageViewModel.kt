@@ -2,6 +2,7 @@ package com.project.ingredient_manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.common_core.filterWith
 import com.project.ingredient.usecase.manage.DeleteHoldIngredientUseCase
 import com.project.ingredient.usecase.manage.GetAllHoldIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import org.orbitmvi.orbit.ContainerHost
@@ -54,10 +56,16 @@ class ManageViewModel @Inject constructor(
     private val selectedCategory: StateFlow<IngredientCategory?> = _selectedCategory.asStateFlow()
 
     init {
-        getAllHoldIngredientUseCase.invoke(
-            categoryFlow = selectedCategory,
-            queryFlow = query,
-        )
+        getAllHoldIngredientUseCase.invoke()
+            .filterWith(
+                categoryFlow = selectedCategory,
+                queryFlow = query,
+                getCategory = { it.category },
+                getName = { it.name }
+            )
+            .map {
+                it.sortedBy { ingredient -> ingredient.expirationDate }
+            }
             .onEach {
                 _items.value = it.toImmutableList()
             }

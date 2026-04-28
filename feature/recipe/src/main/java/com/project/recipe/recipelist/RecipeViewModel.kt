@@ -2,6 +2,7 @@ package com.project.recipe.recipelist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.common_core.filterWith
 import com.project.ingredient.usecase.recipe.GetRecipeListUseCase
 import com.project.model.recipe.RecipeCategory
 import com.project.recipe.recipelist.contract.RecipeEffect
@@ -41,10 +42,13 @@ class RecipeViewModel @Inject constructor(
     private val category = _category.asStateFlow()
 
     init {
-        getRecipeListUseCase.invoke(
-            categoryFlow = category,
-            queryFlow = query,
-        )
+        getRecipeListUseCase.invoke()
+            .filterWith(
+                categoryFlow = category,
+                queryFlow = query,
+                getCategory = { it.category },
+                getName = { it.name }
+            )
             .onEach {
                 intent { reduce { state.copy(recipeList = it.toImmutableList()) } }
             }
