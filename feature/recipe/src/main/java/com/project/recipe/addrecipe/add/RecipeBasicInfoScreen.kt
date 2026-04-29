@@ -46,7 +46,7 @@ internal fun RecipeBasicInfoScreen(
         cookTime = state.time,
         people = state.people,
         selectedCategory = state.selectedCategory,
-        nextButtonEnable = state.isEnableBasicInfoNextButton(),
+        nextButtonEnable = state.isEnableBasicInfoNextButton,
         onNameValueChange = { onIntent(AddRecipeIntent.BasicInfo.RecipeNameChange(it)) },
         onSelectCategoryChip = { onIntent(AddRecipeIntent.BasicInfo.SelectCategoryChip(it)) },
         onCookTimeValueChange = { onIntent(AddRecipeIntent.BasicInfo.RecipeCookTimeChange(it)) },

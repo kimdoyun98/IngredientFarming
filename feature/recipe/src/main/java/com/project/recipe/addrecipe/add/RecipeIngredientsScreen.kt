@@ -59,7 +59,7 @@ internal fun RecipeIngredientsScreen(
     RecipeIngredientsScreen(
         modifier = modifier,
         ingredients = state.ingredients,
-        nextButtonEnable = state.isEnableIngredientsNextButton(),
+        nextButtonEnable = state.isEnableIngredientsNextButton,
         onAddIngredientButtonClick = { onIntent(AddRecipeIntent.Ingredients.IngredientAddButtonClick) },
         onNextButtonClick = { onIntent(AddRecipeIntent.Ingredients.RecipeIngredientsNextButtonClick) },
         onIngredientNameChange = { ingredient, name ->

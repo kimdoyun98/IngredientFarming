@@ -46,7 +46,7 @@ internal fun RecipeStepsScreen(
     RecipeStepsScreen(
         modifier = modifier,
         steps = state.recipeSteps,
-        saveButtonEnable = state.isEnableSaveButton(),
+        saveButtonEnable = state.isEnableSaveButton,
         onRecipeStepChange = { step, value ->
             onIntent(
                 AddRecipeIntent.RecipeStep.RecipeStepChange(

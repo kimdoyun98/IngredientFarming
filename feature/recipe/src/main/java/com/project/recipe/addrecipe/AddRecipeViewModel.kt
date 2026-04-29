@@ -54,6 +54,7 @@ class AddRecipeViewModel @Inject constructor(
                 intent {
                     val ingredients = state.ingredients.toMutableList()
                     ingredients.add(IngredientUiModel(id = it))
+
                     reduce { state.copy(ingredients = ingredients.toImmutableList()) }
                 }
             }
@@ -65,6 +66,7 @@ class AddRecipeViewModel @Inject constructor(
                 intent {
                     val steps = state.recipeSteps.toMutableList()
                     steps.add(RecipeStepUiModel(id = it))
+
                     reduce { state.copy(recipeSteps = steps.toImmutableList()) }
                 }
             }
@@ -74,7 +76,7 @@ class AddRecipeViewModel @Inject constructor(
     fun onIntent(intent: AddRecipeIntent) {
         when (intent) {
             is AddRecipeIntent.Back -> intent {
-                if (state.currentBackstack == AddRecipeBackStack.RecipePhotoScreen()) {
+                if (state.currentBackstack is AddRecipeBackStack.RecipePhotoScreen) {
                     postSideEffect(AddRecipeEffect.NavigateToRecipeList)
                     return@intent
                 }
@@ -131,19 +133,41 @@ class AddRecipeViewModel @Inject constructor(
     private fun handleBasicInfo(intent: AddRecipeIntent.BasicInfo) {
         when (intent) {
             is AddRecipeIntent.BasicInfo.RecipeNameChange -> intent {
-                reduce { state.copy(name = intent.name) }
+                reduce {
+                    state.copy(
+                        name = intent.name,
+                        isEnableBasicInfoNextButton = state.isEnableBasicInfoNextButton(name = intent.name)
+                    )
+                }
             }
 
             is AddRecipeIntent.BasicInfo.RecipeCookTimeChange -> intent {
-                reduce { state.copy(time = intent.time) }
+                reduce {
+                    state.copy(
+                        time = intent.time,
+                        isEnableBasicInfoNextButton = state.isEnableBasicInfoNextButton(time = intent.time)
+                    )
+                }
             }
 
             is AddRecipeIntent.BasicInfo.RecipePeopleChange -> intent {
-                reduce { state.copy(people = intent.people) }
+                reduce {
+                    state.copy(
+                        people = intent.people,
+                        isEnableBasicInfoNextButton = state.isEnableBasicInfoNextButton(people = intent.people)
+                    )
+                }
             }
 
             is AddRecipeIntent.BasicInfo.SelectCategoryChip -> intent {
-                reduce { state.copy(selectedCategory = intent.category) }
+                reduce {
+                    state.copy(
+                        selectedCategory = intent.category,
+                        isEnableBasicInfoNextButton = state.isEnableBasicInfoNextButton(
+                            selectedCategory = intent.category
+                        )
+                    )
+                }
             }
 
             is AddRecipeIntent.BasicInfo.RecipeBasicInfoNextButtonClick -> intent {
@@ -160,27 +184,48 @@ class AddRecipeViewModel @Inject constructor(
                 val ingredients = state.ingredients.map {
                     if (it.id == intent.ingredient.id) it.copy(name = intent.name)
                     else it
-                }
+                }.toImmutableList()
 
-                reduce { state.copy(ingredients = ingredients.toImmutableList()) }
+                reduce {
+                    state.copy(
+                        ingredients = ingredients,
+                        isEnableIngredientsNextButton = state.isEnableIngredientsNextButton(
+                            ingredients
+                        )
+                    )
+                }
             }
 
             is AddRecipeIntent.Ingredients.IngredientAmountChange -> intent {
                 val ingredients = state.ingredients.map {
                     if (it.id == intent.ingredient.id) it.copy(amount = intent.amount)
                     else it
-                }
+                }.toImmutableList()
 
-                reduce { state.copy(ingredients = ingredients.toImmutableList()) }
+                reduce {
+                    state.copy(
+                        ingredients = ingredients,
+                        isEnableIngredientsNextButton = state.isEnableIngredientsNextButton(
+                            ingredients
+                        )
+                    )
+                }
             }
 
             is AddRecipeIntent.Ingredients.IngredientUnitChange -> intent {
                 val ingredients = state.ingredients.map {
                     if (it.id == intent.ingredient.id) it.copy(unit = intent.unit)
                     else it
-                }
+                }.toImmutableList()
 
-                reduce { state.copy(ingredients = ingredients.toImmutableList()) }
+                reduce {
+                    state.copy(
+                        ingredients = ingredients,
+                        isEnableIngredientsNextButton = state.isEnableIngredientsNextButton(
+                            ingredients
+                        )
+                    )
+                }
             }
 
             is AddRecipeIntent.Ingredients.IngredientAddButtonClick -> intent {
@@ -193,7 +238,15 @@ class AddRecipeViewModel @Inject constructor(
                 val ingredients = state.ingredients.toMutableList()
                 ingredients.remove(intent.ingredient)
 
-                reduce { state.copy(ingredients = ingredients.toImmutableList()) }
+                val newIngredients = ingredients.toImmutableList()
+                reduce {
+                    state.copy(
+                        ingredients = newIngredients,
+                        isEnableIngredientsNextButton = state.isEnableIngredientsNextButton(
+                            newIngredients
+                        )
+                    )
+                }
             }
 
             is AddRecipeIntent.Ingredients.RecipeIngredientsNextButtonClick -> intent {
@@ -230,9 +283,14 @@ class AddRecipeViewModel @Inject constructor(
                 val recipeSteps = state.recipeSteps.map {
                     if (it.id == intent.step.id) it.copy(description = intent.value)
                     else it
-                }
+                }.toImmutableList()
 
-                reduce { state.copy(recipeSteps = recipeSteps.toImmutableList()) }
+                reduce {
+                    state.copy(
+                        recipeSteps = recipeSteps,
+                        isEnableSaveButton = state.isEnableSaveButton(recipeSteps)
+                    )
+                }
             }
 
             is AddRecipeIntent.RecipeStep.StepDeleteButtonClick -> intent {
@@ -241,7 +299,13 @@ class AddRecipeViewModel @Inject constructor(
                 val recipeSteps = state.recipeSteps.toMutableList()
                 recipeSteps.remove(intent.step)
 
-                reduce { state.copy(recipeSteps = recipeSteps.toImmutableList()) }
+                val newRecipeSteps = recipeSteps.toImmutableList()
+                reduce {
+                    state.copy(
+                        recipeSteps = newRecipeSteps,
+                        isEnableSaveButton = state.isEnableSaveButton(newRecipeSteps)
+                    )
+                }
             }
         }
     }

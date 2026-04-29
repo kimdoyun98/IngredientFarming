@@ -10,7 +10,6 @@ import com.project.recipe.addrecipe.util.RecipeSaveState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-@Stable
 data class AddRecipeState(
     val recentIngredientNumber: Int = 0,
     val recentRecipeStepNumber: Int = 0,
@@ -32,22 +31,34 @@ data class AddRecipeState(
                 id = 0,
             )
         ),
-    val recipeSaveState: RecipeSaveState = RecipeSaveState.Idle
+    val recipeSaveState: RecipeSaveState = RecipeSaveState.Idle,
+    val isEnableBasicInfoNextButton: Boolean = false,
+    val isEnableIngredientsNextButton: Boolean = false,
+    val isEnableSaveButton: Boolean = false,
 ) {
-    fun isEnableBasicInfoNextButton(): Boolean {
+    fun isEnableBasicInfoNextButton(
+        name: String = this.name,
+        selectedCategory: RecipeCategory? = this.selectedCategory,
+        time: String = this.time,
+        people: String = this.people,
+    ): Boolean {
         return name.isNotBlank() &&
                 selectedCategory != null &&
                 time.isNotBlank() &&
                 people.isNotBlank()
     }
 
-    fun isEnableIngredientsNextButton(): Boolean {
+    fun isEnableIngredientsNextButton(
+        ingredients: ImmutableList<IngredientUiModel> = this.ingredients,
+    ): Boolean {
         return ingredients.all {
-            it.name.isNotBlank() && it.amount.isNotBlank() && !it.name.any{ s -> s.isDigit()}
+            it.name.isNotBlank() && it.amount.isNotBlank() && !it.name.any { s -> s.isDigit() }
         }
     }
 
-    fun isEnableSaveButton(): Boolean {
+    fun isEnableSaveButton(
+        recipeSteps: ImmutableList<RecipeStepUiModel> = this.recipeSteps,
+    ): Boolean {
         return recipeSteps.all {
             it.description.isNotBlank()
         }
