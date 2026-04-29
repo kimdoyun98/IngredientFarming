@@ -22,17 +22,13 @@ import com.project.model.permission.PermissionState
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.barcodeScannerGraph(
     navigator: IngredientFarmingNavigator,
-    cameraPermissionState: Flow<PermissionState?>,
-    requestCameraPermission: () -> Unit,
-    isGrantedCameraPermission: () -> Boolean,
-    updateCameraPermissionState: (PermissionState) -> Unit,
+    requestCameraPermission: ((PermissionState) -> Unit) -> Unit,
 ) {
     composable<IngredientRoute.BarcodeScanner> { backStack ->
         val barcodeViewModel: BarcodeViewModel = hiltViewModel()
@@ -46,6 +42,26 @@ fun NavGraphBuilder.barcodeScannerGraph(
         val openAppSettingsLabel = stringResource(R.string.open_app_settings_label)
         val notFoundProductMessage = stringResource(R.string.no_search_product)
         val directInputLabel = stringResource(R.string.directInput)
+
+        val cameraPermissionLaunch = {
+            requestCameraPermission.invoke { state ->
+                when (state) {
+                    is PermissionState.Granted -> Unit
+
+                    is PermissionState.Denied -> {
+                        barcodeViewModel.onIntent(BarcodeIntent.CameraPermissionDenied)
+                    }
+
+                    is PermissionState.PermanentlyDenied -> {
+                        barcodeViewModel.onIntent(
+                            BarcodeIntent.CameraPermissionPermanentlyDenied(
+                                state.openAppSettings
+                            )
+                        )
+                    }
+                }
+            }
+        }
 
         barcodeViewModel.collectSideEffect { effect ->
             when (effect) {
@@ -77,6 +93,26 @@ fun NavGraphBuilder.barcodeScannerGraph(
                         duration = SnackbarDuration.Long
                     )
                 }
+
+                is BarcodeEffect.CameraPermissionDenied -> {
+                    showSnackBar(
+                        scope = scope,
+                        snackBarHostState = snackbarHostState,
+                        message = requireCameraPermissionMessage,
+                        actionLabel = requestPermissionLabel,
+                        onActionPerformed = cameraPermissionLaunch,
+                    )
+                }
+
+                is BarcodeEffect.CameraPermissionPermanentlyDenied -> {
+                    showSnackBar(
+                        scope = scope,
+                        snackBarHostState = snackbarHostState,
+                        message = requireCameraPermissionMessage,
+                        actionLabel = openAppSettingsLabel,
+                        onActionPerformed = effect.openAppSettings,
+                    )
+                }
             }
         }
 
@@ -87,41 +123,7 @@ fun NavGraphBuilder.barcodeScannerGraph(
         )
 
         LaunchedEffect(Unit) {
-            cameraPermissionState.collect {
-                when (it) {
-                    is PermissionState.Granted -> Unit
-
-                    is PermissionState.Denied -> {
-                        showSnackBar(
-                            scope = scope,
-                            snackBarHostState = snackbarHostState,
-                            message = requireCameraPermissionMessage,
-                            actionLabel = requestPermissionLabel,
-                            onActionPerformed = requestCameraPermission,
-
-                            )
-                    }
-
-                    is PermissionState.PermanentlyDenied -> {
-                        if(isGrantedCameraPermission()){
-                            updateCameraPermissionState(PermissionState.Granted)
-                            return@collect
-                        }
-
-                        showSnackBar(
-                            scope = scope,
-                            snackBarHostState = snackbarHostState,
-                            message = requireCameraPermissionMessage,
-                            actionLabel = openAppSettingsLabel,
-                            onActionPerformed = it.openAppSettings,
-                        )
-                    }
-
-                    else -> {
-                        requestCameraPermission()
-                    }
-                }
-            }
+            cameraPermissionLaunch.invoke()
         }
     }
 }

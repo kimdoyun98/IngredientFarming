@@ -19,15 +19,8 @@ class IngredientFarmingPermission(
         }
     }
 
-    fun launchCameraPermission() {
+    fun launchCameraPermission(onResult: ((PermissionState) -> Unit)) {
+        this.onCameraPermissionResult = onResult
         launcher.launch(arrayOf(CAMERA))
-    }
-
-    fun isGrantedCameraPermission(): Boolean {
-        return checkPermission(CAMERA)
-    }
-
-    fun updateCameraPermissionState(state: PermissionState) {
-        updatePermissionState(permission = CAMERA, state = state)
     }
 }

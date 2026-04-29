@@ -13,14 +13,11 @@ import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.project.model.permission.PermissionState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 abstract class Permission(
     private val activity: ComponentActivity
 ) {
-    private val _cameraPermissionState = MutableStateFlow<PermissionState?>(null)
-    val cameraPermissionState = _cameraPermissionState.asStateFlow()
+    protected var onCameraPermissionResult: ((PermissionState) -> Unit)? = null
     protected var onMediaImagePermissionResult: ((PermissionState) -> Unit)? = null
 
     protected val launcher = activity.registerForActivityResult(
@@ -48,7 +45,7 @@ abstract class Permission(
     protected fun updatePermissionState(permission: String, state: PermissionState) {
         when (permission) {
             CAMERA -> {
-                _cameraPermissionState.value = state
+                onCameraPermissionResult?.invoke(state)
             }
 
             READ_MEDIA_IMAGES, READ_EXTERNAL_STORAGE -> {
