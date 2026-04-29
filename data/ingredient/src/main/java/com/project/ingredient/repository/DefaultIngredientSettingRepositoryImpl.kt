@@ -5,6 +5,7 @@ import com.project.database.dao.IngredientDao
 import com.project.ingredient.asIngredientCategoryGroupEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.model.RootJson
+import com.project.model.ingredient.IngredientCategory
 import javax.inject.Inject
 
 class DefaultIngredientSettingRepositoryImpl @Inject constructor(
@@ -16,8 +17,13 @@ class DefaultIngredientSettingRepositoryImpl @Inject constructor(
         rootJson: RootJson
     ) {
         rootJson.ingredients.forEach { ingredientJson ->
+            val isAutoDecrement = !(ingredientJson.category == IngredientCategory.CONDIMENT.name ||
+                    ingredientJson.category == IngredientCategory.GRAIN.name)
+
             ingredientDao.insertIngredient(
-                ingredientJson.asIngredientEntity()
+                ingredientJson.asIngredientEntity(
+                    autoDecrement = isAutoDecrement
+                )
             )
         }
 

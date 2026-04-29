@@ -2,27 +2,20 @@ package com.project.ingredient_manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.common_core.filterWith
 import com.project.ingredient.usecase.manage.DeleteHoldIngredientUseCase
 import com.project.ingredient.usecase.manage.GetAllHoldIngredientUseCase
 import com.project.ingredient_manage.contract.ManageEffect
 import com.project.ingredient_manage.contract.ManageIntent
 import com.project.ingredient_manage.contract.ManageState
-import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -36,42 +29,26 @@ class ManageViewModel @Inject constructor(
 ) : ContainerHost<ManageState, ManageEffect>, ViewModel() {
     override val container = container<ManageState, ManageEffect>(ManageState())
 
-    private val _items = MutableStateFlow<ImmutableList<Ingredient>>(persistentListOf())
-    private val items = _items.asStateFlow()
-
-    private val _query = MutableStateFlow("")
-    private val query: StateFlow<String> = _query.asStateFlow()
-
-    private val _selectedCategory = MutableStateFlow<IngredientCategory?>(null)
-    private val selectedCategory: StateFlow<IngredientCategory?> = _selectedCategory.asStateFlow()
+    private val query = container.stateFlow.map { it.query }
+    private val selectedCategory = container.stateFlow.map {
+        if (it.selectedCategoryIndex == 0) null
+        else IngredientCategory.entries[it.selectedCategoryIndex - 1]
+    }
 
     init {
         getAllHoldIngredientUseCase.invoke()
-            .flatMapLatest { ingredients ->
-                selectedCategory
-                    .combine(
-                        query
-                            .onEach { q ->
-                                intent { reduce { state.copy(query = q) } }
-                            }
-                            .debounce(300L)
-                    ) { category, q ->
-                        ingredients
-                            .filter { ingredient ->
-                                (category == null || ingredient.category == category) &&
-                                        ingredient.name.contains(q)
-                            }
-                    }
+            .filterWith(
+                categoryFlow = selectedCategory,
+                queryFlow = query,
+                getCategory = { it.category },
+                getName = { it.name }
+            )
+            .map {
+                it.sortedBy { ingredient -> ingredient.expirationDate }
             }
-            .onEach { filterIngredients ->
-                _items.value = filterIngredients.toImmutableList()
-            }
-            .launchIn(viewModelScope)
-
-        items
-            .onEach {
+            .onEach { ingredients ->
                 intent {
-                    reduce { state.copy(ingredientItems = it) }
+                    reduce { state.copy(ingredientItems = ingredients.toImmutableList()) }
                 }
             }
             .launchIn(viewModelScope)
@@ -87,18 +64,16 @@ class ManageViewModel @Inject constructor(
 
             }
 
-            is ManageIntent.OnSearchQueryChange -> {
-                _query.value = intent.query
+            is ManageIntent.OnSearchQueryChange -> intent {
+                reduce { state.copy(query = intent.query) }
             }
 
-            is ManageIntent.OnSearchCloseButtonClick -> {
-                _query.value = ""
+            is ManageIntent.OnSearchCloseButtonClick -> intent {
+                reduce { state.copy(query = "") }
             }
 
             is ManageIntent.OnSelectCategoryChip -> intent {
                 reduce { state.copy(selectedCategoryIndex = intent.index) }
-                _selectedCategory.value =
-                    if (intent.index == 0) null else IngredientCategory.entries[intent.index - 1]
             }
 
             is ManageIntent.OnClickItem -> intent {

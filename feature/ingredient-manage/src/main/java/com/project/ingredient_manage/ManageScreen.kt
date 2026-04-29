@@ -280,7 +280,7 @@ private fun ManageScreenPreview() {
                 Ingredient(
                     id = 1,
                     name = "감자",
-                    count = 2,
+                    count = 2.0,
                     expirationDate = LocalDate.now().plusDays(1),
                     category = IngredientCategory.VEGETABLE,
                     store = IngredientStore.REFRIGERATED
@@ -288,7 +288,7 @@ private fun ManageScreenPreview() {
                 Ingredient(
                     id = 2,
                     name = "돼지고기",
-                    count = 3,
+                    count = 3.0,
                     expirationDate = LocalDate.parse("2026-03-02"),
                     category = IngredientCategory.MEAT,
                     store = IngredientStore.REFRIGERATED
@@ -312,7 +312,7 @@ private fun ManageScreenDeleteOptionsPreview() {
                 Ingredient(
                     id = 1,
                     name = "감자",
-                    count = 2,
+                    count = 2.0,
                     expirationDate = LocalDate.now().plusDays(1),
                     category = IngredientCategory.VEGETABLE,
                     store = IngredientStore.REFRIGERATED
@@ -320,7 +320,7 @@ private fun ManageScreenDeleteOptionsPreview() {
                 Ingredient(
                     id = 2,
                     name = "돼지고기",
-                    count = 3,
+                    count = 3.0,
                     expirationDate = LocalDate.parse("2026-03-02"),
                     category = IngredientCategory.MEAT,
                     store = IngredientStore.REFRIGERATED

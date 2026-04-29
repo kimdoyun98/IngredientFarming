@@ -23,12 +23,19 @@ fun BarcodeResponse.asExternalModel(): List<Product> {
     }
 }
 
-fun Ingredient.asIngredientEntity() = IngredientEntity(
-    name = name,
-    category = category,
-    store = store,
-    holdState = true
-)
+fun Ingredient.asIngredientEntity(): IngredientEntity {
+    val isAutoDecrement =
+        category == IngredientCategory.GRAIN || category == IngredientCategory.CONDIMENT
+
+    return IngredientEntity(
+        name = name,
+        category = category,
+        store = store,
+        holdState = true,
+        isAutoDecrement = !isAutoDecrement,
+        step = if (!isAutoDecrement) 1.0 else 0.5
+    )
+}
 
 fun Ingredient.asHoldIngredientEntity(id: Int) = HoldIngredientEntity(
     ingredientId = id,
@@ -37,12 +44,14 @@ fun Ingredient.asHoldIngredientEntity(id: Int) = HoldIngredientEntity(
     expirationDate = expirationDate,
 )
 
-fun IngredientJson.asIngredientEntity() = IngredientEntity(
+fun IngredientJson.asIngredientEntity(autoDecrement: Boolean = true) = IngredientEntity(
     name = ingredient,
     category = getIngredientCategory(category),
     store = getIngredientStore(store),
     categoryGroupId = null,
-    holdState = false
+    holdState = false,
+    isAutoDecrement = autoDecrement,
+    step = if (autoDecrement) 1.0 else 0.5
 )
 
 fun MeatTypeJson.asIngredientCategoryGroupEntity() = IngredientCategoryGroupEntity(
@@ -57,3 +66,11 @@ fun MeatPartJson.asIngredientEntity(groupId: Int) = IngredientEntity(
     categoryGroupId = groupId,
     holdState = false
 )
+
+internal fun String.asUnknownIngredientEntity() =
+    IngredientEntity(
+        name = this,
+        category = IngredientCategory.OTHER,
+        store = IngredientStore.ROOM_TEMPERATURE,
+        holdState = false,
+    )

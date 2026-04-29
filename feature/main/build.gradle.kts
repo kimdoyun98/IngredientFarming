@@ -11,4 +11,7 @@ dependencies {
     implementation(projects.feature.ingredientAdd)
     implementation(projects.feature.ingredientManage)
     implementation(projects.feature.shoppingCart)
+    implementation(projects.feature.recipe)
+
+    implementation(projects.core.permission)
 }

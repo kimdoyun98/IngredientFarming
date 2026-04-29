@@ -220,7 +220,7 @@ private fun IngredientCardPreview() {
     IngredientCard(
         item = Ingredient(
             name = "간장",
-            count = 10,
+            count = 1.0,
             category = IngredientCategory.BEVERAGE,
             store = IngredientStore.REFRIGERATED,
             expirationDate = LocalDate.parse("2026-02-24")
@@ -234,7 +234,7 @@ private fun IconIngredientCardPreview() {
     IconIngredientCard(
         item = Ingredient(
             name = "사과",
-            count = 10,
+            count = 10.5,
             category = IngredientCategory.FRUIT,
             store = IngredientStore.REFRIGERATED,
             expirationDate = LocalDate.parse("2026-02-26")

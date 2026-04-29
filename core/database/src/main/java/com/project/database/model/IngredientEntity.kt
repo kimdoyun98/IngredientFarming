@@ -25,7 +25,10 @@ data class IngredientCategoryGroupEntity(
             onDelete = ForeignKey.SET_NULL
         )
     ],
-    indices = [Index("group_id")]
+    indices = [
+        Index("group_id"),
+        Index(value = ["name"], unique = true)
+    ]
 )
 data class IngredientEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -41,14 +44,10 @@ data class IngredientEntity(
     val categoryGroupId: Int? = null,
 
     @ColumnInfo(name = "hold_state")
-    val holdState: Boolean
-)
+    val holdState: Boolean,
 
-//fun IngredientEntity.asExternalModel(): IngredientInfo {
-//    return IngredientInfo(
-//        id = id,
-//        name = name,
-//        category = category,
-//        store = store,
-//    )
-//}
+    @ColumnInfo(name = "is_auto_decrement")
+    val isAutoDecrement: Boolean = true,
+
+    val step: Double = 1.0,
+)

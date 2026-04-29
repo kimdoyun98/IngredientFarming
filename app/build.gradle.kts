@@ -26,6 +26,7 @@ dependencies {
     implementation(projects.feature.main)
     implementation(projects.data.ingredient)
     implementation(projects.data.shoppingCart)
+    implementation(projects.data.recipe)
     implementation(projects.core.common)
 
     implementation(projects.domain.ingredient)

@@ -7,4 +7,8 @@ sealed interface BarcodeIntent {
     data class SelectIngredient(val product: Product) : BarcodeIntent
     object DirectInputClick : BarcodeIntent
     object SnackBarDismissed : BarcodeIntent
+    object BarcodeProductEmpty: BarcodeIntent
+    object BarcodeResultError: BarcodeIntent
+    object CameraPermissionDenied: BarcodeIntent
+    data class CameraPermissionPermanentlyDenied(val openAppSettings: () -> Unit): BarcodeIntent
 }

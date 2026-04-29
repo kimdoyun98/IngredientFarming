@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_top_app_bar_title">레시피</string>
+    <string name="recipe_top_app_bar_action_description">레시피 추가 버튼</string>
+    <string name="category_total">전체</string>
+
+
+    <string name="add_recipe_top_app_bar_title_photo">사진</string>
+    <string name="add_recipe_top_app_bar_title_basic">기본 정보</string>
+    <string name="add_recipe_top_app_bar_title_ingredients">재료 입력</string>
+    <string name="add_recipe_top_app_bar_title_steps">조리 순서</string>
+    <string name="add_recipe_photo_main_title">레시피 이미지를\n추가해주세요</string>
+    <string name="add_recipe_photo_add_title">사진 추가하기</string>
+    <string name="add_recipe_photo_description">레시피 사진</string>
+    <string name="add_recipe_photo_empty_photo_description">레시피 사진 비어있음</string>
+    <string name="add_recipe_photo_error_photo_description">레시피 사진 오류</string>
+    <string name="add_recipe_photo_add_description">클릭하여 이미지를 선택하세요</string>
+    <string name="add_recipe_photo_icon_description">사진 추가 아이콘</string>
+    <string name="add_recipe_photo_fail_url_message">이미지를 불러오는데 실패했습니다</string>
+    <string name="add_recipe_photo_require_permission_message">파일에 대한 액세스가 필요합니다</string>
+    <string name="add_recipe_photo_request_permission">권한 요청</string>
+    <string name="add_recipe_photo_open_app_setting">설정</string>
+
+    <string name="add_recipe_basic_info_main_title">레시피 기본 정보를\n입력해주세요</string>
+    <string name="add_recipe_basic_info_recipe_name_label">레시피 이름</string>
+    <string name="add_recipe_basic_info_recipe_name_placeholder">예: 김치찌개, 까르보나라</string>
+    <string name="add_recipe_basic_info_cook_category">요리 종류</string>
+    <string name="add_recipe_basic_info_cook_time_icon_description">조리시간 아이콘</string>
+    <string name="add_recipe_basic_info_cook_time">조리시간</string>
+    <string name="add_recipe_basic_info_cook_time_placeholder">30</string>
+    <string name="add_recipe_basic_info_cook_time_trailing_icon">분</string>
+    <string name="add_recipe_basic_info_people_icon_description">인분 아이콘</string>
+    <string name="add_recipe_basic_info_people">인분</string>
+    <string name="add_recipe_basic_info_people_placeholder">2</string>
+    <string name="add_recipe_basic_info_people_trailing_icon">인분</string>
+
+    <string name="add_recipe_ingredients_main_title">레시피에 들어가는 재료를\n입력해주세요</string>
+    <string name="add_recipe_ingredients_ingredient">재료</string>
+    <string name="add_recipe_ingredients_ingredient_name_placeholder">재료명</string>
+    <string name="add_recipe_ingredients_ingredient_amount_placeholder">양</string>
+
+    <string name="add_recipe_ingredients_step_main_title">조리 순서를\n입력해주세요</string>
+    <string name="add_recipe_ingredients_cooking_step">조리 순서</string>
+    <string name="add_recipe_ingredients_cooking_step_placeholder">조리 과정을 입력해주세요</string>
+
+    <string name="add_recipe_add_text_button_title">추가</string>
+    <string name="add_recipe_next_button_title">다음</string>
+    <string name="add_recipe_save_button_title">저장</string>
+
+    <string name="recipe_info_top_app_bar_title">레시피 상세</string>
+    <string name="recipe_info_require_ingredient">필요한 재료</string>
+    <string name="recipe_info_check_circle_icon_description">재료 보유 아이콘</string>
+    <string name="recipe_info_cancel_circle_icon_description">재료 미보유 아이콘</string>
+    <string name="recipe_info_ingredients_cooking_step">조리 순서</string>
+</resources>

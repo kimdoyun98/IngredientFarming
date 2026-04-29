@@ -10,4 +10,8 @@ sealed interface BarcodeEffect {
         val store: IngredientStore = IngredientStore.ROOM_TEMPERATURE
     ) : BarcodeEffect
     object NavigateDirectInputScreen : BarcodeEffect
+    object BarcodeProductEmpty: BarcodeEffect
+    object BarcodeResultError: BarcodeEffect
+    object CameraPermissionDenied: BarcodeEffect
+    data class CameraPermissionPermanentlyDenied(val openAppSettings: () -> Unit): BarcodeEffect
 }

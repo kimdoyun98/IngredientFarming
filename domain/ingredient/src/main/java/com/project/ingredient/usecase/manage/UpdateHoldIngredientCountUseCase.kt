@@ -6,7 +6,7 @@ import javax.inject.Inject
 class UpdateHoldIngredientCountUseCase @Inject constructor(
     private val holdIngredientRepository: HoldIngredientRepository,
 ) {
-    suspend operator fun invoke(id: Int, count: Int) {
+    suspend operator fun invoke(id: Int, count: Double) {
         holdIngredientRepository.updateHoldIngredientCount(id, count)
     }
 }

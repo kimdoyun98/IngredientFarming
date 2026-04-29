@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.project.database.model.HoldIngredientEntity
 import com.project.model.ingredient.Ingredient
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface HoldIngredientDao {
@@ -24,7 +25,8 @@ interface HoldIngredientDao {
          IngredientCategoryGroupEntity.groupType as categoryGroup,
          IngredientEntity.store as store,
          HoldIngredientEntity.enterDate as enterDate,
-         HoldIngredientEntity.expirationDate as expirationDate
+         HoldIngredientEntity.expirationDate as expirationDate,
+         IngredientEntity.step as step
         FROM IngredientEntity
         JOIN HoldIngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
         LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
@@ -42,7 +44,8 @@ interface HoldIngredientDao {
          IngredientCategoryGroupEntity.groupType as categoryGroup,
          IngredientEntity.store as store,
          HoldIngredientEntity.enterDate as enterDate,
-         HoldIngredientEntity.expirationDate as expirationDate
+         HoldIngredientEntity.expirationDate as expirationDate,
+         IngredientEntity.step as step
         FROM HoldIngredientEntity
         JOIN IngredientEntity ON HoldIngredientEntity.ingredient_id = IngredientEntity.id
         LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
@@ -50,6 +53,18 @@ interface HoldIngredientDao {
     """
     )
     suspend fun getHoldIngredientById(id: Int): Ingredient
+
+    @Query(
+        """
+            SELECT SUM(count)
+            FROM HoldIngredientEntity
+            WHERE ingredient_id =:id AND expirationDate >= :today
+        """
+    )
+    suspend fun getHoldIngredientCountByIngredientId(
+        id: Int,
+        today: String = LocalDate.now().toString()
+    ): Double?
 
     /**
      * INSERT
@@ -67,7 +82,7 @@ interface HoldIngredientDao {
         WHERE id =:id
     """
     )
-    suspend fun updateHoldIngredientCount(id: Int, count: Int)
+    suspend fun updateHoldIngredientCount(id: Int, count: Double)
 
     /**
      * DELETE

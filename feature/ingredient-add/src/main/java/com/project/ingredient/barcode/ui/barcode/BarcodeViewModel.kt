@@ -6,8 +6,8 @@ import com.project.ingredient.barcode.contract.barcode.BarcodeEffect
 import com.project.ingredient.barcode.contract.barcode.BarcodeIntent
 import com.project.ingredient.barcode.contract.barcode.BarcodeState
 import com.project.ingredient.barcode.ui.barcode.util.BarcodeScanStatus
-import com.project.ingredient.usecase.insert.GetBarcodeInfoUseCase
 import com.project.ingredient.usecase.GetIngredientUseCase
+import com.project.ingredient.usecase.insert.GetBarcodeInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
@@ -90,6 +90,22 @@ class BarcodeViewModel @Inject constructor(
 
             is BarcodeIntent.SnackBarDismissed -> intent {
                 reduce { state.copy(scanStatus = BarcodeScanStatus.Idle) }
+            }
+
+            is BarcodeIntent.BarcodeProductEmpty -> intent {
+                postSideEffect(BarcodeEffect.BarcodeProductEmpty)
+            }
+
+            is BarcodeIntent.BarcodeResultError -> intent {
+                postSideEffect(BarcodeEffect.BarcodeResultError)
+            }
+
+            is BarcodeIntent.CameraPermissionDenied -> intent {
+                postSideEffect(BarcodeEffect.CameraPermissionDenied)
+            }
+
+            is BarcodeIntent.CameraPermissionPermanentlyDenied -> intent {
+                postSideEffect(BarcodeEffect.CameraPermissionPermanentlyDenied(intent.openAppSettings))
             }
         }
     }

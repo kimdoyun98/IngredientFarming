@@ -42,6 +42,7 @@ import com.project.ui.LocarmIcon
 import com.project.ui.MediumIconBox
 import com.project.ui.R
 import com.project.ui.modifier.singleClickEvent
+import com.project.ui.util.format
 import com.project.ui.util.rememberUpdateContentList
 import java.time.LocalDate
 
@@ -70,7 +71,7 @@ internal fun UpdateHoldIngredientScreen(
 internal fun UpdateHoldIngredientScreen(
     modifier: Modifier = Modifier,
     name: String,
-    count: Int,
+    count: Double,
     category: IngredientCategory,
     store: IngredientStore,
     enterDate: LocalDate,
@@ -171,7 +172,7 @@ private fun HeadContent(
 @Composable
 private fun BodyContent(
     modifier: Modifier = Modifier,
-    count: Int,
+    count: Double,
     store: IngredientStore,
     enterDate: LocalDate,
     expirationDate: LocalDate,
@@ -216,7 +217,7 @@ private fun BodyContent(
 @Composable
 private fun CountContent(
     modifier: Modifier = Modifier,
-    count: Int,
+    count: Double,
     onCountMinusButtonClick: () -> Unit,
 ) {
     Row(
@@ -227,7 +228,7 @@ private fun CountContent(
     ) {
         BodyContentItem(
             itemTitle = stringResource(R.string.count),
-            itemContent = "$count",
+            itemContent = count.format(),
             iconBackGroundColor = MoreLightGreen
         ) {
             Icon(
@@ -294,7 +295,7 @@ private fun UpdateHoldIngredientScreenPreview() {
     UpdateHoldIngredientScreen(
         updateState = UpdateState(
             name = "삼겹살",
-            count = 4,
+            count = 1.0,
             category = IngredientCategory.MEAT,
             store = IngredientStore.FROZEN,
             expirationDate = LocalDate.parse("9999-01-01"),//LocalDate.now().plusDays(1),

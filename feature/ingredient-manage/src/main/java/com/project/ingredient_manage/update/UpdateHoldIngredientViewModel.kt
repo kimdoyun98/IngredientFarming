@@ -38,7 +38,8 @@ class UpdateHoldIngredientViewModel @Inject constructor(
                         category = holdIngredient.category,
                         store = holdIngredient.store,
                         enterDate = holdIngredient.enterDate,
-                        expirationDate = holdIngredient.expirationDate
+                        expirationDate = holdIngredient.expirationDate,
+                        step = holdIngredient.step
                     )
                 }
             }
@@ -52,7 +53,7 @@ class UpdateHoldIngredientViewModel @Inject constructor(
             }
 
             is UpdateIntent.OnCountMinusButtonClick -> intent {
-                if (state.count == 1) return@intent
+                if (state.count <= state.step) return@intent
 
                 reduce { state.copy(count = state.count - 1) }
             }
