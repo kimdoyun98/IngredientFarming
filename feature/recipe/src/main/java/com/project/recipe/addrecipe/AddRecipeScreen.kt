@@ -24,15 +24,12 @@ import com.project.recipe.addrecipe.util.RecipeSaveState
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingCenterLoading
 import com.project.ui.IngredientFarmingTopAppBar
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Composable
 internal fun AddRecipeScreen(
     modifier: Modifier = Modifier,
     state: AddRecipeState,
     snackbarHostState: SnackbarHostState,
-    mediaImagePermissionState: Flow<PermissionState>,
     onIntent: (AddRecipeIntent) -> Unit,
     launchMediaImagePermission: () -> Unit,
 ) {
@@ -63,7 +60,6 @@ internal fun AddRecipeScreen(
                         modifier = Modifier
                             .fillMaxSize(),
                         state = state,
-                        mediaImagePermissionState = mediaImagePermissionState,
                         onIntent = onIntent,
                         launchMediaImagePermission = launchMediaImagePermission,
                     )
@@ -118,7 +114,6 @@ private fun AddRecipeScreenPreview() {
         state = AddRecipeState(
             currentBackstack = AddRecipeBackStack.RecipePhotoScreen()
         ),
-        mediaImagePermissionState = MutableSharedFlow(),
         onIntent = {},
         launchMediaImagePermission = {},
         snackbarHostState = remember { SnackbarHostState() }

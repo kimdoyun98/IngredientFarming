@@ -120,6 +120,10 @@ class AddRecipeViewModel @Inject constructor(
                 }
             }
 
+            is AddRecipeIntent.Photo.PermissionGranted -> intent {
+                postSideEffect(AddRecipeEffect.PermissionGranted)
+            }
+
             is AddRecipeIntent.Photo.PermissionDenied -> intent {
                 postSideEffect(AddRecipeEffect.PermissionDenied)
             }

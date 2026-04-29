@@ -1,9 +1,6 @@
 package com.project.recipe.addrecipe.add
 
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,7 +36,6 @@ import coil3.request.ImageRequest
 import coil3.request.placeholder
 import com.project.designsystem.compose.IngredientFarmingWideButton
 import com.project.designsystem.theme.Green
-import com.project.model.permission.PermissionState
 import com.project.recipe.R
 import com.project.recipe.addrecipe.component.MainTitleContent
 import com.project.recipe.addrecipe.contract.AddRecipeIntent
@@ -49,39 +44,14 @@ import com.project.ui.IngredientFarmingCenterLoading
 import com.project.ui.MediumIconBox
 import com.project.ui.modifier.dottedLineLayout
 import com.project.ui.modifier.singleClickable
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 
 @Composable
 internal fun RecipePhotoScreen(
     modifier: Modifier = Modifier,
     state: AddRecipeState,
-    mediaImagePermissionState: Flow<PermissionState>,
     onIntent: (AddRecipeIntent) -> Unit,
     launchMediaImagePermission: () -> Unit = {}
 ) {
-    val pickMedia =
-        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            onIntent(AddRecipeIntent.Photo.RecipePhotoSelect(uri))
-        }
-
-    LaunchedEffect(Unit) {
-        mediaImagePermissionState.collect { permissionState ->
-            when (permissionState) {
-                is PermissionState.Granted -> {
-                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                }
-
-                is PermissionState.Denied -> {
-                    onIntent(AddRecipeIntent.Photo.PermissionDenied)
-                }
-
-                is PermissionState.PermanentlyDenied -> {
-                    onIntent(AddRecipeIntent.Photo.PermissionPermanentlyDenied(permissionState.openAppSettings))
-                }
-            }
-        }
-    }
 
     RecipePhotoScreen(
         modifier = modifier,
@@ -232,7 +202,6 @@ private fun InsertRecipePhoto(
 private fun RecipePhotoScreenPreview() {
     RecipePhotoScreen(
         state = AddRecipeState(),
-        mediaImagePermissionState = MutableSharedFlow<PermissionState>(),
         onIntent = {},
         launchMediaImagePermission = {}
     )

@@ -9,7 +9,9 @@ class IngredientFarmingPermission(
     activity: ComponentActivity
 ) : Permission(activity = activity) {
 
-    fun launchMediaImagesPermission() {
+    fun launchMediaImagesPermission(onResult: ((PermissionState) -> Unit)) {
+        this.onMediaImagePermissionResult = onResult
+
         if (isTiramisuVersionHigher()) {
             launcher.launch(arrayOf(READ_MEDIA_IMAGES))
         } else {

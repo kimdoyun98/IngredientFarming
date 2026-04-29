@@ -1,6 +1,9 @@
 package com.project.recipe.addrecipe.navigation
 
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -19,15 +22,14 @@ import com.project.recipe.R
 import com.project.recipe.addrecipe.AddRecipeScreen
 import com.project.recipe.addrecipe.AddRecipeViewModel
 import com.project.recipe.addrecipe.contract.AddRecipeEffect
-import kotlinx.coroutines.flow.Flow
+import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.addRecipeGraph(
     navigator: IngredientFarmingNavigator,
-    mediaImagePermissionState: Flow<PermissionState>,
-    launchMediaImagePermission: () -> Unit,
+    launchMediaImagePermission: ((PermissionState) -> Unit) -> Unit,
 ) {
     composable<IngredientRoute.AddRecipe> {
         val addRecipeViewModel: AddRecipeViewModel = hiltViewModel()
@@ -41,6 +43,31 @@ fun NavGraphBuilder.addRecipeGraph(
             stringResource(R.string.add_recipe_photo_require_permission_message)
         val requestPermissionLabel = stringResource(R.string.add_recipe_photo_request_permission)
         val openAppSettingsLabel = stringResource(R.string.add_recipe_photo_open_app_setting)
+
+        val pickMedia =
+            rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                addRecipeViewModel.onIntent(AddRecipeIntent.Photo.RecipePhotoSelect(uri))
+            }
+
+        val permissionLaunch = {
+            launchMediaImagePermission.invoke { state ->
+                when (state) {
+                    is PermissionState.Granted -> {
+                        addRecipeViewModel.onIntent(AddRecipeIntent.Photo.PermissionGranted)
+                    }
+
+                    is PermissionState.Denied -> {
+                        addRecipeViewModel.onIntent(AddRecipeIntent.Photo.PermissionDenied)
+                    }
+
+                    is PermissionState.PermanentlyDenied -> {
+                        addRecipeViewModel.onIntent(
+                            AddRecipeIntent.Photo.PermissionPermanentlyDenied(state.openAppSettings)
+                        )
+                    }
+                }
+            }
+        }
 
         addRecipeViewModel.collectSideEffect { effect ->
             when (effect) {
@@ -56,6 +83,10 @@ fun NavGraphBuilder.addRecipeGraph(
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
 
+                is AddRecipeEffect.PermissionGranted -> {
+                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                }
+
                 is AddRecipeEffect.PermissionDenied -> {
                     scope.launch {
                         val result = snackbarHostState.showSnackbar(
@@ -66,7 +97,7 @@ fun NavGraphBuilder.addRecipeGraph(
 
                         when (result) {
                             SnackbarResult.ActionPerformed -> {
-                                launchMediaImagePermission()
+                                permissionLaunch.invoke()
                             }
 
                             SnackbarResult.Dismissed -> Unit
@@ -98,8 +129,7 @@ fun NavGraphBuilder.addRecipeGraph(
             state = addRecipeState,
             onIntent = addRecipeViewModel::onIntent,
             snackbarHostState = snackbarHostState,
-            mediaImagePermissionState = mediaImagePermissionState,
-            launchMediaImagePermission = launchMediaImagePermission
+            launchMediaImagePermission = permissionLaunch
         )
     }
 }

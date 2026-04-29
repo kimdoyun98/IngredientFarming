@@ -55,7 +55,6 @@ internal fun MainScreen(
 
         addRecipeGraph(
             navigator = navigator,
-            mediaImagePermissionState = ingredientFarmingPermission.mediaImagePermissionState,
             launchMediaImagePermission = ingredientFarmingPermission::launchMediaImagesPermission,
         )
 

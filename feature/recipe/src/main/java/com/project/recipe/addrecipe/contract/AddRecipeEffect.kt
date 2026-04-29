@@ -7,4 +7,5 @@ sealed interface AddRecipeEffect {
     data class SaveError(val message: String = "실패") : AddRecipeEffect
     data class PermissionPermanentlyDenied(val openAppSettings: () -> Unit) : AddRecipeEffect
     object PermissionDenied : AddRecipeEffect
+    object PermissionGranted: AddRecipeEffect
 }

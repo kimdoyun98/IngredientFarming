@@ -2,7 +2,6 @@ package com.project.permission
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,9 +13,7 @@ import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.project.model.permission.PermissionState
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 abstract class Permission(
@@ -24,31 +21,28 @@ abstract class Permission(
 ) {
     private val _cameraPermissionState = MutableStateFlow<PermissionState?>(null)
     val cameraPermissionState = _cameraPermissionState.asStateFlow()
-
-    private val _mediaImagePermissionState =
-        MutableSharedFlow<PermissionState>(extraBufferCapacity = 1)
-    val mediaImagePermissionState = _mediaImagePermissionState.asSharedFlow()
+    protected var onMediaImagePermissionResult: ((PermissionState) -> Unit)? = null
 
     protected val launcher = activity.registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
 
-        permissions.entries
-            .forEach { (permission, isGranted) ->
-
-                if (isGranted) updatePermissionState(permission, PermissionState.Granted)
-
-                if (isLimitsPermission(activity, permission)) {
-                    updatePermissionState(
-                        permission, PermissionState.PermanentlyDenied({
-                            openAppSettingsForPermission()
-                        })
-                    )
-                } else {
-                    updatePermissionState(permission, PermissionState.Denied)
-                }
-
+        for ((permission, isGranted) in permissions.entries) {
+            if (isGranted) {
+                updatePermissionState(permission, PermissionState.Granted)
+                continue
             }
+            0
+            if (isLimitsPermission(activity, permission)) {
+                updatePermissionState(
+                    permission, PermissionState.PermanentlyDenied({
+                        openAppSettingsForPermission()
+                    })
+                )
+            } else {
+                updatePermissionState(permission, PermissionState.Denied)
+            }
+        }
     }
 
     protected fun updatePermissionState(permission: String, state: PermissionState) {
@@ -58,7 +52,7 @@ abstract class Permission(
             }
 
             READ_MEDIA_IMAGES, READ_EXTERNAL_STORAGE -> {
-                _mediaImagePermissionState.tryEmit(state)
+                onMediaImagePermissionResult?.invoke(state)
             }
         }
     }
