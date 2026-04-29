@@ -42,16 +42,11 @@ class RecipeInfoViewModel @Inject constructor(
                     minute = recipe.minute,
                     people = recipe.people,
                     ingredients =
-                        recipe.ingredients
-                            .map { ingredient ->
-                                ingredient.asUiModel(
-                                    ingredientAvailability
-                                        .find {
-                                            it.ingredientId == ingredient.ingredientId
-                                        }?.isAvailability ?: false
-                                )
-                            }
-                            .toImmutableList(),
+                        recipe.ingredients.map { ingredient ->
+                            ingredient.asUiModel(
+                                ingredientAvailability[ingredient.ingredientId] ?: false
+                            )
+                        }.toImmutableList(),
                     recipeSteps = recipe.recipeSteps.toImmutableList()
                 )
             }
@@ -59,7 +54,7 @@ class RecipeInfoViewModel @Inject constructor(
     }
 
     fun onIntent(intent: RecipeInfoIntent) {
-        when(intent){
+        when (intent) {
             is RecipeInfoIntent.OnTopAppBarNavigationClick -> intent {
                 postSideEffect(RecipeInfoEffect.NavigateToBack)
             }
