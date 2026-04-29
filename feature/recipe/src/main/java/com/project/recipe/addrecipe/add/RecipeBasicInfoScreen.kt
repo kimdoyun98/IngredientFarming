@@ -158,7 +158,6 @@ private fun TimeAndPeopleContent(
             }
 
             LocarmNumberTextField(
-                modifier = Modifier,
                 placeholder = stringResource(R.string.add_recipe_basic_info_cook_time_placeholder),
                 value = cookTime,
                 onValueChange = { onCookTimeValueChange(it) },
@@ -179,7 +178,6 @@ private fun TimeAndPeopleContent(
             }
 
             LocarmNumberTextField(
-                modifier = Modifier,
                 placeholder = stringResource(R.string.add_recipe_basic_info_people_placeholder),
                 value = people,
                 onValueChange = { onPeopleValueChange(it) },
