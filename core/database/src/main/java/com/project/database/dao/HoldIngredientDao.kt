@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.database.model.HoldIngredientEntity
+import com.project.model.ingredient.HoldIngredientCount
 import com.project.model.ingredient.Ingredient
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
@@ -33,6 +34,20 @@ interface HoldIngredientDao {
     """
     )
     fun getAllHoldIngredient(): Flow<List<Ingredient>>
+
+    @Query(
+        """
+        SELECT 
+            ingredient_id as ingredientId, 
+            SUM(count) as count
+        FROM HoldIngredientEntity
+        WHERE expirationDate >= :today
+        GROUP BY ingredient_id
+        """
+    )
+    fun getAllHoldIngredientCount(
+        today: String = LocalDate.now().toString()
+    ): Flow<List<HoldIngredientCount>>
 
     @Query(
         """

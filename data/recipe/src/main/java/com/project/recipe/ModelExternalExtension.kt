@@ -7,6 +7,7 @@ import com.project.database.relation.RecipeWithIngredients
 import com.project.model.recipe.Recipe
 import com.project.model.recipe.RecipeIngredient
 import com.project.model.recipe.RecipeListItem
+import com.project.model.recipe.RecipeListItemIngredient
 import com.project.model.recipe.RecipeStep
 
 internal fun RecipeWithIngredients.asExternalModel(): RecipeListItem {
@@ -17,7 +18,13 @@ internal fun RecipeWithIngredients.asExternalModel(): RecipeListItem {
         category = recipe.category,
         minute = recipe.minute,
         people = recipe.people,
-        ingredients = ingredients.map { it.ingredientId }
+        ingredients = ingredients.map {
+            RecipeListItemIngredient(
+                ingredientId = it.ingredient.id,
+                recipeIngredientCount = it.recipeIngredient.count,
+                isAutoDecrement = it.ingredient.isAutoDecrement
+            )
+        }
     )
 }
 

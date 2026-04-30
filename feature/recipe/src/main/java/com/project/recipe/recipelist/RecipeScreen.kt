@@ -18,29 +18,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.model.recipe.IngredientUnit
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.project.model.recipe.RecipeCategory
-import com.project.model.recipe.RecipeIngredient
-import com.project.model.recipe.RecipeListItem
 import com.project.recipe.R
 import com.project.recipe.recipelist.component.RecipeCardItem
 import com.project.recipe.recipelist.contract.RecipeIntent
 import com.project.recipe.recipelist.contract.RecipeState
+import com.project.recipe.recipelist.model.RecipeListItemUiModel
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun RecipeScreen(
     state: RecipeState,
+    recipes: LazyPagingItems<RecipeListItemUiModel>,
     onIntent: (RecipeIntent) -> Unit
 ) {
     RecipeScreen(
         query = state.query,
         selectedCategory = state.selectedCategory,
-        recipeList = state.recipeList,
+        recipes = recipes,
         onTopAppBarNavigationClick = { onIntent(RecipeIntent.OnTopAppBarNavigationClick) },
         onTopAppBarActionClick = { onIntent(RecipeIntent.OnTopAppBarActionClick) },
         onSearchRecipeQueryChange = { query -> onIntent(RecipeIntent.SearchRecipeQueryChange(query)) },
@@ -55,7 +58,7 @@ internal fun RecipeScreen(
     modifier: Modifier = Modifier,
     query: String,
     selectedCategory: RecipeCategory?,
-    recipeList: ImmutableList<RecipeListItem>,
+    recipes: LazyPagingItems<RecipeListItemUiModel>,
     onTopAppBarNavigationClick: () -> Unit,
     onTopAppBarActionClick: () -> Unit,
     onSearchRecipeQueryChange: (String) -> Unit,
@@ -95,22 +98,34 @@ internal fun RecipeScreen(
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
-                items(
-                    items = recipeList,
-                    key = { it.id }
-                ) {
-                    RecipeCardItem(
-                        imagePath = it.image,
-                        name = it.name,
-                        category = it.category,
-                        time = it.minute,
-                        people = it.people,
-                        totalIngredient = it.ingredients.size,
-                        holdIngredient = 2,
-                        onClick = { onRecipeItemClick(it.id) }
-                    )
+                items(count = recipes.itemCount) { idx ->
+                    val recipe = recipes[idx]
+                    if (recipe != null) {
+                        RecipeCardItem(
+                            imagePath = recipe.image,
+                            name = recipe.name,
+                            category = recipe.category,
+                            time = recipe.minute,
+                            people = recipe.people,
+                            totalIngredient = recipe.ingredientsAvailable.size,
+                            holdIngredient = recipe.ingredientsAvailable.count { it },
+                            onClick = { onRecipeItemClick(recipe.id) }
+                        )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+
+                recipes.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+
+                        }
+
+                        loadState.append is LoadState.Error -> {
+                            item { Text("에러 발생") }
+                        }
+                    }
                 }
             }
         }
@@ -148,20 +163,23 @@ private fun CategoryFilterChipGroup(
 @Preview
 @Composable
 private fun RecipeScreenPreview() {
-    RecipeScreen(
-        state = RecipeState(
-            recipeList = persistentListOf(
-                RecipeListItem(
-                    id = 0,
-                    image = "",
-                    name = "비빔밥",
-                    category = RecipeCategory.KOREAN_FOOD,
-                    minute = 30,
-                    people = 2,
-                    ingredients = listOf(0,1,2)
-                )
-            )
+    val fakeList = listOf(
+        RecipeListItemUiModel(
+            id = 0,
+            name = "김치찌개",
+            ingredientsAvailable = persistentListOf(false, false, true, false, true)
         ),
+        RecipeListItemUiModel(
+            id = 2,
+            name = "된장찌개",
+            ingredientsAvailable = persistentListOf(true, false, true, true, true)
+        ),
+    )
+    val pagingItems = flowOf(PagingData.from(fakeList)).collectAsLazyPagingItems()
+
+    RecipeScreen(
+        state = RecipeState(),
+        recipes = pagingItems,
         onIntent = {}
     )
 }

@@ -7,5 +7,11 @@ data class RecipeListItem(
     val category: RecipeCategory,
     val minute: Int,
     val people: Int,
-    val ingredients: List<Int>,
+    val ingredients: List<RecipeListItemIngredient>,
+)
+
+data class RecipeListItemIngredient(
+    val ingredientId: Int,
+    val recipeIngredientCount: Double,
+    val isAutoDecrement: Boolean,
 )

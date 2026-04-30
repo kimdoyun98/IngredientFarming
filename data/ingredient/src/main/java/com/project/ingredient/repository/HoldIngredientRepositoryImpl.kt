@@ -3,6 +3,7 @@ package com.project.ingredient.repository
 import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
+import com.project.model.ingredient.HoldIngredientCount
 import com.project.model.ingredient.Ingredient
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,10 @@ class HoldIngredientRepositoryImpl @Inject constructor(
 
     override fun getAllHoldIngredient(): Flow<List<Ingredient>> {
         return holdIngredientDao.getAllHoldIngredient()
+    }
+
+    override fun getAllHoldIngredientCount(): Flow<List<HoldIngredientCount>> {
+        return holdIngredientDao.getAllHoldIngredientCount()
     }
 
     override suspend fun deleteHoldIngredientByIds(ids: List<Int>) {
