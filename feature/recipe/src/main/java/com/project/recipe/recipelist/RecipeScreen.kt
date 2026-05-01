@@ -3,6 +3,7 @@ package com.project.recipe.recipelist
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +32,7 @@ import com.project.recipe.recipelist.contract.RecipeState
 import com.project.recipe.recipelist.model.IngredientsAvailable
 import com.project.recipe.recipelist.model.RecipeListItemUiModel
 import com.project.ui.AppBarType
+import com.project.ui.IngredientFarmingCenterLoading
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
 import kotlinx.coroutines.flow.flowOf
@@ -96,7 +99,10 @@ internal fun RecipeScreen(
             )
 
             LazyColumn(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 items(
                     count = recipes.itemCount,
@@ -122,7 +128,11 @@ internal fun RecipeScreen(
                 recipes.apply {
                     when {
                         loadState.refresh is LoadState.Loading -> {
+                            item { IngredientFarmingCenterLoading() }
+                        }
 
+                        loadState.append is LoadState.Loading -> {
+                            item { IngredientFarmingCenterLoading() }
                         }
 
                         loadState.append is LoadState.Error -> {
