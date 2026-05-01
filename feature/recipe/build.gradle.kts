@@ -10,5 +10,5 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(projects.domain.ingredient)
     implementation(projects.core.commonCore)
-    implementation("androidx.paging:paging-compose:3.4.2")
+    implementation(libs.androidx.paging.compose)
 }
