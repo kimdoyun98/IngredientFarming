@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.project.ingredient.usecase.recipe.CheckRecipeIngredientsAvailabilityUseCase
 import com.project.ingredient.usecase.recipe.GetAllHoldIngredientCountUseCase
 import com.project.ingredient.usecase.recipe.GetRecipeListUseCase
 import com.project.model.recipe.RecipeFilter
+import com.project.model.recipe.asCheckRecipeAvailability
 import com.project.recipe.recipelist.contract.RecipeEffect
 import com.project.recipe.recipelist.contract.RecipeIntent
 import com.project.recipe.recipelist.contract.RecipeState
@@ -25,15 +27,16 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-@OptIn(FlowPreview::class)
 class RecipeViewModel @Inject constructor(
     private val getRecipeListUseCase: GetRecipeListUseCase,
     private val getAllHoldIngredientCountUseCase: GetAllHoldIngredientCountUseCase,
+    private val checkRecipeIngredientsAvailabilityUseCase: CheckRecipeIngredientsAvailabilityUseCase,
 ) : ContainerHost<RecipeState, RecipeEffect>, ViewModel() {
     override val container = container<RecipeState, RecipeEffect>(RecipeState())
 
     private val queryFlow = container.stateFlow.map { it.query }
     private val categoryFlow = container.stateFlow.map { it.selectedCategory }
+    @OptIn(FlowPreview::class)
     private val filterFlow: Flow<RecipeFilter> =
         combine(queryFlow, categoryFlow) { query, category ->
             RecipeFilter(
@@ -49,6 +52,7 @@ class RecipeViewModel @Inject constructor(
                 holdIngredientCount.associateBy { it.ingredientId }
             }
 
+    @OptIn(FlowPreview::class)
     val recipes = filterFlow
         .debounce(300L)
         .distinctUntilChanged()
@@ -58,17 +62,16 @@ class RecipeViewModel @Inject constructor(
 
             pagingFlow.combine(holdIngredientsFlow) { pagingData, holdIngredientsMap ->
                 pagingData.map { recipeListItem ->
-                    recipeListItem.asUiModel(
-                        recipeListItem.ingredients.map { ingredient ->
-                            val holdCount =
-                                holdIngredientsMap[ingredient.ingredientId]?.count ?: 0.0
-
-                            if (holdCount == 0.0) false
-                            else if (!ingredient.isAutoDecrement) true
-                            else if (ingredient.recipeIngredientCount <= holdCount) true
-                            else false
-                        }.toImmutableList()
+                    val map = checkRecipeIngredientsAvailabilityUseCase.invoke(
+                        holdIngredientCount = holdIngredientsMap,
+                        recipeIngredients = recipeListItem.ingredients.map {
+                            it.asCheckRecipeAvailability(
+                                recipeListItem.id
+                            )
+                        }
                     )
+
+                    recipeListItem.asUiModel(map.values.map { it }.toImmutableList())
                 }
             }
         }
