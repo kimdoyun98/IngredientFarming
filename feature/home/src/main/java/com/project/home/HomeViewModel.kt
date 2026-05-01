@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.project.home.contract.HomeEffect
 import com.project.home.contract.HomeIntent
 import com.project.home.contract.HomeState
-import com.project.ingredient.usecase.home.GetCurrentIngredientCount
-import com.project.ingredient.usecase.home.GetExpirationDateSoonCount
-import com.project.ingredient.usecase.home.GetExpirationDateSoonIngredient
+import com.project.ingredient.usecase.home.GetCurrentIngredientCountUseCase
+import com.project.ingredient.usecase.home.GetExpirationDateSoonCountUseCase
+import com.project.ingredient.usecase.home.GetExpirationDateSoonIngredientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.launchIn
@@ -18,26 +18,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCurrentIngredientCount: GetCurrentIngredientCount,
-    private val getExpirationDateSoonCount: GetExpirationDateSoonCount,
-    private val getExpirationDateSoonIngredient: GetExpirationDateSoonIngredient
+    private val getCurrentIngredientCountUseCase: GetCurrentIngredientCountUseCase,
+    private val getExpirationDateSoonCountUseCase: GetExpirationDateSoonCountUseCase,
+    private val getExpirationDateSoonIngredientUseCase: GetExpirationDateSoonIngredientUseCase
 ) : ContainerHost<HomeState, HomeEffect>, ViewModel() {
     override val container = container<HomeState, HomeEffect>(HomeState())
 
     init {
-        getCurrentIngredientCount.invoke()
+        getCurrentIngredientCountUseCase.invoke()
             .onEach {
                 intent { reduce { state.copy(ingredientCount = it) } }
             }
             .launchIn(viewModelScope)
 
-        getExpirationDateSoonCount.invoke()
+        getExpirationDateSoonCountUseCase.invoke()
             .onEach {
                 intent { reduce { state.copy(expiresSoonCount = it) } }
             }
             .launchIn(viewModelScope)
 
-        getExpirationDateSoonIngredient.invoke()
+        getExpirationDateSoonIngredientUseCase.invoke()
             .onEach {
                 intent {
                     reduce {
