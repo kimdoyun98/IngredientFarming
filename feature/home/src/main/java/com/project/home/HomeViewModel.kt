@@ -1,51 +1,57 @@
 package com.project.home
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.project.home.contract.HomeEffect
 import com.project.home.contract.HomeIntent
 import com.project.home.contract.HomeState
-import com.project.ingredient.usecase.home.GetCurrentIngredientCount
-import com.project.ingredient.usecase.home.GetExpirationDateSoonCount
-import com.project.ingredient.usecase.home.GetExpirationDateSoonIngredient
+import com.project.ingredient.usecase.home.GetCurrentIngredientCountUseCase
+import com.project.ingredient.usecase.home.GetExpirationDateSoonCountUseCase
+import com.project.ingredient.usecase.home.GetExpirationDateSoonIngredientUseCase
+import com.project.ingredient.usecase.home.GetRecipeCountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCurrentIngredientCount: GetCurrentIngredientCount,
-    private val getExpirationDateSoonCount: GetExpirationDateSoonCount,
-    private val getExpirationDateSoonIngredient: GetExpirationDateSoonIngredient
+    private val getCurrentIngredientCountUseCase: GetCurrentIngredientCountUseCase,
+    private val getExpirationDateSoonCountUseCase: GetExpirationDateSoonCountUseCase,
+    private val getExpirationDateSoonIngredientUseCase: GetExpirationDateSoonIngredientUseCase,
+    private val getRecipeCountUseCase: GetRecipeCountUseCase,
 ) : ContainerHost<HomeState, HomeEffect>, ViewModel() {
     override val container = container<HomeState, HomeEffect>(HomeState())
 
     init {
-        getCurrentIngredientCount.invoke()
-            .onEach {
-                intent { reduce { state.copy(ingredientCount = it) } }
-            }
-            .launchIn(viewModelScope)
-
-        getExpirationDateSoonCount.invoke()
-            .onEach {
-                intent { reduce { state.copy(expiresSoonCount = it) } }
-            }
-            .launchIn(viewModelScope)
-
-        getExpirationDateSoonIngredient.invoke()
-            .onEach {
-                intent {
-                    reduce {
-                        state.copy(expirationDateSoonItems = it.toImmutableList())
-                    }
+        intent {
+            getCurrentIngredientCountUseCase.invoke()
+                .collectLatest {
+                    reduce { state.copy(ingredientCount = it) }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
+
+        intent {
+            getExpirationDateSoonCountUseCase.invoke()
+                .collectLatest {
+                    reduce { state.copy(expiresSoonCount = it) }
+                }
+        }
+
+        intent {
+            getExpirationDateSoonIngredientUseCase.invoke()
+                .collectLatest {
+                    reduce { state.copy(expirationDateSoonItems = it.toImmutableList()) }
+                }
+        }
+
+        intent {
+            getRecipeCountUseCase.invoke()
+                .collectLatest {
+                    reduce { state.copy(recipeCount = it) }
+                }
+        }
     }
 
     fun onIntent(intent: HomeIntent) {

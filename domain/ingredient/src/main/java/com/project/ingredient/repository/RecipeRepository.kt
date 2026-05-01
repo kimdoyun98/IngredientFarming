@@ -14,4 +14,6 @@ interface RecipeRepository {
     suspend fun getRecipeInfoById(recipeId: Int): Recipe
 
     fun getPagedRecipes(filter: RecipeFilter): Flow<PagingData<RecipeListItem>>
+
+    fun getRecipeCount(): Flow<Int>
 }

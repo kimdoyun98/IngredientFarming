@@ -5,7 +5,7 @@ import com.project.model.ingredient.ExpirationDateSoonIngredient
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetExpirationDateSoonIngredient @Inject constructor(
+class GetExpirationDateSoonIngredientUseCase @Inject constructor(
     private val ingredientRepository: IngredientRepository
 ) {
     operator fun invoke(): Flow<List<ExpirationDateSoonIngredient>> {
