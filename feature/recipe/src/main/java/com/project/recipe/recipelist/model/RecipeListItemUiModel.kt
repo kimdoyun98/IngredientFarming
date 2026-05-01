@@ -14,7 +14,13 @@ data class RecipeListItemUiModel(
     val category: RecipeCategory = RecipeCategory.KOREAN_FOOD,
     val minute: Int = 30,
     val people: Int = 2,
-    val ingredientsAvailable: ImmutableList<Boolean> = persistentListOf(),
+    val ingredientsAvailable: IngredientsAvailable = IngredientsAvailable(),
+)
+
+@Stable
+data class IngredientsAvailable(
+    val total: Int = 0,
+    val isAvailableCount: Int = 0,
 )
 
 internal fun RecipeListItem.asUiModel(ingredientsAvailable: ImmutableList<Boolean>) =
@@ -25,5 +31,8 @@ internal fun RecipeListItem.asUiModel(ingredientsAvailable: ImmutableList<Boolea
         category = category,
         minute = minute,
         people = people,
-        ingredientsAvailable = ingredientsAvailable
+        ingredientsAvailable = IngredientsAvailable(
+            total = ingredientsAvailable.size,
+            isAvailableCount = ingredientsAvailable.count{ it }
+        )
     )

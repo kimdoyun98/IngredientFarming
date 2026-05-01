@@ -27,11 +27,11 @@ import com.project.recipe.R
 import com.project.recipe.recipelist.component.RecipeCardItem
 import com.project.recipe.recipelist.contract.RecipeIntent
 import com.project.recipe.recipelist.contract.RecipeState
+import com.project.recipe.recipelist.model.IngredientsAvailable
 import com.project.recipe.recipelist.model.RecipeListItemUiModel
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.flowOf
 
 @Composable
@@ -110,8 +110,8 @@ internal fun RecipeScreen(
                             category = recipe.category,
                             time = recipe.minute,
                             people = recipe.people,
-                            totalIngredient = recipe.ingredientsAvailable.size,
-                            holdIngredient = recipe.ingredientsAvailable.count { it },
+                            totalIngredient = recipe.ingredientsAvailable.total,
+                            holdIngredient = recipe.ingredientsAvailable.isAvailableCount,
                             onClick = { onRecipeItemClick(recipe.id) }
                         )
 
@@ -170,12 +170,12 @@ private fun RecipeScreenPreview() {
         RecipeListItemUiModel(
             id = 0,
             name = "김치찌개",
-            ingredientsAvailable = persistentListOf(false, false, true, false, true)
+            ingredientsAvailable = IngredientsAvailable(5, 3)
         ),
         RecipeListItemUiModel(
             id = 2,
             name = "된장찌개",
-            ingredientsAvailable = persistentListOf(true, false, true, true, true)
+            ingredientsAvailable = IngredientsAvailable(5, 1)
         ),
     )
     val pagingItems = flowOf(PagingData.from(fakeList)).collectAsLazyPagingItems()
