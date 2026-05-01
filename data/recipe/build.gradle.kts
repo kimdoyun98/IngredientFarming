@@ -13,4 +13,5 @@ dependencies {
     implementation(projects.domain.ingredient)
 
     implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.paging.common)
 }

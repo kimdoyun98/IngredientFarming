@@ -4,8 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import com.project.ingredient.usecase.recipe.CheckRecipeIngredientsAvailabilityUseCase
+import com.project.ingredient.usecase.recipe.GetAllHoldIngredientCountUseCase
 import com.project.ingredient.usecase.recipe.GetRecipeInfoUseCase
 import com.project.ingredient.usecase.recipe.SaveRequireIngredientsToCartUseCase
+import com.project.model.recipe.asCheckRecipeAvailability
 import com.project.navigation.IngredientRoute
 import com.project.recipe.recipinfo.contract.RecipeInfoEffect
 import com.project.recipe.recipinfo.contract.RecipeInfoIntent
@@ -14,6 +16,8 @@ import com.project.recipe.recipinfo.model.asRecipeIngredient
 import com.project.recipe.recipinfo.model.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -22,17 +26,26 @@ import javax.inject.Inject
 class RecipeInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getRecipeInfoUseCase: GetRecipeInfoUseCase,
+    private val getAllHoldIngredientCountUseCase: GetAllHoldIngredientCountUseCase,
     private val checkRecipeIngredientsAvailabilityUseCase: CheckRecipeIngredientsAvailabilityUseCase,
     private val saveRequireIngredientsToCartUseCase: SaveRequireIngredientsToCartUseCase,
 ) : ContainerHost<RecipeInfoState, RecipeInfoEffect>, ViewModel() {
     private val route: IngredientRoute.RecipeInfo = savedStateHandle.toRoute()
     override val container = container<RecipeInfoState, RecipeInfoEffect>(RecipeInfoState())
+    private val holdIngredientsFlow =
+        getAllHoldIngredientCountUseCase.invoke()
+            .map { holdIngredientCount ->
+                holdIngredientCount.associateBy { it.ingredientId }
+            }
 
     init {
         intent {
             val recipe = getRecipeInfoUseCase.invoke(route.recipeId)
-            val ingredientAvailability =
-                checkRecipeIngredientsAvailabilityUseCase.invoke(recipe.ingredients)
+
+            val map = checkRecipeIngredientsAvailabilityUseCase.invoke(
+                holdIngredientCount = holdIngredientsFlow.first(),
+                recipeIngredients = recipe.ingredients.map { it.asCheckRecipeAvailability(recipe.id) }
+            )
 
             reduce {
                 state.copy(
@@ -44,7 +57,7 @@ class RecipeInfoViewModel @Inject constructor(
                     ingredients =
                         recipe.ingredients.map { ingredient ->
                             ingredient.asUiModel(
-                                ingredientAvailability[ingredient.ingredientId] ?: false
+                                map[ingredient.ingredientId] ?: false
                             )
                         }.toImmutableList(),
                     recipeSteps = recipe.recipeSteps.toImmutableList()

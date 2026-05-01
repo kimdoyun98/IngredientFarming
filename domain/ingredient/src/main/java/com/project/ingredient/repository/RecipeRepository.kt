@@ -1,6 +1,8 @@
 package com.project.ingredient.repository
 
+import androidx.paging.PagingData
 import com.project.model.recipe.Recipe
+import com.project.model.recipe.RecipeFilter
 import com.project.model.recipe.RecipeListItem
 import kotlinx.coroutines.flow.Flow
 
@@ -10,4 +12,6 @@ interface RecipeRepository {
     fun getAllRecipe(): Flow<List<RecipeListItem>>
 
     suspend fun getRecipeInfoById(recipeId: Int): Recipe
+
+    fun getPagedRecipes(filter: RecipeFilter): Flow<PagingData<RecipeListItem>>
 }

@@ -7,4 +7,5 @@ dependencies {
     implementation(libs.javax.inject)
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.paging.common)
 }
