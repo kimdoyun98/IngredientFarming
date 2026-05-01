@@ -98,7 +98,10 @@ internal fun RecipeScreen(
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
-                items(count = recipes.itemCount) { idx ->
+                items(
+                    count = recipes.itemCount,
+                    key = { recipes[it]?.id ?: -1 }
+                ) { idx ->
                     val recipe = recipes[idx]
                     if (recipe != null) {
                         RecipeCardItem(
