@@ -72,4 +72,8 @@ class RecipeRepositoryImpl @Inject constructor(
                 }
             }
     }
+
+    override fun getRecipeCount(): Flow<Int> {
+        return recipeDao.getRecipeCount()
+    }
 }

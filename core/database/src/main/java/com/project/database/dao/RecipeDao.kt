@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecipeDao {
 
+    @Query("SELECT Count(*) FROM RecipeEntity")
+    fun getRecipeCount(): Flow<Int>
+
     @Transaction
     @Query("SELECT * FROM RecipeEntity")
     fun getAllRecipe(): Flow<List<RecipeWithIngredients>>
