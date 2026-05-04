@@ -30,6 +30,9 @@ interface IngredientDao {
     )
     suspend fun getIngredientByName(name: String): IngredientInfo?
 
+    @Query("SELECT * FROM IngredientEntity WHERE id=:id")
+    suspend fun getIngredientById(id: Int): IngredientInfo?
+
     @Query("SELECT id FROM IngredientEntity WHERE name =:name")
     suspend fun findIngredientIdByName(name: String): Int?
 

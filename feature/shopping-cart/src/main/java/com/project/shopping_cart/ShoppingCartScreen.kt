@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.designsystem.theme.LightGreen
-import com.project.model.cart.ShoppingCart
+import com.project.model.cart.ShoppingCartUiModel
 import com.project.model.ingredient.IngredientCategory
 import com.project.shopping_cart.component.ShoppingCartItem
 import com.project.shopping_cart.component.ShoppingItemAddContent
@@ -62,7 +62,7 @@ internal fun ShoppingCartScreen(
 @Composable
 internal fun ShoppingCartScreen(
     modifier: Modifier = Modifier,
-    cartList: ImmutableList<ShoppingCart>,
+    cartList: ImmutableList<ShoppingCartUiModel>,
     addState: Boolean,
     saveSuccessItemState: Boolean,
     addItemNameQuery: String,
@@ -170,14 +170,14 @@ private fun ShoppingCartScreenPreview() {
     ShoppingCartScreen(
         shoppingCartState = ShoppingCartState(
             cartList = persistentListOf(
-                ShoppingCart(
+                ShoppingCartUiModel(
                     name = "사과",
                     count = 5.0,
                     category = IngredientCategory.FRUIT,
                     success = false
                 ),
 
-                ShoppingCart(
+                ShoppingCartUiModel(
                     name = "삼겹살",
                     count = 1.0,
                     category = IngredientCategory.MEAT,
@@ -197,14 +197,14 @@ private fun ShoppingCartAddScreenPreview() {
         shoppingCartState = ShoppingCartState(
             addState = true,
             cartList = persistentListOf(
-                ShoppingCart(
+                ShoppingCartUiModel(
                     name = "사과",
                     count = 5.0,
                     category = IngredientCategory.FRUIT,
                     success = false
                 ),
 
-                ShoppingCart(
+                ShoppingCartUiModel(
                     name = "삼겹살",
                     count = 1.0,
                     category = IngredientCategory.MEAT,

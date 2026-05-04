@@ -67,10 +67,11 @@ fun MeatPartJson.asIngredientEntity(groupId: Int) = IngredientEntity(
     holdState = false
 )
 
-internal fun String.asUnknownIngredientEntity() =
-    IngredientEntity(
-        name = this,
-        category = IngredientCategory.OTHER,
-        store = IngredientStore.ROOM_TEMPERATURE,
-        holdState = false,
-    )
+internal fun String.asUnknownIngredientEntity(
+    category: IngredientCategory = IngredientCategory.OTHER
+) = IngredientEntity(
+    name = this,
+    category = category,
+    store = IngredientStore.ROOM_TEMPERATURE,
+    holdState = false,
+)

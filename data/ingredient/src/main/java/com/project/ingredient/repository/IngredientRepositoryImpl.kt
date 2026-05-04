@@ -7,6 +7,7 @@ import com.project.ingredient.asIngredientEntity
 import com.project.ingredient.asUnknownIngredientEntity
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
+import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,10 @@ class IngredientRepositoryImpl @Inject constructor(
 ) : IngredientRepository {
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
         return ingredientDao.getIngredientByName(name)
+    }
+
+    override suspend fun getIngredientById(id: Int): IngredientInfo? {
+        return ingredientDao.getIngredientById(id)
     }
 
     override fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>> {
@@ -59,6 +64,15 @@ class IngredientRepositoryImpl @Inject constructor(
 
         return ingredientDao.insertIngredient(
             name.asUnknownIngredientEntity()
+        ).toInt()
+    }
+
+    override suspend fun insertUnknownIngredient(
+        name: String,
+        category: IngredientCategory
+    ): Int {
+        return ingredientDao.insertIngredient(
+            name.asUnknownIngredientEntity(category)
         ).toInt()
     }
 }

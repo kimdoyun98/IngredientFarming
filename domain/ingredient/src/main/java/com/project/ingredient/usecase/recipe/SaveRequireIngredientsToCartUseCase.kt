@@ -3,13 +3,12 @@ package com.project.ingredient.usecase.recipe
 import com.project.ingredient.repository.HoldIngredientRepository
 import com.project.ingredient.repository.ShoppingCartRepository
 import com.project.ingredient.usecase.GetIngredientUseCase
-import com.project.model.cart.ShoppingCart
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.recipe.RecipeIngredient
 import javax.inject.Inject
 
 class SaveRequireIngredientsToCartUseCase @Inject constructor(
-    private val getIngredientUseCase: GetIngredientUseCase,
+    //private val getIngredientUseCase: GetIngredientUseCase,
     private val holdIngredientRepository: HoldIngredientRepository,
     private val shoppingCartRepository: ShoppingCartRepository,
 ) {
@@ -18,21 +17,18 @@ class SaveRequireIngredientsToCartUseCase @Inject constructor(
 
         //TODO forEach를 통해 반복적인 로직 처리 과정에 대해 개선 고려
         requireIngredients.forEach { ingredient ->
-            val category =
-                getIngredientUseCase.invoke(ingredient.name)?.category ?: IngredientCategory.OTHER
+//            val category =
+//                getIngredientUseCase.invoke(ingredient.name)?.category ?: IngredientCategory.OTHER
             val holdIngredientCount =
                 holdIngredientRepository.getHoldIngredientCountByIngredientId(ingredient.ingredientId)
+
             val isInShoppingCart =
-                shoppingCartRepository.getShoppingCartItemByName(ingredient.name) != null
+                shoppingCartRepository.getShoppingCartItemByIngredientId(ingredient.ingredientId) != null
 
             if (!isInShoppingCart || ingredient.isAutoDecrement) {
                 shoppingCartRepository.insertShoppingCartItem(
-                    ShoppingCart(
-                        name = ingredient.name,
-                        count = if (ingredient.isAutoDecrement) ingredient.count - holdIngredientCount else 1.0,
-                        category = category,
-                        success = false
-                    )
+                    ingredientId = ingredient.ingredientId,
+                    count = if (ingredient.isAutoDecrement) ingredient.count - holdIngredientCount else 1.0,
                 )
             }
         }

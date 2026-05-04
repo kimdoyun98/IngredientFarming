@@ -2,13 +2,14 @@ package com.project.ingredient.usecase.shopping
 
 import com.project.ingredient.repository.IngredientRepository
 import com.project.model.cart.ShoppingCart
+import com.project.model.cart.ShoppingCartUiModel
 import com.project.model.ingredient.Ingredient
 import javax.inject.Inject
 
 class SaveCartSuccessItemsUseCase @Inject constructor(
     private val ingredientRepository: IngredientRepository,
 ) {
-    suspend operator fun invoke(items: List<ShoppingCart>) {
+    suspend operator fun invoke(items: List<ShoppingCartUiModel>) {
         ingredientRepository.insertIngredient(
             items.map {
                 Ingredient(
