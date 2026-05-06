@@ -14,20 +14,18 @@ class ShoppingCartRepositoryImpl @Inject constructor(
     private val shoppingCartDao: ShoppingCartDao
 ) : ShoppingCartRepository {
     override suspend fun insertShoppingCartItem(ingredientId: Int, count: Double) {
-        val cart = getShoppingCartItemByIngredientId(ingredientId)
+        shoppingCartDao.insertShoppingCartItem(
+            ShoppingCartEntity(
+                ingredientId = ingredientId,
+                count = count
+            )
+        )
+    }
 
-        if (cart == null) {
-            shoppingCartDao.insertShoppingCartItem(
-                ShoppingCartEntity(
-                    ingredientId = ingredientId,
-                    count = count
-                )
-            )
-        } else {
-            shoppingCartDao.updateShoppingCartItemCount(
-                cart.copy(count = cart.count + count).asShoppingCartEntity()
-            )
-        }
+    override suspend fun updateShoppingCartItem(cart: ShoppingCart, count: Double) {
+        shoppingCartDao.updateShoppingCartItemCount(
+            cart.copy(count = cart.count + count).asShoppingCartEntity()
+        )
     }
 
     override fun getAllShoppingCartItems(): Flow<List<ShoppingCart>> {

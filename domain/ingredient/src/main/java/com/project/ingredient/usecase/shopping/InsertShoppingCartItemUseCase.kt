@@ -16,7 +16,18 @@ class InsertShoppingCartItemUseCase @Inject constructor(
         } else {
             item.ingredientId
         }
+        val cart = shoppingCartRepository.getShoppingCartItemByIngredientId(ingredientId)
 
-        shoppingCartRepository.insertShoppingCartItem(ingredientId, item.count)
+        if (cart == null) {
+            shoppingCartRepository.insertShoppingCartItem(
+                ingredientId = ingredientId,
+                count = item.count,
+            )
+        } else {
+            shoppingCartRepository.updateShoppingCartItem(
+                cart = cart,
+                count = item.count
+            )
+        }
     }
 }
