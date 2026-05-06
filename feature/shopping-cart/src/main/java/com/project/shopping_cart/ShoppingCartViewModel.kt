@@ -7,13 +7,12 @@ import com.project.ingredient.usecase.shopping.DeleteShoppingCartItemUseCase
 import com.project.ingredient.usecase.shopping.GetAllShoppingCartItemsUseCase
 import com.project.ingredient.usecase.shopping.InsertShoppingCartItemUseCase
 import com.project.ingredient.usecase.shopping.SaveCartSuccessItemsUseCase
-import com.project.model.cart.ShoppingCartUiModel
 import com.project.model.cart.asShoppingCart
 import com.project.model.ingredient.getIndexByIngredientCategory
-import com.project.model.ingredient.getIndexToIngredientCategory
 import com.project.shopping_cart.contract.ShoppingCartEffect
 import com.project.shopping_cart.contract.ShoppingCartIntent
 import com.project.shopping_cart.contract.ShoppingCartState
+import com.project.shopping_cart.contract.asShoppingCartUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
@@ -85,33 +84,25 @@ class ShoppingCartViewModel @Inject constructor(
             is ShoppingCartIntent.OnItemAddCancelButtonClick -> intent {
                 reduce {
                     state.copy(
-                        addState = false,
-                        addItemCount = "0",
-                        addItemNameQuery = "",
-                        addItemCategorySelected = -1,
-                        addItemIngredientId = -1
+                        addState = STATE_FALSE,
+                        addItemCount = ZERO_ITEM_COUNT,
+                        addItemNameQuery = BLANK_QUERY,
+                        addItemCategorySelected = UNSELECTED_INDEX,
+                        addItemIngredientId = RESET_INGREDIENT_ID
                     )
                 }
             }
 
             is ShoppingCartIntent.OnItemAddButtonClick -> intent {
-                insertShoppingCartItemUseCase.invoke(
-                    ShoppingCartUiModel(
-                        ingredientId = state.addItemIngredientId,
-                        name = state.addItemNameQuery,
-                        count = state.addItemCount.toDouble(),
-                        category = getIndexToIngredientCategory(state.addItemCategorySelected),
-                        success = false
-                    )
-                )
+                insertShoppingCartItemUseCase.invoke(state.asShoppingCartUiModel())
 
                 reduce {
                     state.copy(
-                        addState = false,
-                        addItemCount = "0",
-                        addItemNameQuery = "",
-                        addItemCategorySelected = -1,
-                        addItemIngredientId = -1
+                        addState = STATE_FALSE,
+                        addItemCount = ZERO_ITEM_COUNT,
+                        addItemNameQuery = BLANK_QUERY,
+                        addItemCategorySelected = UNSELECTED_INDEX,
+                        addItemIngredientId = RESET_INGREDIENT_ID
                     )
                 }
             }
@@ -158,5 +149,13 @@ class ShoppingCartViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val ZERO_ITEM_COUNT = "0"
+        private const val STATE_FALSE = false
+        private const val BLANK_QUERY = ""
+        private const val UNSELECTED_INDEX = -1
+        private const val RESET_INGREDIENT_ID = -1
     }
 }
