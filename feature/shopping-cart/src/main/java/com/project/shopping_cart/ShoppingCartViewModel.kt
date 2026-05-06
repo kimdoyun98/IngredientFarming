@@ -1,6 +1,7 @@
 package com.project.shopping_cart
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.project.ingredient.usecase.GetIngredientUseCase
 import com.project.ingredient.usecase.shopping.DeleteShoppingCartItemUseCase
 import com.project.ingredient.usecase.shopping.GetAllShoppingCartItemsUseCase
@@ -18,8 +19,10 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -43,25 +46,14 @@ class ShoppingCartViewModel @Inject constructor(
                 }
         }
 
-        intent {
+        viewModelScope.launch {
             container.stateFlow
-                .onEach { state ->
-                    reduce { state.copy(saveSuccessItemState = state.cartList.any { it.success }) }
-                }
                 .map { it.addItemNameQuery }
+                .distinctUntilChanged()
+                .filter { it.isNotBlank() }
                 .debounce(300L)
                 .collectLatest {
-                    val ingredient = getIngredientUseCase.invoke(it)
-                    if (ingredient != null) {
-                        reduce {
-                            state.copy(
-                                addItemCategorySelected = getIndexByIngredientCategory(
-                                    ingredient.category
-                                ),
-                                addItemIngredientId = ingredient.id
-                            )
-                        }
-                    }
+                    onIntent(ShoppingCartIntent.SearchIngredient(it))
                 }
         }
     }
@@ -129,7 +121,12 @@ class ShoppingCartViewModel @Inject constructor(
                 val changeItem = cartList[intent.index]
                 cartList[intent.index] = changeItem.copy(success = !changeItem.success)
 
-                reduce { state.copy(cartList = cartList.toImmutableList()) }
+                reduce {
+                    state.copy(
+                        cartList = cartList.toImmutableList(),
+                        saveSuccessItemState = cartList.any { it.success }
+                    )
+                }
             }
 
             is ShoppingCartIntent.OnItemDeleteClick -> intent {
@@ -142,6 +139,22 @@ class ShoppingCartViewModel @Inject constructor(
 
                 successList.forEach {
                     deleteShoppingCartItemUseCase.invoke(it.asShoppingCart())
+                }
+            }
+
+            is ShoppingCartIntent.SearchIngredient -> intent {
+                val ingredient = getIngredientUseCase.invoke(intent.query)
+
+                if (intent.query != state.addItemNameQuery) return@intent
+                if (ingredient != null) {
+                    reduce {
+                        state.copy(
+                            addItemCategorySelected = getIndexByIngredientCategory(
+                                ingredient.category
+                            ),
+                            addItemIngredientId = ingredient.id
+                        )
+                    }
                 }
             }
         }
