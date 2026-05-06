@@ -17,8 +17,8 @@ interface ShoppingCartDao {
     @Query("SELECT * FROM ShoppingCartEntity")
     fun getAllShoppingCartItems(): Flow<List<ShoppingCartEntity>>
 
-    @Query("SELECT * FROM ShoppingCartEntity WHERE name == :name")
-    suspend fun getShoppingCartItemByName(name: String): ShoppingCartEntity?
+    @Query("SELECT * FROM ShoppingCartEntity WHERE ingredientId == :id")
+    suspend fun getShoppingCartItemByIngredientId(id: Int): ShoppingCartEntity?
 
     /**
      * Update

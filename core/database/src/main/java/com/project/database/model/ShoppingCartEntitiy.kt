@@ -1,25 +1,30 @@
 package com.project.database.model
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.project.model.cart.ShoppingCart
-import com.project.model.ingredient.IngredientCategory
 
 @Entity(
     tableName = "ShoppingCartEntity",
+    foreignKeys = [
+        ForeignKey(
+            entity = IngredientEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["ingredientId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
 )
 data class ShoppingCartEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String,
+    val ingredientId: Int,
     val count: Double,
-    val category: IngredientCategory,
 )
 
 fun ShoppingCartEntity.asExternalModel(): ShoppingCart =
     ShoppingCart(
         id = id,
-        name = name,
+        ingredientId = ingredientId,
         count = count,
-        category = category,
-        success = false
     )

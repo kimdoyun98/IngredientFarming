@@ -1,6 +1,7 @@
 package com.project.shopping_cart.repository
 
 import com.project.database.dao.ShoppingCartDao
+import com.project.database.model.ShoppingCartEntity
 import com.project.database.model.asExternalModel
 import com.project.ingredient.repository.ShoppingCartRepository
 import com.project.model.cart.ShoppingCart
@@ -12,17 +13,19 @@ import javax.inject.Inject
 class ShoppingCartRepositoryImpl @Inject constructor(
     private val shoppingCartDao: ShoppingCartDao
 ) : ShoppingCartRepository {
-    override suspend fun insertShoppingCartItem(item: ShoppingCart) {
-        val cart = getShoppingCartItemByName(item.name)
-
-        if (cart == null) {
-            shoppingCartDao.insertShoppingCartItem(item.asShoppingCartEntity())
-        }
-        else {
-            shoppingCartDao.updateShoppingCartItemCount(
-                cart.copy(count = cart.count + item.count).asShoppingCartEntity()
+    override suspend fun insertShoppingCartItem(ingredientId: Int, count: Double) {
+        shoppingCartDao.insertShoppingCartItem(
+            ShoppingCartEntity(
+                ingredientId = ingredientId,
+                count = count
             )
-        }
+        )
+    }
+
+    override suspend fun updateShoppingCartItem(cart: ShoppingCart, count: Double) {
+        shoppingCartDao.updateShoppingCartItemCount(
+            cart.copy(count = cart.count + count).asShoppingCartEntity()
+        )
     }
 
     override fun getAllShoppingCartItems(): Flow<List<ShoppingCart>> {
@@ -38,7 +41,7 @@ class ShoppingCartRepositoryImpl @Inject constructor(
         shoppingCartDao.deleteShoppingCartItem(item.asShoppingCartEntity())
     }
 
-    override suspend fun getShoppingCartItemByName(name: String): ShoppingCart? {
-        return shoppingCartDao.getShoppingCartItemByName(name)?.asExternalModel()
+    override suspend fun getShoppingCartItemByIngredientId(id: Int): ShoppingCart? {
+        return shoppingCartDao.getShoppingCartItemByIngredientId(id)?.asExternalModel()
     }
 }

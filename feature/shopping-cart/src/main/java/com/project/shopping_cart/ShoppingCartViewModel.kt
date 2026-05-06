@@ -3,24 +3,25 @@ package com.project.shopping_cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.ingredient.usecase.GetIngredientUseCase
-import com.project.model.cart.ShoppingCart
-import com.project.model.ingredient.getIndexByIngredientCategory
-import com.project.model.ingredient.getIndexToIngredientCategory
-import com.project.shopping_cart.contract.ShoppingCartEffect
-import com.project.shopping_cart.contract.ShoppingCartIntent
-import com.project.shopping_cart.contract.ShoppingCartState
 import com.project.ingredient.usecase.shopping.DeleteShoppingCartItemUseCase
 import com.project.ingredient.usecase.shopping.GetAllShoppingCartItemsUseCase
 import com.project.ingredient.usecase.shopping.InsertShoppingCartItemUseCase
 import com.project.ingredient.usecase.shopping.SaveCartSuccessItemsUseCase
+import com.project.model.cart.asShoppingCart
+import com.project.model.ingredient.getIndexByIngredientCategory
+import com.project.shopping_cart.contract.ShoppingCartEffect
+import com.project.shopping_cart.contract.ShoppingCartIntent
+import com.project.shopping_cart.contract.ShoppingCartState
+import com.project.shopping_cart.contract.asShoppingCartUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -36,59 +37,24 @@ class ShoppingCartViewModel @Inject constructor(
 ) : ContainerHost<ShoppingCartState, ShoppingCartEffect>, ViewModel() {
     override val container = container<ShoppingCartState, ShoppingCartEffect>(ShoppingCartState())
 
-    private val _nameQuery = MutableStateFlow("")
-    private val nameQuery = _nameQuery.asStateFlow()
-
-    private val _countQuery = MutableStateFlow("")
-    private val countQuery = _countQuery.asStateFlow()
-
     init {
-        getAllShoppingCartItemsUseCase.invoke()
-            .onEach { shoppingCarts ->
-                intent {
+        intent {
+            getAllShoppingCartItemsUseCase.invoke()
+                .collectLatest { shoppingCarts ->
                     reduce { state.copy(cartList = shoppingCarts.toImmutableList()) }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
 
-        nameQuery
-            .onEach {
-                intent {
-                    reduce { state.copy(addItemNameQuery = it) }
+        viewModelScope.launch {
+            container.stateFlow
+                .map { it.addItemNameQuery }
+                .distinctUntilChanged()
+                .filter { it.isNotBlank() }
+                .debounce(300L)
+                .collectLatest {
+                    onIntent(ShoppingCartIntent.SearchIngredient(it))
                 }
-            }
-            .debounce(300L)
-            .onEach {
-                val ingredient = getIngredientUseCase.invoke(it)
-                if (ingredient != null) {
-                    intent {
-                        reduce {
-                            state.copy(
-                                addItemCategorySelected = getIndexByIngredientCategory(
-                                    ingredient.category
-                                )
-                            )
-                        }
-                    }
-                }
-            }
-            .launchIn(viewModelScope)
-
-        countQuery
-            .onEach {
-                intent {
-                    reduce { state.copy(addItemCount = it) }
-                }
-            }
-            .launchIn(viewModelScope)
-
-        container.stateFlow
-            .onEach { state ->
-                intent {
-                    reduce { state.copy(saveSuccessItemState = state.cartList.any { it.success }) }
-                }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 
     fun onIntent(intent: ShoppingCartIntent) {
@@ -102,11 +68,11 @@ class ShoppingCartViewModel @Inject constructor(
             }
 
             is ShoppingCartIntent.OnAddItemNameChanged -> intent {
-                _nameQuery.value = intent.name
+                reduce { state.copy(addItemNameQuery = intent.name) }
             }
 
             is ShoppingCartIntent.OnAddItemCountChanged -> intent {
-                _countQuery.value = intent.count
+                reduce { state.copy(addItemCount = intent.count) }
             }
 
             is ShoppingCartIntent.OnAddItemCategoryChanged -> intent {
@@ -118,25 +84,27 @@ class ShoppingCartViewModel @Inject constructor(
             is ShoppingCartIntent.OnItemAddCancelButtonClick -> intent {
                 reduce {
                     state.copy(
-                        addState = false,
-                        addItemCount = "0",
-                        addItemNameQuery = "",
-                        addItemCategorySelected = -1
+                        addState = STATE_FALSE,
+                        addItemCount = ZERO_ITEM_COUNT,
+                        addItemNameQuery = BLANK_QUERY,
+                        addItemCategorySelected = UNSELECTED_INDEX,
+                        addItemIngredientId = RESET_INGREDIENT_ID
                     )
                 }
             }
 
             is ShoppingCartIntent.OnItemAddButtonClick -> intent {
-                insertShoppingCartItemUseCase.invoke(
-                    ShoppingCart(
-                        name = state.addItemNameQuery,
-                        count = state.addItemCount.toDouble(),
-                        category = getIndexToIngredientCategory(state.addItemCategorySelected),
-                        success = false
-                    )
-                )
+                insertShoppingCartItemUseCase.invoke(state.asShoppingCartUiModel())
 
-                reduce { state.copy(addState = false) }
+                reduce {
+                    state.copy(
+                        addState = STATE_FALSE,
+                        addItemCount = ZERO_ITEM_COUNT,
+                        addItemNameQuery = BLANK_QUERY,
+                        addItemCategorySelected = UNSELECTED_INDEX,
+                        addItemIngredientId = RESET_INGREDIENT_ID
+                    )
+                }
             }
 
             is ShoppingCartIntent.OnItemCheckBoxClick -> intent {
@@ -144,11 +112,16 @@ class ShoppingCartViewModel @Inject constructor(
                 val changeItem = cartList[intent.index]
                 cartList[intent.index] = changeItem.copy(success = !changeItem.success)
 
-                reduce { state.copy(cartList = cartList.toImmutableList()) }
+                reduce {
+                    state.copy(
+                        cartList = cartList.toImmutableList(),
+                        saveSuccessItemState = cartList.any { it.success }
+                    )
+                }
             }
 
             is ShoppingCartIntent.OnItemDeleteClick -> intent {
-                deleteShoppingCartItemUseCase.invoke(state.cartList[intent.index])
+                deleteShoppingCartItemUseCase.invoke(state.cartList[intent.index].asShoppingCart())
             }
 
             is ShoppingCartIntent.OnSaveCartItemsButtonClick -> intent {
@@ -156,9 +129,33 @@ class ShoppingCartViewModel @Inject constructor(
                 saveCartSuccessItemsUseCase.invoke(successList)
 
                 successList.forEach {
-                    deleteShoppingCartItemUseCase.invoke(it)
+                    deleteShoppingCartItemUseCase.invoke(it.asShoppingCart())
+                }
+            }
+
+            is ShoppingCartIntent.SearchIngredient -> intent {
+                val ingredient = getIngredientUseCase.invoke(intent.query)
+
+                if (intent.query != state.addItemNameQuery) return@intent
+                if (ingredient != null) {
+                    reduce {
+                        state.copy(
+                            addItemCategorySelected = getIndexByIngredientCategory(
+                                ingredient.category
+                            ),
+                            addItemIngredientId = ingredient.id
+                        )
+                    }
                 }
             }
         }
+    }
+
+    companion object {
+        private const val ZERO_ITEM_COUNT = "0"
+        private const val STATE_FALSE = false
+        private const val BLANK_QUERY = ""
+        private const val UNSELECTED_INDEX = -1
+        private const val RESET_INGREDIENT_ID = -1
     }
 }
