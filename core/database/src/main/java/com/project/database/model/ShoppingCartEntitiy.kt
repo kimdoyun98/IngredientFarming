@@ -12,7 +12,7 @@ import com.project.model.cart.ShoppingCart
             entity = IngredientEntity::class,
             parentColumns = ["id"],
             childColumns = ["ingredientId"],
-            onDelete = ForeignKey.SET_DEFAULT//?
+            onDelete = ForeignKey.CASCADE
         )
     ],
 )

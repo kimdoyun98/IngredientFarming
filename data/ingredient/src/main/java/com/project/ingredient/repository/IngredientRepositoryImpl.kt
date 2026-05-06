@@ -22,8 +22,8 @@ class IngredientRepositoryImpl @Inject constructor(
         return ingredientDao.getIngredientByName(name)
     }
 
-    override suspend fun getIngredientById(id: Int): IngredientInfo? {
-        return ingredientDao.getIngredientById(id)
+    override suspend fun getIngredientById(id: Int): IngredientInfo {
+        return ingredientDao.getIngredientById(id)!!
     }
 
     override fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>> {

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IngredientRepository {
     suspend fun getIngredientByName(name: String): IngredientInfo?
-    suspend fun getIngredientById(id: Int): IngredientInfo?
+    suspend fun getIngredientById(id: Int): IngredientInfo
 
     fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>>
     suspend fun insertIngredient(igdList: List<Ingredient>)

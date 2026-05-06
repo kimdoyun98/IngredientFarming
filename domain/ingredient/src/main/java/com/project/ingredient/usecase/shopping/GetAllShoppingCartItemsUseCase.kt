@@ -15,7 +15,7 @@ class GetAllShoppingCartItemsUseCase @Inject constructor(
         return shoppingCartRepository.getAllShoppingCartItems()
             .map { shoppingCarts ->
                 shoppingCarts.map { shoppingCart ->
-                    val info = ingredientRepository.getIngredientById(shoppingCart.ingredientId)!!
+                    val info = ingredientRepository.getIngredientById(shoppingCart.ingredientId)
 
                     ShoppingCartUiModel(
                         id = shoppingCart.id,
