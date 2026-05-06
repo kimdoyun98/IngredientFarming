@@ -7,6 +7,7 @@ import com.project.ingredient.usecase.shopping.GetAllShoppingCartItemsUseCase
 import com.project.ingredient.usecase.shopping.InsertShoppingCartItemUseCase
 import com.project.ingredient.usecase.shopping.SaveCartSuccessItemsUseCase
 import com.project.model.cart.ShoppingCartUiModel
+import com.project.model.cart.asShoppingCart
 import com.project.model.ingredient.getIndexByIngredientCategory
 import com.project.model.ingredient.getIndexToIngredientCategory
 import com.project.shopping_cart.contract.ShoppingCartEffect
@@ -132,7 +133,7 @@ class ShoppingCartViewModel @Inject constructor(
             }
 
             is ShoppingCartIntent.OnItemDeleteClick -> intent {
-                deleteShoppingCartItemUseCase.invoke(state.cartList[intent.index])
+                deleteShoppingCartItemUseCase.invoke(state.cartList[intent.index].asShoppingCart())
             }
 
             is ShoppingCartIntent.OnSaveCartItemsButtonClick -> intent {
@@ -140,7 +141,7 @@ class ShoppingCartViewModel @Inject constructor(
                 saveCartSuccessItemsUseCase.invoke(successList)
 
                 successList.forEach {
-                    deleteShoppingCartItemUseCase.invoke(it)
+                    deleteShoppingCartItemUseCase.invoke(it.asShoppingCart())
                 }
             }
         }
