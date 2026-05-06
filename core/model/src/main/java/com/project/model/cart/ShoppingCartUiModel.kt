@@ -8,7 +8,7 @@ data class ShoppingCartUiModel(
     val name: String,
     val count: Double,
     val category: IngredientCategory,
-    val success: Boolean,
+    val success: Boolean = false,
 )
 
 fun ShoppingCartUiModel.asShoppingCart() =

@@ -23,7 +23,6 @@ class GetAllShoppingCartItemsUseCase @Inject constructor(
                         name = info.name,
                         count = shoppingCart.count,
                         category = info.category,
-                        success = false
                     )
                 }
             }
