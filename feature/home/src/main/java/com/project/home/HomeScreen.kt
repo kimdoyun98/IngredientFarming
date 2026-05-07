@@ -47,6 +47,7 @@ internal fun HomeScreen(
         recipeCount = homeState.recipeCount,
         addStatus = homeState.addStatus,
         expirationDateSoonItems = homeState.expirationDateSoonItems,
+        shoppingCartButtonIndicatorValue = homeState.shoppingCartItemsCountValue,
         onManageButtonClick = { onIntent(HomeIntent.OnManageButtonClick) },
         onAddButtonClick = { onIntent(HomeIntent.OnAddButtonClick) },
         onDismissRequestToAdd = { onIntent(HomeIntent.OnDismissRequestToAdd) },
@@ -67,6 +68,7 @@ internal fun HomeScreen(
     recipeCount: Int,
     addStatus: Boolean = false,
     expirationDateSoonItems: ImmutableList<ExpirationDateSoonIngredient>,
+    shoppingCartButtonIndicatorValue: String? = null,
     onManageButtonClick: () -> Unit,
     onAddButtonClick: () -> Unit,
     onDismissRequestToAdd: () -> Unit,
@@ -95,10 +97,11 @@ internal fun HomeScreen(
             )
 
             NavigateButtonsContent(
-                onManageButtonClick = { onManageButtonClick() },
-                onAddButtonClick = { onAddButtonClick() },
-                onRecipeButtonClick = { onRecipeButtonClick() },
-                onShoppingCartButtonClick = { onShoppingCartButtonClick() }
+                shoppingCartButtonIndicatorValue = shoppingCartButtonIndicatorValue,
+                onManageButtonClick = onManageButtonClick,
+                onAddButtonClick = onAddButtonClick,
+                onRecipeButtonClick = onRecipeButtonClick,
+                onShoppingCartButtonClick = onShoppingCartButtonClick
             )
 
             ExpirationDateSoonContent(items = expirationDateSoonItems)

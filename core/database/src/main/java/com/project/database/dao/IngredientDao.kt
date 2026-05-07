@@ -44,7 +44,7 @@ interface IngredientDao {
         SELECT Count(*) 
         FROM IngredientEntity 
         JOIN HoldIngredientEntity ON IngredientEntity.id = HoldIngredientEntity.ingredient_id
-        WHERE HoldIngredientEntity.expirationDate BETWEEN DATE('now') AND DATE('now', '+3 days')
+        WHERE HoldIngredientEntity.expirationDate <= DATE('now', '+3 days')
         """
     )
     fun getExpirationDateSoonCount(): Flow<Int>
@@ -58,7 +58,7 @@ interface IngredientDao {
             category
         FROM IngredientEntity
         JOIN HoldIngredientEntity ON IngredientEntity.id = HoldIngredientEntity.ingredient_id
-        WHERE HoldIngredientEntity.expirationDate BETWEEN DATE('now') AND DATE('now', '+3 days')
+        WHERE HoldIngredientEntity.expirationDate <= DATE('now', '+3 days')
     """
     )
     fun getExpirationDateSoonIngredient(): Flow<List<ExpirationDateSoonIngredient>>

@@ -10,6 +10,7 @@ data class HomeState(
     val ingredientCount: Int = 0,
     val expiresSoonCount: Int = 0,
     val recipeCount: Int = 0,
+    val shoppingCartItemsCountValue: String? = null,
     val addStatus: Boolean = false,
     val expirationDateSoonItems: ImmutableList<ExpirationDateSoonIngredient> = persistentListOf()
 )

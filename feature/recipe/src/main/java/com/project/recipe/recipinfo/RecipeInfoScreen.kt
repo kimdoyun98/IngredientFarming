@@ -1,6 +1,5 @@
 package com.project.recipe.recipinfo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -20,9 +17,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
@@ -44,6 +43,7 @@ import com.project.recipe.recipinfo.contract.RecipeInfoState
 import com.project.recipe.recipinfo.model.RecipeIngredientUiModel
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingTopAppBar
+import com.project.ui.modifier.circleLayout
 import com.project.ui.modifier.shadowLayout
 import com.project.ui.util.format
 import kotlinx.collections.immutable.ImmutableList
@@ -151,6 +151,12 @@ private fun RecipeIngredientsContent(
     ingredients: ImmutableList<RecipeIngredientUiModel>,
     onClickAddRequireIngredientButton: () -> Unit,
 ) {
+    val hasMissingIngredients by remember(ingredients) {
+        derivedStateOf {
+            ingredients.any { !it.isAvailable }
+        }
+    }
+
     Text(
         text = stringResource(R.string.recipe_info_require_ingredient),
         style = MaterialTheme.typography.titleSmall,
@@ -200,11 +206,11 @@ private fun RecipeIngredientsContent(
         }
     }
 
-    if(ingredients.any { !it.isAvailable }){
+    if (hasMissingIngredients) {
         IngredientFarmingWideButton(
             onClick = onClickAddRequireIngredientButton,
             background = Red
-        ) { Text("부족한 재료 장보기 목록에 추가") }
+        ) { Text(stringResource(R.string.recipe_info_ingredients_require_ingredients_add_button_text)) }
     }
 }
 
@@ -229,9 +235,10 @@ private fun RecipeStepsContent(
         ) {
             Box(
                 modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(MoreLightGreen),
+                    .circleLayout(
+                        size = 36.dp,
+                        background = MoreLightGreen
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

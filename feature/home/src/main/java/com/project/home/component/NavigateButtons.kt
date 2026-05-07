@@ -16,17 +16,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.designsystem.compose.IngredientFarmingRoundedIconButton
 import com.project.designsystem.theme.DeepOrange
 import com.project.designsystem.theme.MoreLightBlue
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.designsystem.theme.MoreLightOrange
 import com.project.designsystem.theme.MoreLightPink
+import com.project.ui.IndicatorRoundedIconButton
 import com.project.ui.R
 
 @Composable
 internal fun NavigateButtonsContent(
     modifier: Modifier = Modifier,
+    shoppingCartButtonIndicatorValue: String?,
     onManageButtonClick: () -> Unit,
     onAddButtonClick: () -> Unit,
     onRecipeButtonClick: () -> Unit,
@@ -75,6 +76,7 @@ internal fun NavigateButtonsContent(
 
         NavigateButton(
             title = stringResource(com.project.home.R.string.shopping_cart),
+            indicatorValue = shoppingCartButtonIndicatorValue,
             backgroundColor = MoreLightPink,
             onClick = { onShoppingCartButtonClick() }
         ) {
@@ -91,6 +93,7 @@ internal fun NavigateButtonsContent(
 private fun NavigateButton(
     modifier: Modifier = Modifier,
     title: String,
+    indicatorValue: String? = null,
     backgroundColor: Color,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
@@ -99,7 +102,8 @@ private fun NavigateButton(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        IngredientFarmingRoundedIconButton(
+        IndicatorRoundedIconButton(
+            indicatorValue = indicatorValue,
             backgroundColor = backgroundColor,
             onClick = { onClick() }
         ) {
@@ -117,6 +121,7 @@ private fun NavigateButton(
 @Composable
 private fun NavigateButtonsPreview() {
     NavigateButtonsContent(
+        shoppingCartButtonIndicatorValue = "3",
         onManageButtonClick = {},
         onAddButtonClick = {},
         onRecipeButtonClick = {},
