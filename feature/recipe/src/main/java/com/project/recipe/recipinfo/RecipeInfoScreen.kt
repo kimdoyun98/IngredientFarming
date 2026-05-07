@@ -210,7 +210,7 @@ private fun RecipeIngredientsContent(
         IngredientFarmingWideButton(
             onClick = onClickAddRequireIngredientButton,
             background = Red
-        ) { Text("부족한 재료 장보기 목록에 추가") }
+        ) { Text(stringResource(R.string.recipe_info_ingredients_require_ingredients_add_button_text)) }
     }
 }
 
