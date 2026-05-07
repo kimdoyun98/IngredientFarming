@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import com.project.home.contract.HomeEffect
 import com.project.home.contract.HomeIntent
 import com.project.home.contract.HomeState
+import com.project.home.util.toCountValue
 import com.project.ingredient.usecase.home.GetCurrentIngredientCountUseCase
 import com.project.ingredient.usecase.home.GetExpirationDateSoonCountUseCase
 import com.project.ingredient.usecase.home.GetExpirationDateSoonIngredientUseCase
 import com.project.ingredient.usecase.home.GetRecipeCountUseCase
+import com.project.ingredient.usecase.home.GetShoppingCartItemsCountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -21,6 +24,7 @@ class HomeViewModel @Inject constructor(
     private val getExpirationDateSoonCountUseCase: GetExpirationDateSoonCountUseCase,
     private val getExpirationDateSoonIngredientUseCase: GetExpirationDateSoonIngredientUseCase,
     private val getRecipeCountUseCase: GetRecipeCountUseCase,
+    private val getShoppingCartItemsCountUseCase: GetShoppingCartItemsCountUseCase,
 ) : ContainerHost<HomeState, HomeEffect>, ViewModel() {
     override val container = container<HomeState, HomeEffect>(HomeState())
 
@@ -50,6 +54,16 @@ class HomeViewModel @Inject constructor(
             getRecipeCountUseCase.invoke()
                 .collectLatest {
                     reduce { state.copy(recipeCount = it) }
+                }
+        }
+
+        intent {
+            getShoppingCartItemsCountUseCase.invoke()
+                .map {
+                    it.toCountValue()
+                }
+                .collectLatest {
+                    reduce { state.copy(shoppingCartItemsCountValue = it) }
                 }
         }
     }

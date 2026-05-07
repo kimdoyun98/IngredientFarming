@@ -9,4 +9,5 @@ interface ShoppingCartRepository {
     fun getAllShoppingCartItems(): Flow<List<ShoppingCart>>
     suspend fun deleteShoppingCartItem(item: ShoppingCart)
     suspend fun getShoppingCartItemByIngredientId(id: Int): ShoppingCart?
+    fun getShoppingCartItemsCount(): Flow<Int>
 }

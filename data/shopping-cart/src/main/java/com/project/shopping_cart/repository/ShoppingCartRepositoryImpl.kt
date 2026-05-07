@@ -44,4 +44,8 @@ class ShoppingCartRepositoryImpl @Inject constructor(
     override suspend fun getShoppingCartItemByIngredientId(id: Int): ShoppingCart? {
         return shoppingCartDao.getShoppingCartItemByIngredientId(id)?.asExternalModel()
     }
+
+    override fun getShoppingCartItemsCount(): Flow<Int> {
+        return shoppingCartDao.getShoppingCartItemsCount()
+    }
 }

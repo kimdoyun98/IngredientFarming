@@ -20,6 +20,9 @@ interface ShoppingCartDao {
     @Query("SELECT * FROM ShoppingCartEntity WHERE ingredientId == :id")
     suspend fun getShoppingCartItemByIngredientId(id: Int): ShoppingCartEntity?
 
+    @Query("SELECT Count(*) FROM ShoppingCartEntity")
+    fun getShoppingCartItemsCount(): Flow<Int>
+
     /**
      * Update
      */
