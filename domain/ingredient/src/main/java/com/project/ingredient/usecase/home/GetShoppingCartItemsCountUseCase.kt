@@ -8,7 +8,7 @@ class GetShoppingCartItemsCountUseCase @Inject constructor(
     private val shoppingCartRepository: ShoppingCartRepository
 ) {
 
-    suspend operator fun invoke(): Flow<Int> {
+    operator fun invoke(): Flow<Int> {
         return shoppingCartRepository.getShoppingCartItemsCount()
     }
 }
