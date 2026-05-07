@@ -17,6 +17,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
@@ -148,6 +151,12 @@ private fun RecipeIngredientsContent(
     ingredients: ImmutableList<RecipeIngredientUiModel>,
     onClickAddRequireIngredientButton: () -> Unit,
 ) {
+    val hasMissingIngredients by remember(ingredients) {
+        derivedStateOf {
+            ingredients.any { !it.isAvailable }
+        }
+    }
+
     Text(
         text = stringResource(R.string.recipe_info_require_ingredient),
         style = MaterialTheme.typography.titleSmall,
@@ -197,7 +206,7 @@ private fun RecipeIngredientsContent(
         }
     }
 
-    if (ingredients.any { !it.isAvailable }) {
+    if (hasMissingIngredients) {
         IngredientFarmingWideButton(
             onClick = onClickAddRequireIngredientButton,
             background = Red
