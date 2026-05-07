@@ -1,6 +1,5 @@
 package com.project.recipe.recipinfo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -22,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
@@ -44,6 +40,7 @@ import com.project.recipe.recipinfo.contract.RecipeInfoState
 import com.project.recipe.recipinfo.model.RecipeIngredientUiModel
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingTopAppBar
+import com.project.ui.modifier.circleLayout
 import com.project.ui.modifier.shadowLayout
 import com.project.ui.util.format
 import kotlinx.collections.immutable.ImmutableList
@@ -200,7 +197,7 @@ private fun RecipeIngredientsContent(
         }
     }
 
-    if(ingredients.any { !it.isAvailable }){
+    if (ingredients.any { !it.isAvailable }) {
         IngredientFarmingWideButton(
             onClick = onClickAddRequireIngredientButton,
             background = Red
@@ -229,9 +226,10 @@ private fun RecipeStepsContent(
         ) {
             Box(
                 modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(MoreLightGreen),
+                    .circleLayout(
+                        size = 36.dp,
+                        background = MoreLightGreen
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

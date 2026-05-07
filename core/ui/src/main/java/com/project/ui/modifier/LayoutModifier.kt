@@ -1,8 +1,11 @@
 package com.project.ui.modifier
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
@@ -11,7 +14,9 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.theme.MoreLightGreen
 
 fun Modifier.shadowLayout(
     elevation: Int = 2
@@ -44,3 +49,9 @@ fun Modifier.dottedLineLayout(color: Color = LightGray) = this
             cornerRadius = CornerRadius(16.dp.toPx())
         )
     }
+
+fun Modifier.circleLayout(size: Dp, background: Color) =
+    this
+        .size(size)
+        .clip(CircleShape)
+        .background(background)
