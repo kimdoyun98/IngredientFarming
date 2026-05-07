@@ -74,4 +74,5 @@ internal fun String.asUnknownIngredientEntity(
     category = category,
     store = IngredientStore.ROOM_TEMPERATURE,
     holdState = false,
+    isInComplete = false,
 )

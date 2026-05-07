@@ -50,4 +50,7 @@ data class IngredientEntity(
     val isAutoDecrement: Boolean = true,
 
     val step: Double = 1.0,
+
+    @ColumnInfo(name = "is_in_complete")
+    val isInComplete: Boolean = true,
 )
