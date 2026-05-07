@@ -66,9 +66,7 @@ internal fun RecipeStepsScreen(
         onSaveButtonClick = {
             onIntent(
                 AddRecipeIntent.RecipeStep.RecipeSaveButtonClick(
-                    filePath = state.photo?.copyToInternalStorage(
-                        context
-                    )
+                    filePath = state.photo?.copyToInternalStorage(context, state.name)
                 )
             )
         }
