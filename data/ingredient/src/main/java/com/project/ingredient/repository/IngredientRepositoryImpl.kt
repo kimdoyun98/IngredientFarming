@@ -46,9 +46,7 @@ class IngredientRepositoryImpl @Inject constructor(
     }
 
     private suspend fun insertIngredient(igd: Ingredient): Int {
-        ingredientDao.insertIngredient(igd.asIngredientEntity())
-
-        return ingredientDao.findIngredientIdByName(igd.name)!!
+        return ingredientDao.insertIngredient(igd.asIngredientEntity()).toInt()
     }
 
     override fun getIngredientCount(): Flow<Int> {
