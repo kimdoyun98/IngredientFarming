@@ -60,7 +60,7 @@ data class IngredientEntity(
     ],
 )
 data class IngredientStateEntity(
-    val ingredientId: Int,
+    @PrimaryKey val ingredientId: Int,
 
     @ColumnInfo(name = "hold_state")
     val holdState: Boolean,
