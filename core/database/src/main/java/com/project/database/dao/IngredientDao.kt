@@ -36,9 +36,6 @@ interface IngredientDao {
     @Query("SELECT id FROM IngredientEntity WHERE name =:name")
     suspend fun findIngredientIdByName(name: String): Int?
 
-    @Query("SELECT Count(*) FROM IngredientEntity WHERE hold_state = 1")
-    fun getIngredientCount(): Flow<Int>
-
     @Query(
         """
         SELECT Count(*) 
@@ -72,16 +69,5 @@ interface IngredientDao {
     /**
      * UPDATE
      */
-    @Query("UPDATE IngredientEntity SET hold_state = 1 WHERE id =:id")
-    suspend fun updateHoldStateById(id: Int)
 
-    @Query(
-        """
-        UPDATE IngredientEntity 
-        SET hold_state = 0 
-        WHERE id NOT IN (SELECT DISTINCT ingredient_id FROM HoldIngredientEntity)
-        AND hold_state = 1
-    """
-    )
-    suspend fun updateMissingIngredientsHoldState(): Int
 }

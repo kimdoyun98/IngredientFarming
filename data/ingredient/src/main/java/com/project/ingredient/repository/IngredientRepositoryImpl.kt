@@ -2,6 +2,7 @@ package com.project.ingredient.repository
 
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
+import com.project.database.dao.IngredientStateDao
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.ingredient.asUnknownIngredientEntity
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class IngredientRepositoryImpl @Inject constructor(
     private val ingredientDao: IngredientDao,
+    private val ingredientStateDao: IngredientStateDao,
     private val holdIngredientDao: HoldIngredientDao,
 ) : IngredientRepository {
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
@@ -38,7 +40,7 @@ class IngredientRepositoryImpl @Inject constructor(
                 var id = ingredientDao.findIngredientIdByName(ingredient.name)
 
                 if (id == null) id = insertIngredient(ingredient)
-                else ingredientDao.updateHoldStateById(id)
+                else ingredientStateDao.updateHoldStateById(id)
 
                 holdIngredientDao.insertHoldIngredient(ingredient.asHoldIngredientEntity(id))
             }
@@ -50,7 +52,7 @@ class IngredientRepositoryImpl @Inject constructor(
     }
 
     override fun getIngredientCount(): Flow<Int> {
-        return ingredientDao.getIngredientCount()
+        return ingredientStateDao.getIngredientCount()
     }
 
 
