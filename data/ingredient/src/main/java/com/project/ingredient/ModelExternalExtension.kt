@@ -49,7 +49,6 @@ fun IngredientJson.asIngredientEntity(autoDecrement: Boolean = true) = Ingredien
     category = getIngredientCategory(category),
     store = getIngredientStore(store),
     categoryGroupId = null,
-    holdState = false,
     isAutoDecrement = autoDecrement,
     step = if (autoDecrement) 1.0 else 0.5
 )
@@ -64,7 +63,6 @@ fun MeatPartJson.asIngredientEntity(groupId: Int) = IngredientEntity(
     category = IngredientCategory.MEAT,
     store = IngredientStore.valueOf(store),
     categoryGroupId = groupId,
-    holdState = false
 )
 
 internal fun String.asUnknownIngredientEntity(
