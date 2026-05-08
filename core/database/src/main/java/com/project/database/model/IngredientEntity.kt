@@ -37,19 +37,33 @@ data class IngredientEntity(
 
     val category: IngredientCategory,
 
-
     val store: IngredientStore,
 
     @ColumnInfo(name = "group_id")
     val categoryGroupId: Int? = null,
 
-    @ColumnInfo(name = "hold_state")
-    val holdState: Boolean,
-
     @ColumnInfo(name = "is_auto_decrement")
     val isAutoDecrement: Boolean = true,
 
     val step: Double = 1.0,
+)
+
+@Entity(
+    tableName = "IngredientStateEntity",
+    foreignKeys = [
+        ForeignKey(
+            entity = IngredientEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["ingredientId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+)
+data class IngredientStateEntity(
+    val ingredientId: Int,
+
+    @ColumnInfo(name = "hold_state")
+    val holdState: Boolean,
 
     @ColumnInfo(name = "is_in_complete")
     val isInComplete: Boolean = true,
