@@ -1,8 +1,10 @@
 package com.project.ingredient.repository
 
+import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
 import com.project.database.dao.IngredientStateDao
+import com.project.database.model.IngredientStateEntity
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.ingredient.asUnknownIngredientEntity
@@ -47,8 +49,13 @@ class IngredientRepositoryImpl @Inject constructor(
         }
     }
 
+    @Transaction
     private suspend fun insertIngredient(igd: Ingredient): Int {
-        return ingredientDao.insertIngredient(igd.asIngredientEntity()).toInt()
+        val id = ingredientDao.insertIngredient(igd.asIngredientEntity()).toInt()
+
+        insertIngredientState(id = id, holdState = true, isInComplete = true)
+
+        return id
     }
 
     override fun getIngredientCount(): Flow<Int> {
@@ -62,17 +69,39 @@ class IngredientRepositoryImpl @Inject constructor(
 
     override suspend fun insertUnknownIngredient(name: String): Int {
 
-        return ingredientDao.insertIngredient(
+        val id = ingredientDao.insertIngredient(
             name.asUnknownIngredientEntity()
         ).toInt()
+
+        insertIngredientState(id = id, holdState = false, isInComplete = false)
+
+        return id
     }
 
     override suspend fun insertUnknownIngredient(
         name: String,
         category: IngredientCategory
     ): Int {
-        return ingredientDao.insertIngredient(
+        val id = ingredientDao.insertIngredient(
             name.asUnknownIngredientEntity(category)
         ).toInt()
+
+        insertIngredientState(id = id, holdState = false, isInComplete = false)
+
+        return id
+    }
+
+    private suspend fun insertIngredientState(
+        id: Int,
+        holdState: Boolean,
+        isInComplete: Boolean,
+    ) {
+        ingredientStateDao.insertIngredientState(
+            IngredientStateEntity(
+                ingredientId = id,
+                holdState = holdState,
+                isInComplete = isInComplete
+            )
+        )
     }
 }

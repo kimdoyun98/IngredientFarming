@@ -31,7 +31,6 @@ fun Ingredient.asIngredientEntity(): IngredientEntity {
         name = name,
         category = category,
         store = store,
-        holdState = true,
         isAutoDecrement = !isAutoDecrement,
         step = if (!isAutoDecrement) 1.0 else 0.5
     )
@@ -71,6 +70,4 @@ internal fun String.asUnknownIngredientEntity(
     name = this,
     category = category,
     store = IngredientStore.ROOM_TEMPERATURE,
-    holdState = false,
-    isInComplete = false,
 )
