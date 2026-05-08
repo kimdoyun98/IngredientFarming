@@ -56,6 +56,11 @@
 
  <br>
 
+## ERD 다이어그램
+<img width="1461" height="549" alt="Image" src="https://github.com/user-attachments/assets/eeab8771-ce6a-4c11-b3a8-61bd927b3ba6" />
+
+<br>
+
 ## Issue
 
 ### 1. Stability Configuration File로 모듈 간 객체 Stability 안정화
@@ -75,6 +80,8 @@
     - 어노테이션을 사용하지 않아 안드로이드 의존성이 강제되지 않고 Stable Type을 유지
 
 
+<br>
+
 
 ### 2. BackStack으로 ViewModel 데이터 유지
 
@@ -92,10 +99,33 @@
 
 <br>
 
+
+### 3. 레시피 목록에서 각 레시피 재료 충족률 계산, Paging3와 Map 자료구조로 최적화
+
+<img width="534" height="713" alt="Image" src="https://github.com/user-attachments/assets/e76a76cd-7839-476f-9db6-8496084cc8c3" />
+
+<br>
+
+- 문제   
+    - 레시피 목록의 Item 내에는 레시피의 정보 뿐만 아니라 레시피에 필요한 재료 충족률을 보여준다.
+    - 레시피의 목록을 모두 가져와 보여주게 되는 경우 재료 충족률을 계산하는 비용이 레시피 수에 비례하는 문제 발생
+- 해결   
+    - 보유 식재료를 List로 받아와 Key를 Id, Value를 Count로 갖는 Map으로 변환하여 탐색 속도 최적화
+    - 검색 쿼리 + 카테고리가 일치하는 레시피 목록을 Paging3를 통해 스트림 형식으로 가져온다.
+    - Paging3로 받은 레시피의 재료들을 보유 식재료 Map으로 개수를 비교하여 재료 충족률 계산
+    - 결과를 UI Model로 변환하여 State Update
+- 결과   
+    - Paging3를 사용하여 점진적 데이터 로딩을 통해 재료 충족률 계산 비용을 절감
+    - 레시피 식재료와 보유 식재료의 비교를 HashMap 자료구조를 통해 탐색 속도를 시간복잡도 O(1)로 최적화
+    
+<br>
+
 ## 자동화
 
 ### 1. AI PR 리뷰 자동화
 <img width="917" height="512" alt="Image" src="https://github.com/user-attachments/assets/91f31d3e-557c-48ce-aa60-9b67a02ac009" />   
+
+<br>
 
 - 개인 프로젝트를 진행하면서 코드 개선을 하고 싶은 상황에서 매번 코드를 복사하여 AI에게 물어보는 과정이 반복
 - GithubActions와 Gemini를 이용해 PR을 올리면 자동으로 AI가 PR 리뷰를 달아주는 로직 구현
