@@ -1,4 +1,4 @@
-package com.project.ingredient_manage.contract
+package com.project.ingredient_manage.manage.contract
 
 import com.project.model.ingredient.Ingredient
 import kotlinx.collections.immutable.ImmutableList

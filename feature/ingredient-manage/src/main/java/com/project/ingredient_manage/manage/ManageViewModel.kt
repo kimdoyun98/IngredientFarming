@@ -1,13 +1,13 @@
-package com.project.ingredient_manage
+package com.project.ingredient_manage.manage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.common_core.filterWith
 import com.project.ingredient.usecase.manage.DeleteHoldIngredientUseCase
 import com.project.ingredient.usecase.manage.GetAllHoldIngredientUseCase
-import com.project.ingredient_manage.contract.ManageEffect
-import com.project.ingredient_manage.contract.ManageIntent
-import com.project.ingredient_manage.contract.ManageState
+import com.project.ingredient_manage.manage.contract.ManageEffect
+import com.project.ingredient_manage.manage.contract.ManageIntent
+import com.project.ingredient_manage.manage.contract.ManageState
 import com.project.model.ingredient.IngredientCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentMapOf

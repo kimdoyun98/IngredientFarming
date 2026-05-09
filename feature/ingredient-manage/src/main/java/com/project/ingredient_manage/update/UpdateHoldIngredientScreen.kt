@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.project.designsystem.compose.IngredientFarmingButton
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
-import com.project.ingredient_manage.contract.update.UpdateIntent
-import com.project.ingredient_manage.contract.update.UpdateState
+import com.project.ingredient_manage.update.contract.UpdateIntent
+import com.project.ingredient_manage.update.contract.UpdateState
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
