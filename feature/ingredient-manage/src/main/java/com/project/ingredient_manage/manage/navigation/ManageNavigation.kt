@@ -33,6 +33,10 @@ fun NavGraphBuilder.manageGraph(
                     navigator.navigateToHome()
                 }
 
+                is ManageEffect.NavigateToDefaultIngredientManage -> {
+                    navigator.navigateToDefaultIngredientManage()
+                }
+
                 is ManageEffect.NavigateToUpdateIngredient -> {
                     navigator.navigateToUpdateHoldIngredient(effect.id)
                 }

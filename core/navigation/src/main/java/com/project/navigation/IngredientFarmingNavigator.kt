@@ -32,6 +32,9 @@ class IngredientFarmingNavigator(
     fun navigateToUpdateHoldIngredient(id: Int) =
         navController.navigate(IngredientRoute.UpdateHoldIngredient(id = id))
 
+    fun navigateToDefaultIngredientManage() =
+        navController.navigate(IngredientRoute.DefaultIngredientManage)
+
     fun navigateToShoppingCart() =
         navController.navigate(IngredientRoute.ShoppingCart)
 

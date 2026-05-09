@@ -61,7 +61,7 @@ class ManageViewModel @Inject constructor(
             }
 
             is ManageIntent.OnClickTopAppBarAction -> intent {
-
+                postSideEffect(ManageEffect.NavigateToDefaultIngredientManage)
             }
 
             is ManageIntent.OnSearchQueryChange -> intent {
