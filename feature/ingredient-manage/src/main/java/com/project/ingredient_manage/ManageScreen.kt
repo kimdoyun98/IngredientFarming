@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -103,14 +104,14 @@ internal fun ManageScreen(
     IngredientFarmingTopAppBar(
         title = stringResource(R.string.top_app_bar_title),
         type = AppBarType.All,
-        onClickNavigation = { onClickTopAppBarNavigation() },
+        onClickNavigation = onClickTopAppBarNavigation,
         actionIcon = {
             Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.top_app_bar_action_icon_ingredient_add)
+                imageVector = Icons.Default.Settings,
+                contentDescription = stringResource(R.string.top_app_bar_action_icon_ingredient_settings)
             )
         },
-        onClickAction = { onClickTopAppBarAction() },
+        onClickAction = onClickTopAppBarAction,
         snackBarHostState = snackBarHostState
     ) { innerPadding ->
         Box(
@@ -126,7 +127,7 @@ internal fun ManageScreen(
                     modifier = modifier,
                     query = query,
                     onQueryChange = { q -> onSearchQueryChange(q) },
-                    onCloseClick = { onSearchCloseButtonClick() }
+                    onCloseClick = onSearchCloseButtonClick
                 )
 
                 CategoryFilterChipGroup(
