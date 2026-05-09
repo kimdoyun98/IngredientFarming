@@ -1,12 +1,16 @@
 package com.project.ingredient.repository
 
+import androidx.paging.PagingData
+import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientFilter
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.flow.Flow
 
 interface IngredientRepository {
+    fun getDefaultIngredients(filter: IngredientFilter): Flow<PagingData<DefaultIngredient>>
     suspend fun getIngredientByName(name: String): IngredientInfo?
     suspend fun getIngredientById(id: Int): IngredientInfo
 

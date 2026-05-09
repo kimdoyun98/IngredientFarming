@@ -1,5 +1,9 @@
 package com.project.ingredient.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
@@ -8,12 +12,15 @@ import com.project.database.model.IngredientStateEntity
 import com.project.ingredient.asHoldIngredientEntity
 import com.project.ingredient.asIngredientEntity
 import com.project.ingredient.asUnknownIngredientEntity
+import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientFilter
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +29,22 @@ class IngredientRepositoryImpl @Inject constructor(
     private val ingredientStateDao: IngredientStateDao,
     private val holdIngredientDao: HoldIngredientDao,
 ) : IngredientRepository {
+    override fun getDefaultIngredients(filter: IngredientFilter): Flow<PagingData<DefaultIngredient>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+
+            pagingSourceFactory = {
+                ingredientDao.getDefaultIngredients(
+                    query = filter.query.takeIf { it.isNotBlank() },
+                    category = filter.category
+                )
+            }
+        ).flow
+    }
+
     override suspend fun getIngredientByName(name: String): IngredientInfo? {
         return ingredientDao.getIngredientByName(name)
     }

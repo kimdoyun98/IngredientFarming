@@ -1,11 +1,14 @@
 package com.project.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.project.database.model.IngredientEntity
+import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.ExpirationDateSoonIngredient
+import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientInfo
 import kotlinx.coroutines.flow.Flow
 
@@ -15,6 +18,27 @@ interface IngredientDao {
     /**
      * GET
      */
+    @Query(
+        """
+            SELECT 
+                IngredientEntity.id as id,
+                IngredientEntity.name as name,
+                IngredientEntity.category as category,
+                IngredientCategoryGroupEntity.groupType as categoryGroup,
+                IngredientEntity.store as store,
+                IngredientStateEntity.is_in_complete as isComplete
+            FROM IngredientEntity
+            JOIN IngredientStateEntity ON IngredientEntity.id = IngredientStateEntity.ingredientId
+            LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
+            WHERE (:query IS NULL OR IngredientEntity.name LIKE '%' || :query || '%') 
+            AND (:category IS NULL OR IngredientEntity.category = :category)
+        """
+    )
+    fun getDefaultIngredients(
+        query: String?,
+        category: IngredientCategory?
+    ): PagingSource<Int, DefaultIngredient>
+
     @Query(
         """
         SELECT 
