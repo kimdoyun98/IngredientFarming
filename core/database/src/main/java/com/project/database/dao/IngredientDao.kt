@@ -32,6 +32,7 @@ interface IngredientDao {
             LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
             WHERE (:query IS NULL OR IngredientEntity.name LIKE '%' || :query || '%') 
             AND (:category IS NULL OR IngredientEntity.category = :category)
+            ORDER BY IngredientStateEntity.is_in_complete ASC, IngredientEntity.name ASC
         """
     )
     fun getDefaultIngredients(
