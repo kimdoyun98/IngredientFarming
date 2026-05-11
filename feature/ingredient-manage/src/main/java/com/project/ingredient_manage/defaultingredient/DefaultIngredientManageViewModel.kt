@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.project.ingredient.usecase.manage.GetDefaultIngredientsUseCase
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientEffect
+import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientIntent
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientState
 import com.project.model.ingredient.IngredientFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,4 +50,28 @@ class DefaultIngredientManageViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
+
+    fun onIntent(intent: DefaultIngredientIntent){
+        when(intent){
+            is DefaultIngredientIntent.OnTopAppBarNavigationClick -> intent {
+                postSideEffect(DefaultIngredientEffect.NavigateToBack)
+            }
+
+            is DefaultIngredientIntent.SearchQueryChange -> intent {
+                reduce { state.copy(query = intent.query) }
+            }
+
+            is DefaultIngredientIntent.OnSearchCloseButtonClick -> intent {
+                reduce { state.copy(query = "") }
+            }
+
+            is DefaultIngredientIntent.SelectCategoryChip -> intent {
+                reduce { state.copy(selectedCategory = intent.category) }
+            }
+
+            is DefaultIngredientIntent.OnDefaultIngredientItemClick -> intent {
+                postSideEffect(DefaultIngredientEffect.UpdateDefaultIngredient(intent.id))
+            }
+        }
+    }
 }

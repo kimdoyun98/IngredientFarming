@@ -14,4 +14,6 @@
     <string name="expiration_date_icon_description">유통 기한 아이콘</string>
     <string name="enter_date_icon_description">등록 일자 아이콘</string>
     <string name="count_minus_button_description">개수 차감 버튼</string>
+
+    <string name="default_ingredients_manage_top_app_bar_title">기본 식재료 관리</string>
 </resources>

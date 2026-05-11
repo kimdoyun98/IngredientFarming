@@ -5,7 +5,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.project.ingredient_manage.defaultingredient.DefaultIngredientManageScreen
 import com.project.ingredient_manage.defaultingredient.DefaultIngredientManageViewModel
+import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientEffect
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState
@@ -20,7 +22,21 @@ fun NavGraphBuilder.defaultIngredientManageGraph(
         val ingredients = defaultIngredientViewModel.ingredients.collectAsLazyPagingItems()
 
         defaultIngredientViewModel.collectSideEffect { effect ->
+            when(effect){
+                is DefaultIngredientEffect.NavigateToBack -> {
+                    navigator.navController.popBackStack()
+                }
 
+                is DefaultIngredientEffect.UpdateDefaultIngredient -> {
+
+                }
+            }
         }
+
+        DefaultIngredientManageScreen(
+            state = defaultIngredientState,
+            ingredients = ingredients,
+            onIntent = defaultIngredientViewModel::onIntent
+        )
     }
 }
