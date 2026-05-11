@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.model.ingredient.IngredientCategory
-import com.project.ui.IconBoxSize
 import com.project.ui.LocarmIcon
 import com.project.ui.R
 import com.project.ui.util.iconResource

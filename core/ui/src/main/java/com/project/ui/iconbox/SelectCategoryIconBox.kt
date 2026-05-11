@@ -8,7 +8,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.model.ingredient.IngredientCategory
-import com.project.ui.IconBoxSize
 import com.project.ui.LocarmIcon
 import com.project.ui.R
 import com.project.ui.util.iconResource

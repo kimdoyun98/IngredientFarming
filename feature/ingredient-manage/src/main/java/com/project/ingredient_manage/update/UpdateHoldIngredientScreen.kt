@@ -35,11 +35,11 @@ import com.project.ingredient_manage.update.contract.UpdateState
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
-import com.project.ui.CategoryLargeIconBox
-import com.project.ui.IconBoxSize
+import com.project.ui.iconbox.CategoryLargeIconBox
+import com.project.ui.iconbox.IconBoxSize
 import com.project.ui.IngredientFarmingTopAppBar
 import com.project.ui.LocarmIcon
-import com.project.ui.MediumIconBox
+import com.project.ui.iconbox.MediumIconBox
 import com.project.ui.R
 import com.project.ui.modifier.singleClickEvent
 import com.project.ui.util.format

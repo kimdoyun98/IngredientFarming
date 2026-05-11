@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.designsystem.theme.DeepOrange
 import com.project.designsystem.theme.MoreLightOrange
+import com.project.ui.iconbox.SmallIconBox
 
 @Composable
 fun StatusCard(

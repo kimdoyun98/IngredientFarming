@@ -33,7 +33,7 @@ import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import com.project.recipe.addrecipe.contract.AddRecipeState
 import com.project.recipe.addrecipe.model.RecipeStepUiModel
 import com.project.recipe.addrecipe.util.copyToInternalStorage
-import com.project.ui.SmallIconBox
+import com.project.ui.iconbox.SmallIconBox
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
