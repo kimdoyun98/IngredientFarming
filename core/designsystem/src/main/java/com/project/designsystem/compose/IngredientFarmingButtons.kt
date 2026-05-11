@@ -1,5 +1,6 @@
 package com.project.designsystem.compose
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -45,6 +46,7 @@ fun IngredientFarmingButton(
     modifier: Modifier = Modifier,
     background: Color? = null,
     enabled: Boolean = true,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -54,6 +56,7 @@ fun IngredientFarmingButton(
         colors =
             if (background == null) ButtonDefaults.buttonColors()
             else ButtonDefaults.buttonColors(containerColor = background),
+        contentPadding = contentPadding,
         shape = RoundedCornerShape(8.dp),
         onClick = { onClick() },
         enabled = enabled,

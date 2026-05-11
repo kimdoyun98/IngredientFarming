@@ -28,10 +28,12 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.project.ingredient_manage.R
 import com.project.ingredient_manage.defaultingredient.component.DefaultIngredientItem
+import com.project.ingredient_manage.defaultingredient.component.UpdateIngredientDialog
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientIntent
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientState
 import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.IngredientCategory
+import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
@@ -47,6 +49,10 @@ internal fun DefaultIngredientManageScreen(
         query = state.query,
         selectedCategory = state.selectedCategory,
         ingredients = ingredients,
+        showDialog = state.showDialog,
+        dialogIngredientName = state.dialogIngredientName,
+        selectedDialogCategory = state.selectedDialogCategory,
+        selectedDialogStore = state.selectedDialogStore,
         onClickTopAppBarNavigation = { onIntent(DefaultIngredientIntent.OnTopAppBarNavigationClick) },
         onSearchQueryChange = { query -> onIntent(DefaultIngredientIntent.SearchQueryChange(query)) },
         onSearchCloseButtonClick = { onIntent(DefaultIngredientIntent.OnSearchCloseButtonClick) },
@@ -57,7 +63,30 @@ internal fun DefaultIngredientManageScreen(
                 )
             )
         },
-        onItemClick = { id -> onIntent(DefaultIngredientIntent.OnDefaultIngredientItemClick(id)) },
+        onItemClick = { ingredient ->
+            onIntent(
+                DefaultIngredientIntent.OnDefaultIngredientItemClick(
+                    ingredient
+                )
+            )
+        },
+        showDialogStateChange = { state ->
+            onIntent(
+                DefaultIngredientIntent.ShowDialogStateChange(
+                    state
+                )
+            )
+        },
+        onDialogCategorySelect = { category ->
+            onIntent(
+                DefaultIngredientIntent.OnDialogCategorySelect(
+                    category
+                )
+            )
+        },
+        onDialogStoreSelect = { store -> onIntent(DefaultIngredientIntent.OnDialogStoreSelect(store)) },
+        onDialogDismissButtonClick = { onIntent(DefaultIngredientIntent.OnDialogDismissButtonClick) },
+        onDialogSaveButtonClick = { onIntent(DefaultIngredientIntent.OnDialogSaveButtonClick) },
     )
 }
 
@@ -66,12 +95,21 @@ internal fun DefaultIngredientManageScreen(
     modifier: Modifier = Modifier,
     query: String,
     selectedCategory: IngredientCategory?,
+    showDialog: Boolean,
+    dialogIngredientName: String,
+    selectedDialogCategory: IngredientCategory?,
+    selectedDialogStore: IngredientStore?,
     ingredients: LazyPagingItems<DefaultIngredient>,
     onClickTopAppBarNavigation: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onSearchCloseButtonClick: () -> Unit,
     onSelectCategoryChip: (IngredientCategory?) -> Unit,
-    onItemClick: (Int) -> Unit,
+    onItemClick: (DefaultIngredient) -> Unit,
+    showDialogStateChange: (Boolean) -> Unit,
+    onDialogCategorySelect: (IngredientCategory) -> Unit,
+    onDialogStoreSelect: (IngredientStore) -> Unit,
+    onDialogDismissButtonClick: () -> Unit,
+    onDialogSaveButtonClick: () -> Unit,
 ) {
     IngredientFarmingTopAppBar(
         title = stringResource(R.string.default_ingredients_manage_top_app_bar_title),
@@ -115,7 +153,7 @@ internal fun DefaultIngredientManageScreen(
                             category = defaultIngredient.category,
                             store = defaultIngredient.store,
                             isComplete = defaultIngredient.isComplete,
-                            onClick = { onItemClick(defaultIngredient.id) }
+                            onClick = { onItemClick(defaultIngredient) }
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
@@ -123,6 +161,19 @@ internal fun DefaultIngredientManageScreen(
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        UpdateIngredientDialog(
+            name = dialogIngredientName,
+            selectedCategory = selectedDialogCategory,
+            selectedStore = selectedDialogStore,
+            showDialogStateChange = { state -> showDialogStateChange(state) },
+            onClickCategory = { category -> onDialogCategorySelect(category) },
+            onClickStore = { store -> onDialogStoreSelect(store) },
+            onClickDismiss = onDialogDismissButtonClick,
+            onClickSave = onDialogSaveButtonClick
+        )
     }
 
     BackHandler {

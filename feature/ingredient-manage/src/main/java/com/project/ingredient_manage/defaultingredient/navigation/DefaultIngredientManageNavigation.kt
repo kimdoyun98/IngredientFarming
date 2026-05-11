@@ -22,13 +22,9 @@ fun NavGraphBuilder.defaultIngredientManageGraph(
         val ingredients = defaultIngredientViewModel.ingredients.collectAsLazyPagingItems()
 
         defaultIngredientViewModel.collectSideEffect { effect ->
-            when(effect){
+            when (effect) {
                 is DefaultIngredientEffect.NavigateToBack -> {
                     navigator.navController.popBackStack()
-                }
-
-                is DefaultIngredientEffect.UpdateDefaultIngredient -> {
-
                 }
             }
         }

@@ -50,9 +50,10 @@ class DefaultIngredientManageViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
+    private var selectedIngredientId: Int? = null
 
-    fun onIntent(intent: DefaultIngredientIntent){
-        when(intent){
+    fun onIntent(intent: DefaultIngredientIntent) {
+        when (intent) {
             is DefaultIngredientIntent.OnTopAppBarNavigationClick -> intent {
                 postSideEffect(DefaultIngredientEffect.NavigateToBack)
             }
@@ -70,8 +71,50 @@ class DefaultIngredientManageViewModel @Inject constructor(
             }
 
             is DefaultIngredientIntent.OnDefaultIngredientItemClick -> intent {
-                postSideEffect(DefaultIngredientEffect.UpdateDefaultIngredient(intent.id))
+                selectedIngredientId = intent.ingredient.id
+                reduce {
+                    state.copy(
+                        showDialog = true,
+                        dialogIngredientName = intent.ingredient.name,
+                        selectedDialogCategory = null,
+                        selectedDialogStore = null
+                    )
+                }
             }
+
+            is DefaultIngredientIntent.ShowDialogStateChange -> intent {
+                reduce { state.copy(showDialog = intent.state) }
+            }
+
+            is DefaultIngredientIntent.OnDialogStoreSelect -> intent {
+                reduce { state.copy(selectedDialogStore = intent.store) }
+            }
+
+            is DefaultIngredientIntent.OnDialogCategorySelect -> intent {
+                reduce { state.copy(selectedDialogCategory = intent.category) }
+            }
+
+            is DefaultIngredientIntent.OnDialogDismissButtonClick -> {
+                resetDialogState()
+            }
+
+            is DefaultIngredientIntent.OnDialogSaveButtonClick -> intent {
+                if (state.selectedDialogCategory == null || state.selectedDialogStore == null) return@intent
+                //TODO Update
+
+                resetDialogState()
+            }
+        }
+    }
+
+    private fun resetDialogState() = intent {
+        reduce {
+            state.copy(
+                showDialog = false,
+                dialogIngredientName = "",
+                selectedDialogCategory = null,
+                selectedDialogStore = null
+            )
         }
     }
 }
