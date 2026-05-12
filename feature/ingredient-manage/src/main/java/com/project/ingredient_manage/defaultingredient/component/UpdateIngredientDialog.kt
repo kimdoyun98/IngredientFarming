@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -40,6 +41,7 @@ import com.project.model.ingredient.IngredientStore
 import com.project.ui.iconbox.SelectCategoryIconBox
 import com.project.ui.modifier.singleClickable
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun UpdateIngredientDialog(
     modifier: Modifier = Modifier,
