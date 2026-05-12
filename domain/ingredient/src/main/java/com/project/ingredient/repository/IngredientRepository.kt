@@ -7,6 +7,7 @@ import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientFilter
 import com.project.model.ingredient.IngredientInfo
+import com.project.model.ingredient.IngredientStore
 import kotlinx.coroutines.flow.Flow
 
 interface IngredientRepository {
@@ -20,4 +21,5 @@ interface IngredientRepository {
     fun getCountExpiringInThreeDays(): Flow<Int>
     suspend fun insertUnknownIngredient(name: String): Int
     suspend fun insertUnknownIngredient(name: String, category: IngredientCategory): Int
+    suspend fun updateUnknownIngredient(id: Int, category: IngredientCategory, store: IngredientStore): Result<Unit>
 }

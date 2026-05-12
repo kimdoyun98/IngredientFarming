@@ -38,4 +38,7 @@ interface IngredientStateDao {
     """
     )
     suspend fun updateMissingIngredientsHoldState(): Int
+
+    @Query("UPDATE IngredientStateEntity SET is_in_complete=1 WHERE ingredientId=:id")
+    suspend fun updateCompleteState(id: Int)
 }

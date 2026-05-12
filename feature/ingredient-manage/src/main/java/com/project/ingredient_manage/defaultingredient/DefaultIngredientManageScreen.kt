@@ -31,10 +31,12 @@ import com.project.ingredient_manage.defaultingredient.component.DefaultIngredie
 import com.project.ingredient_manage.defaultingredient.component.UpdateIngredientDialog
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientIntent
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientState
+import com.project.ingredient_manage.defaultingredient.util.UpdateDefaultIngredientState
 import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
+import com.project.ui.IngredientFarmingCenterLoading
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
 import kotlinx.coroutines.flow.flowOf
@@ -53,6 +55,7 @@ internal fun DefaultIngredientManageScreen(
         dialogIngredientName = state.dialogIngredientName,
         selectedDialogCategory = state.selectedDialogCategory,
         selectedDialogStore = state.selectedDialogStore,
+        updateState = state.updateState,
         onClickTopAppBarNavigation = { onIntent(DefaultIngredientIntent.OnTopAppBarNavigationClick) },
         onSearchQueryChange = { query -> onIntent(DefaultIngredientIntent.SearchQueryChange(query)) },
         onSearchCloseButtonClick = { onIntent(DefaultIngredientIntent.OnSearchCloseButtonClick) },
@@ -100,6 +103,7 @@ internal fun DefaultIngredientManageScreen(
     selectedDialogCategory: IngredientCategory?,
     selectedDialogStore: IngredientStore?,
     ingredients: LazyPagingItems<DefaultIngredient>,
+    updateState: UpdateDefaultIngredientState,
     onClickTopAppBarNavigation: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onSearchCloseButtonClick: () -> Unit,
@@ -174,6 +178,10 @@ internal fun DefaultIngredientManageScreen(
             onClickDismiss = onDialogDismissButtonClick,
             onClickSave = onDialogSaveButtonClick
         )
+
+        if(updateState is UpdateDefaultIngredientState.Loading){
+            IngredientFarmingCenterLoading()
+        }
     }
 
     BackHandler {

@@ -5,11 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.project.database.model.IngredientEntity
 import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.ExpirationDateSoonIngredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientInfo
+import com.project.model.ingredient.IngredientStore
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -94,5 +96,6 @@ interface IngredientDao {
     /**
      * UPDATE
      */
-
+    @Query("UPDATE IngredientEntity SET category=:category, store=:store WHERE id=:id")
+    suspend fun updateUnknownIngredient(id: Int, category: IngredientCategory, store: IngredientStore)
 }

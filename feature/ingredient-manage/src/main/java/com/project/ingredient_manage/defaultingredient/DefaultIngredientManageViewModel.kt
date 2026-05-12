@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.project.ingredient.usecase.manage.GetDefaultIngredientsUseCase
+import com.project.ingredient.usecase.manage.UpdateIngredientUseCase
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientEffect
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientIntent
 import com.project.ingredient_manage.defaultingredient.contract.DefaultIngredientState
+import com.project.ingredient_manage.defaultingredient.util.UpdateDefaultIngredientState
 import com.project.model.ingredient.IngredientFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -23,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DefaultIngredientManageViewModel @Inject constructor(
     private val getDefaultIngredientsUseCase: GetDefaultIngredientsUseCase,
+    private val updateIngredientUseCase: UpdateIngredientUseCase,
 ) : ContainerHost<DefaultIngredientState, DefaultIngredientEffect>, ViewModel() {
     override val container =
         container<DefaultIngredientState, DefaultIngredientEffect>(DefaultIngredientState())
@@ -99,10 +102,23 @@ class DefaultIngredientManageViewModel @Inject constructor(
             }
 
             is DefaultIngredientIntent.OnDialogSaveButtonClick -> intent {
-                if (state.selectedDialogCategory == null || state.selectedDialogStore == null) return@intent
-                //TODO Update
+                if (selectedIngredientId == null ||
+                    state.selectedDialogCategory == null ||
+                    state.selectedDialogStore == null
+                ) return@intent
 
-                resetDialogState()
+                reduce { state.copy(updateState = UpdateDefaultIngredientState.Loading) }
+
+                updateIngredientUseCase.invoke(
+                    id = selectedIngredientId!!,
+                    category = state.selectedDialogCategory!!,
+                    store = state.selectedDialogStore!!
+                ).onSuccess {
+                    reduce { state.copy(updateState = UpdateDefaultIngredientState.Success) }
+                    resetDialogState()
+                }.onFailure {
+                    postSideEffect(DefaultIngredientEffect.UpdateDialogError(it.message))
+                }
             }
         }
     }
@@ -113,7 +129,8 @@ class DefaultIngredientManageViewModel @Inject constructor(
                 showDialog = false,
                 dialogIngredientName = "",
                 selectedDialogCategory = null,
-                selectedDialogStore = null
+                selectedDialogStore = null,
+                updateState = UpdateDefaultIngredientState.Idle
             )
         }
     }

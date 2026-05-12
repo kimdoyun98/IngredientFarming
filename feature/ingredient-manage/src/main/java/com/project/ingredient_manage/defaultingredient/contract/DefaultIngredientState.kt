@@ -1,5 +1,6 @@
 package com.project.ingredient_manage.defaultingredient.contract
 
+import com.project.ingredient_manage.defaultingredient.util.UpdateDefaultIngredientState
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 
@@ -10,4 +11,5 @@ data class DefaultIngredientState(
     val dialogIngredientName: String = "",
     val selectedDialogCategory: IngredientCategory? = null,
     val selectedDialogStore: IngredientStore? = null,
+    val updateState: UpdateDefaultIngredientState = UpdateDefaultIngredientState.Idle
 )

@@ -3,7 +3,6 @@ package com.project.ingredient.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.map
 import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
@@ -18,9 +17,9 @@ import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientFilter
 import com.project.model.ingredient.IngredientInfo
+import com.project.model.ingredient.IngredientStore
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -112,6 +111,23 @@ class IngredientRepositoryImpl @Inject constructor(
         insertIngredientState(id = id, holdState = false, isInComplete = false)
 
         return id
+    }
+
+    @Transaction
+    override suspend fun updateUnknownIngredient(
+        id: Int,
+        category: IngredientCategory,
+        store: IngredientStore
+    ): Result<Unit> {
+        return runCatching {
+            ingredientDao.updateUnknownIngredient(
+                id = id,
+                category = category,
+                store = store
+            )
+
+            ingredientStateDao.updateCompleteState(id)
+        }
     }
 
     private suspend fun insertIngredientState(
