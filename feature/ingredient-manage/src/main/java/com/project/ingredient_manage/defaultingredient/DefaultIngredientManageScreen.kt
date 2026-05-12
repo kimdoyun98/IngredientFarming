@@ -52,7 +52,7 @@ internal fun DefaultIngredientManageScreen(
         selectedCategory = state.selectedCategory,
         ingredients = ingredients,
         showDialog = state.showDialog,
-        dialogIngredientName = state.dialogIngredientName,
+        dialogIngredientName = state.selectedIngredient?.name ?: "",
         selectedDialogCategory = state.selectedDialogCategory,
         selectedDialogStore = state.selectedDialogStore,
         updateState = state.updateState,

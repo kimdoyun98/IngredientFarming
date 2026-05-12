@@ -53,8 +53,6 @@ class DefaultIngredientManageViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
-    private var selectedIngredientId: Int? = null
-
     fun onIntent(intent: DefaultIngredientIntent) {
         when (intent) {
             is DefaultIngredientIntent.OnTopAppBarNavigationClick -> intent {
@@ -74,11 +72,10 @@ class DefaultIngredientManageViewModel @Inject constructor(
             }
 
             is DefaultIngredientIntent.OnDefaultIngredientItemClick -> intent {
-                selectedIngredientId = intent.ingredient.id
                 reduce {
                     state.copy(
                         showDialog = true,
-                        dialogIngredientName = intent.ingredient.name,
+                        selectedIngredient = intent.ingredient,
                         selectedDialogCategory = null,
                         selectedDialogStore = null
                     )
@@ -102,7 +99,7 @@ class DefaultIngredientManageViewModel @Inject constructor(
             }
 
             is DefaultIngredientIntent.OnDialogSaveButtonClick -> intent {
-                if (selectedIngredientId == null ||
+                if (state.selectedIngredient == null ||
                     state.selectedDialogCategory == null ||
                     state.selectedDialogStore == null
                 ) return@intent
@@ -110,7 +107,7 @@ class DefaultIngredientManageViewModel @Inject constructor(
                 reduce { state.copy(updateState = UpdateDefaultIngredientState.Loading) }
 
                 updateIngredientUseCase.invoke(
-                    id = selectedIngredientId!!,
+                    id = state.selectedIngredient!!.id,
                     category = state.selectedDialogCategory!!,
                     store = state.selectedDialogStore!!
                 ).onSuccess {
@@ -127,7 +124,7 @@ class DefaultIngredientManageViewModel @Inject constructor(
         reduce {
             state.copy(
                 showDialog = false,
-                dialogIngredientName = "",
+                selectedIngredient = null,
                 selectedDialogCategory = null,
                 selectedDialogStore = null,
                 updateState = UpdateDefaultIngredientState.Idle
