@@ -33,7 +33,7 @@ import com.project.database.model.recipe.RecipeStepEntity
     exportSchema = true
 )
 @TypeConverters(Converter::class)
-internal abstract class IngredientFarmingDatabase : RoomDatabase() {
+abstract class IngredientFarmingDatabase : RoomDatabase() {
     abstract fun getIngredientDao(): IngredientDao
     abstract fun getIngredientStateDao(): IngredientStateDao
     abstract fun getCategoryGroupDao(): CategoryGroupDao

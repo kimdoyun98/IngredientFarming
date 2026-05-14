@@ -1,6 +1,8 @@
 package com.project.ingredient.repository
 
 import androidx.room.Transaction
+import androidx.room.withTransaction
+import com.project.database.IngredientFarmingDatabase
 import com.project.database.dao.CategoryGroupDao
 import com.project.database.dao.IngredientDao
 import com.project.database.dao.IngredientStateDao
@@ -13,6 +15,7 @@ import com.project.model.RootJson
 import javax.inject.Inject
 
 class DefaultIngredientSettingRepositoryImpl @Inject constructor(
+    private val db: IngredientFarmingDatabase,
     private val ingredientDao: IngredientDao,
     private val ingredientStateDao: IngredientStateDao,
     private val categoryGroupDao: CategoryGroupDao,
@@ -34,27 +37,29 @@ class DefaultIngredientSettingRepositoryImpl @Inject constructor(
         return categoryGroupDao.getCategoryGroupCount() > 0
     }
 
-    @Transaction
     private suspend fun insertIngredientsJson(ingredientJson: IngredientJson) {
-        val id = ingredientDao.insertIngredient(
-            ingredientJson.asIngredientEntity()
-        ).toInt()
-
-        insertIngredientState(id)
-    }
-
-    @Transaction
-    private suspend fun insertMeatJson(type: MeatTypeJson) {
-        val groupId = categoryGroupDao.insert(
-            type.asIngredientCategoryGroupEntity()
-        ).toInt()
-
-        type.parts.forEach { part ->
+        db.withTransaction {
             val id = ingredientDao.insertIngredient(
-                part.asIngredientEntity(groupId)
+                ingredientJson.asIngredientEntity()
             ).toInt()
 
             insertIngredientState(id)
+        }
+    }
+
+    private suspend fun insertMeatJson(type: MeatTypeJson) {
+        db.withTransaction {
+            val groupId = categoryGroupDao.insert(
+                type.asIngredientCategoryGroupEntity()
+            ).toInt()
+
+            type.parts.forEach { part ->
+                val id = ingredientDao.insertIngredient(
+                    part.asIngredientEntity(groupId)
+                ).toInt()
+
+                insertIngredientState(id)
+            }
         }
     }
 

@@ -15,5 +15,6 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.paging.common)
 }

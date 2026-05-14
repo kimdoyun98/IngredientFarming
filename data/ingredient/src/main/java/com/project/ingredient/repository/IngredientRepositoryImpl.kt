@@ -4,6 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.room.Transaction
+import androidx.room.withTransaction
+import com.project.database.IngredientFarmingDatabase
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
 import com.project.database.dao.IngredientStateDao
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class IngredientRepositoryImpl @Inject constructor(
+    private val db: IngredientFarmingDatabase,
     private val ingredientDao: IngredientDao,
     private val ingredientStateDao: IngredientStateDao,
     private val holdIngredientDao: HoldIngredientDao,
@@ -61,23 +64,26 @@ class IngredientRepositoryImpl @Inject constructor(
     ) = coroutineScope {
         igdList.forEach { ingredient ->
             launch {
-                var id = ingredientDao.findIngredientIdByName(ingredient.name)
+                db.withTransaction {
+                    var id = ingredientDao.findIngredientIdByName(ingredient.name)
 
-                if (id == null) id = insertIngredient(ingredient)
-                else ingredientStateDao.updateHoldStateById(id)
+                    if (id == null) id = insertIngredient(ingredient)
+                    else ingredientStateDao.updateHoldStateById(id)
 
-                holdIngredientDao.insertHoldIngredient(ingredient.asHoldIngredientEntity(id))
+                    holdIngredientDao.insertHoldIngredient(ingredient.asHoldIngredientEntity(id))
+                }
             }
         }
     }
 
-    @Transaction
     private suspend fun insertIngredient(igd: Ingredient): Int {
-        val id = ingredientDao.insertIngredient(igd.asIngredientEntity()).toInt()
+        return db.withTransaction {
+            val id = ingredientDao.insertIngredient(igd.asIngredientEntity()).toInt()
 
-        insertIngredientState(id = id, holdState = true, isInComplete = true)
+            insertIngredientState(id = id, holdState = true, isInComplete = true)
 
-        return id
+            id
+        }
     }
 
     override fun getIngredientCount(): Flow<Int> {
@@ -90,43 +96,47 @@ class IngredientRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertUnknownIngredient(name: String): Int {
+        return db.withTransaction {
+            val id = ingredientDao.insertIngredient(
+                name.asUnknownIngredientEntity()
+            ).toInt()
 
-        val id = ingredientDao.insertIngredient(
-            name.asUnknownIngredientEntity()
-        ).toInt()
+            insertIngredientState(id = id, holdState = false, isInComplete = false)
 
-        insertIngredientState(id = id, holdState = false, isInComplete = false)
-
-        return id
+            id
+        }
     }
 
     override suspend fun insertUnknownIngredient(
         name: String,
         category: IngredientCategory
     ): Int {
-        val id = ingredientDao.insertIngredient(
-            name.asUnknownIngredientEntity(category)
-        ).toInt()
+        return db.withTransaction {
+            val id = ingredientDao.insertIngredient(
+                name.asUnknownIngredientEntity(category)
+            ).toInt()
 
-        insertIngredientState(id = id, holdState = false, isInComplete = false)
+            insertIngredientState(id = id, holdState = false, isInComplete = false)
 
-        return id
+            id
+        }
     }
 
-    @Transaction
     override suspend fun updateUnknownIngredient(
         id: Int,
         category: IngredientCategory,
         store: IngredientStore
     ): Result<Unit> {
         return runCatching {
-            ingredientDao.updateUnknownIngredient(
-                id = id,
-                category = category,
-                store = store
-            )
+            db.withTransaction {
+                ingredientDao.updateUnknownIngredient(
+                    id = id,
+                    category = category,
+                    store = store
+                )
 
-            ingredientStateDao.updateCompleteState(id)
+                ingredientStateDao.updateCompleteState(id)
+            }
         }
     }
 
