@@ -144,6 +144,13 @@
 - GithubActions를 사용하여 PR이 올라오면 Build 및 테스트 자동 진행
 - 아직 구현 단계로 배포는 미작성
 
+<br>
 
+## 스크린샷
+<img src="https://github.com/user-attachments/assets/cb85cf5c-98f8-4a41-a38a-0822999a08e1" width=250 />
+<img src="https://github.com/user-attachments/assets/8b38b510-f719-41f4-a291-6610d1afab2b" width=250 />
+<img src="https://github.com/user-attachments/assets/8cbcc86c-130d-48f9-8cc5-9997372c8956" width=250 />
+<img src="https://github.com/user-attachments/assets/7d14d38c-0032-467c-a032-00c7fd90491e" width=250 />
+<img src="https://github.com/user-attachments/assets/47b12eef-e6e5-43ef-8b50-5a448a43f44f" width=250 />
 
 
