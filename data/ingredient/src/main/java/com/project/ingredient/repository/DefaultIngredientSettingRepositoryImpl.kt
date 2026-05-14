@@ -60,11 +60,7 @@ class DefaultIngredientSettingRepositoryImpl @Inject constructor(
 
     private suspend fun insertIngredientState(id: Int){
         ingredientStateDao.insertIngredientState(
-            IngredientStateEntity(
-                ingredientId = id,
-                holdState = false,
-                isInComplete = true
-            )
+            IngredientStateEntity.createDefaultIngredientState(id)
         )
     }
 }

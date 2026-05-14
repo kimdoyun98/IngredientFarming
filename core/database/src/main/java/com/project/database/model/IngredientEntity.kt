@@ -67,4 +67,17 @@ data class IngredientStateEntity(
 
     @ColumnInfo(name = "is_in_complete")
     val isInComplete: Boolean = true,
-)
+){
+    companion object {
+
+        fun createDefaultIngredientState(
+            ingredientId: Int
+        ): IngredientStateEntity {
+            return IngredientStateEntity(
+                ingredientId = ingredientId,
+                holdState = false,
+                isInComplete = true
+            )
+        }
+    }
+}
