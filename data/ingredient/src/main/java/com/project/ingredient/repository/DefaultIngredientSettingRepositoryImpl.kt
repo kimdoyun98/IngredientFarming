@@ -10,7 +10,6 @@ import com.project.ingredient.asIngredientEntity
 import com.project.model.IngredientJson
 import com.project.model.MeatTypeJson
 import com.project.model.RootJson
-import com.project.model.ingredient.IngredientCategory
 import javax.inject.Inject
 
 class DefaultIngredientSettingRepositoryImpl @Inject constructor(
@@ -37,13 +36,8 @@ class DefaultIngredientSettingRepositoryImpl @Inject constructor(
 
     @Transaction
     private suspend fun insertIngredientsJson(ingredientJson: IngredientJson) {
-        val isAutoDecrement = !(ingredientJson.category == IngredientCategory.CONDIMENT.name ||
-                ingredientJson.category == IngredientCategory.GRAIN.name)
-
         val id = ingredientDao.insertIngredient(
-            ingredientJson.asIngredientEntity(
-                autoDecrement = isAutoDecrement
-            )
+            ingredientJson.asIngredientEntity()
         ).toInt()
 
         insertIngredientState(id)
