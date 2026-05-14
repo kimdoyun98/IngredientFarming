@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class HoldIngredientRepositoryImpl @Inject constructor(
     private val holdIngredientDao: HoldIngredientDao,
-    private val ingredientDao: IngredientDao,
     private val ingredientStateDao: IngredientStateDao,
 ) : HoldIngredientRepository {
     override suspend fun getHoldIngredientById(id: Int): Ingredient {
