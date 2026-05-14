@@ -7,7 +7,9 @@ import androidx.navigation.compose.composable
 import com.project.navigation.IngredientRoute
 import com.project.recipe.recipinfo.RecipeInfoScreen
 import com.project.recipe.recipinfo.RecipeInfoViewModel
+import com.project.recipe.recipinfo.contract.RecipeInfoEffect
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.recipeInfoGraph(
     popBackStack: () -> Unit,
@@ -15,6 +17,14 @@ fun NavGraphBuilder.recipeInfoGraph(
     composable<IngredientRoute.RecipeInfo> {
         val recipeInfoViewModel: RecipeInfoViewModel = hiltViewModel()
         val recipeInfoState by recipeInfoViewModel.collectAsState()
+
+        recipeInfoViewModel.collectSideEffect { effect ->
+            when(effect){
+                RecipeInfoEffect.NavigateToBack -> {
+                    popBackStack()
+                }
+            }
+        }
 
         RecipeInfoScreen(
             state = recipeInfoState,
