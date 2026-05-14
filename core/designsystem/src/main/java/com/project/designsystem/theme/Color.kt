@@ -29,3 +29,5 @@ val MoreLightGreen = Color(0xFFE8F5E9)
 val Blue = Color(0xFF2196F3)
 val LightBlue = Color(0xFFBBDEFB)
 val MoreLightBlue = Color(0xFFE3F2FD)
+
+val Silver = Color(0xFFF0F0F0)

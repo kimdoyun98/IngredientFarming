@@ -1,12 +1,17 @@
 package com.project.database.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.project.database.model.IngredientEntity
+import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.ExpirationDateSoonIngredient
+import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientInfo
+import com.project.model.ingredient.IngredientStore
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,6 +20,28 @@ interface IngredientDao {
     /**
      * GET
      */
+    @Query(
+        """
+            SELECT 
+                IngredientEntity.id as id,
+                IngredientEntity.name as name,
+                IngredientEntity.category as category,
+                IngredientCategoryGroupEntity.groupType as categoryGroup,
+                IngredientEntity.store as store,
+                IngredientStateEntity.is_in_complete as isComplete
+            FROM IngredientEntity
+            JOIN IngredientStateEntity ON IngredientEntity.id = IngredientStateEntity.ingredientId
+            LEFT JOIN IngredientCategoryGroupEntity ON IngredientEntity.group_id = IngredientCategoryGroupEntity.id
+            WHERE (:query IS NULL OR IngredientEntity.name LIKE '%' || :query || '%') 
+            AND (:category IS NULL OR IngredientEntity.category = :category)
+            ORDER BY IngredientStateEntity.is_in_complete ASC, IngredientEntity.name ASC
+        """
+    )
+    fun getDefaultIngredients(
+        query: String?,
+        category: IngredientCategory?
+    ): PagingSource<Int, DefaultIngredient>
+
     @Query(
         """
         SELECT 
@@ -35,9 +62,6 @@ interface IngredientDao {
 
     @Query("SELECT id FROM IngredientEntity WHERE name =:name")
     suspend fun findIngredientIdByName(name: String): Int?
-
-    @Query("SELECT Count(*) FROM IngredientEntity WHERE hold_state = 1")
-    fun getIngredientCount(): Flow<Int>
 
     @Query(
         """
@@ -72,16 +96,6 @@ interface IngredientDao {
     /**
      * UPDATE
      */
-    @Query("UPDATE IngredientEntity SET hold_state = 1 WHERE id =:id")
-    suspend fun updateHoldStateById(id: Int)
-
-    @Query(
-        """
-        UPDATE IngredientEntity 
-        SET hold_state = 0 
-        WHERE id NOT IN (SELECT DISTINCT ingredient_id FROM HoldIngredientEntity)
-        AND hold_state = 1
-    """
-    )
-    suspend fun updateMissingIngredientsHoldState(): Int
+    @Query("UPDATE IngredientEntity SET category=:category, store=:store WHERE id=:id")
+    suspend fun updateUnknownIngredient(id: Int, category: IngredientCategory, store: IngredientStore)
 }

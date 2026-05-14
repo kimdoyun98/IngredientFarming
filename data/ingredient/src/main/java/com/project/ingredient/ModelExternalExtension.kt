@@ -31,7 +31,6 @@ fun Ingredient.asIngredientEntity(): IngredientEntity {
         name = name,
         category = category,
         store = store,
-        holdState = true,
         isAutoDecrement = !isAutoDecrement,
         step = if (!isAutoDecrement) 1.0 else 0.5
     )
@@ -44,15 +43,19 @@ fun Ingredient.asHoldIngredientEntity(id: Int) = HoldIngredientEntity(
     expirationDate = expirationDate,
 )
 
-fun IngredientJson.asIngredientEntity(autoDecrement: Boolean = true) = IngredientEntity(
-    name = ingredient,
-    category = getIngredientCategory(category),
-    store = getIngredientStore(store),
-    categoryGroupId = null,
-    holdState = false,
-    isAutoDecrement = autoDecrement,
-    step = if (autoDecrement) 1.0 else 0.5
-)
+fun IngredientJson.asIngredientEntity(): IngredientEntity {
+    val isAutoDecrement = !(this.category == IngredientCategory.CONDIMENT.name ||
+            this.category == IngredientCategory.GRAIN.name)
+
+    return IngredientEntity(
+        name = ingredient,
+        category = getIngredientCategory(category),
+        store = getIngredientStore(store),
+        categoryGroupId = null,
+        isAutoDecrement = isAutoDecrement,
+        step = if (isAutoDecrement) 1.0 else 0.5
+    )
+}
 
 fun MeatTypeJson.asIngredientCategoryGroupEntity() = IngredientCategoryGroupEntity(
     groupType = name,
@@ -64,7 +67,6 @@ fun MeatPartJson.asIngredientEntity(groupId: Int) = IngredientEntity(
     category = IngredientCategory.MEAT,
     store = IngredientStore.valueOf(store),
     categoryGroupId = groupId,
-    holdState = false
 )
 
 internal fun String.asUnknownIngredientEntity(
@@ -73,5 +75,4 @@ internal fun String.asUnknownIngredientEntity(
     name = this,
     category = category,
     store = IngredientStore.ROOM_TEMPERATURE,
-    holdState = false,
 )

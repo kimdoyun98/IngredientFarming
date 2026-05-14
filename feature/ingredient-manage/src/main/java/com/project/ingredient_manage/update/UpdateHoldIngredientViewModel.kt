@@ -7,9 +7,9 @@ import androidx.navigation.toRoute
 import com.project.ingredient.usecase.manage.DeleteHoldIngredientUseCase
 import com.project.ingredient.usecase.manage.GetHoldIngredientUseCase
 import com.project.ingredient.usecase.manage.UpdateHoldIngredientCountUseCase
-import com.project.ingredient_manage.contract.update.UpdateEffect
-import com.project.ingredient_manage.contract.update.UpdateIntent
-import com.project.ingredient_manage.contract.update.UpdateState
+import com.project.ingredient_manage.update.contract.UpdateEffect
+import com.project.ingredient_manage.update.contract.UpdateIntent
+import com.project.ingredient_manage.update.contract.UpdateState
 import com.project.navigation.IngredientRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

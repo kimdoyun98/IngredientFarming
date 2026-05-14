@@ -6,11 +6,13 @@ import androidx.room.TypeConverters
 import com.project.database.dao.CategoryGroupDao
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
+import com.project.database.dao.IngredientStateDao
 import com.project.database.dao.RecipeDao
 import com.project.database.dao.ShoppingCartDao
 import com.project.database.model.HoldIngredientEntity
 import com.project.database.model.IngredientCategoryGroupEntity
 import com.project.database.model.IngredientEntity
+import com.project.database.model.IngredientStateEntity
 import com.project.database.model.ShoppingCartEntity
 import com.project.database.model.recipe.RecipeEntity
 import com.project.database.model.recipe.RecipeIngredientEntity
@@ -20,6 +22,7 @@ import com.project.database.model.recipe.RecipeStepEntity
     entities = [
         IngredientCategoryGroupEntity::class,
         IngredientEntity::class,
+        IngredientStateEntity::class,
         HoldIngredientEntity::class,
         ShoppingCartEntity::class,
         RecipeEntity::class,
@@ -30,8 +33,9 @@ import com.project.database.model.recipe.RecipeStepEntity
     exportSchema = true
 )
 @TypeConverters(Converter::class)
-internal abstract class IngredientFarmingDatabase : RoomDatabase() {
+abstract class IngredientFarmingDatabase : RoomDatabase() {
     abstract fun getIngredientDao(): IngredientDao
+    abstract fun getIngredientStateDao(): IngredientStateDao
     abstract fun getCategoryGroupDao(): CategoryGroupDao
     abstract fun getHoldIngredientDao(): HoldIngredientDao
     abstract fun getShoppingCardDao(): ShoppingCartDao

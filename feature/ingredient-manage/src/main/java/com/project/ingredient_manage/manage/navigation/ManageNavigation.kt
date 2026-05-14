@@ -1,4 +1,4 @@
-package com.project.ingredient_manage.navigation
+package com.project.ingredient_manage.manage.navigation
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -9,9 +9,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.project.ingredient_manage.ManageScreen
-import com.project.ingredient_manage.ManageViewModel
-import com.project.ingredient_manage.contract.ManageEffect
+import com.project.ingredient_manage.manage.ManageScreen
+import com.project.ingredient_manage.manage.ManageViewModel
+import com.project.ingredient_manage.manage.contract.ManageEffect
 import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import kotlinx.coroutines.launch
@@ -31,6 +31,10 @@ fun NavGraphBuilder.manageGraph(
             when (effect) {
                 is ManageEffect.NavigateToHome -> {
                     navigator.navigateToHome()
+                }
+
+                is ManageEffect.NavigateToDefaultIngredientManage -> {
+                    navigator.navigateToDefaultIngredientManage()
                 }
 
                 is ManageEffect.NavigateToUpdateIngredient -> {

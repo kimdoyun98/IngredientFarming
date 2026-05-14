@@ -1,4 +1,4 @@
-package com.project.ingredient_manage.contract.update
+package com.project.ingredient_manage.update.contract
 
 sealed interface UpdateIntent {
     object OnTopAppBarNavigationClick: UpdateIntent

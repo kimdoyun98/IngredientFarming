@@ -3,6 +3,7 @@ package com.project.ingredient.repository
 import androidx.room.Transaction
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
+import com.project.database.dao.IngredientStateDao
 import com.project.model.ingredient.HoldIngredientCount
 import com.project.model.ingredient.Ingredient
 import kotlinx.coroutines.delay
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 class HoldIngredientRepositoryImpl @Inject constructor(
     private val holdIngredientDao: HoldIngredientDao,
-    private val ingredientDao: IngredientDao,
+    private val ingredientStateDao: IngredientStateDao,
 ) : HoldIngredientRepository {
     override suspend fun getHoldIngredientById(id: Int): Ingredient {
         return holdIngredientDao.getHoldIngredientById(id)
@@ -42,7 +43,7 @@ class HoldIngredientRepositoryImpl @Inject constructor(
     @Transaction
     private suspend fun deleteHoldIngredientAndUpdateHoldState(ids: List<Int>) {
         holdIngredientDao.deleteHoldIngredientsByIds(ids)
-        ingredientDao.updateMissingIngredientsHoldState()
+        ingredientStateDao.updateMissingIngredientsHoldState()
     }
 
     private suspend fun <T> runWithRetry(

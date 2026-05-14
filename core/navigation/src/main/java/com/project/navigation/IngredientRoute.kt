@@ -29,6 +29,9 @@ sealed interface IngredientRoute : Route {
     data class UpdateHoldIngredient(val id: Int) : IngredientRoute
 
     @Serializable
+    data object DefaultIngredientManage: IngredientRoute
+
+    @Serializable
     data object ShoppingCart : IngredientRoute
 
     @Serializable

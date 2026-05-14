@@ -1,4 +1,4 @@
-package com.project.ingredient_manage.contract.update
+package com.project.ingredient_manage.update.contract
 
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory

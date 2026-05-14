@@ -37,6 +37,7 @@ import com.project.designsystem.theme.Orange
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
+import com.project.ui.iconbox.CategorySmallIconBox
 import com.project.ui.util.daysLeft
 import com.project.ui.util.getLeftDateText
 import com.project.ui.util.getLuminanceTextColor

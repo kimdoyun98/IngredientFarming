@@ -1,10 +1,10 @@
-package com.project.ingredient_manage.navigation
+package com.project.ingredient_manage.update.navigation
 
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.project.ingredient_manage.contract.update.UpdateEffect
+import com.project.ingredient_manage.update.contract.UpdateEffect
 import com.project.ingredient_manage.update.UpdateHoldIngredientScreen
 import com.project.ingredient_manage.update.UpdateHoldIngredientViewModel
 import com.project.navigation.IngredientFarmingNavigator

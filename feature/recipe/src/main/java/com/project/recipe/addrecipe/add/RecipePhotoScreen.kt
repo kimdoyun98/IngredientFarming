@@ -41,7 +41,7 @@ import com.project.recipe.addrecipe.component.MainTitleContent
 import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import com.project.recipe.addrecipe.contract.AddRecipeState
 import com.project.ui.IngredientFarmingCenterLoading
-import com.project.ui.MediumIconBox
+import com.project.ui.iconbox.MediumIconBox
 import com.project.ui.modifier.dottedLineLayout
 import com.project.ui.modifier.singleClickable
 

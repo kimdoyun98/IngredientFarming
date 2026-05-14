@@ -4,6 +4,7 @@ import com.project.database.IngredientFarmingDatabase
 import com.project.database.dao.CategoryGroupDao
 import com.project.database.dao.HoldIngredientDao
 import com.project.database.dao.IngredientDao
+import com.project.database.dao.IngredientStateDao
 import com.project.database.dao.RecipeDao
 import com.project.database.dao.ShoppingCartDao
 import dagger.Module
@@ -21,6 +22,12 @@ internal object DaoModules {
     fun provideIngredientDao(
         database: IngredientFarmingDatabase
     ): IngredientDao = database.getIngredientDao()
+
+    @Singleton
+    @Provides
+    fun provideIngredientStateDao(
+        database: IngredientFarmingDatabase
+    ): IngredientStateDao = database.getIngredientStateDao()
 
     @Singleton
     @Provides

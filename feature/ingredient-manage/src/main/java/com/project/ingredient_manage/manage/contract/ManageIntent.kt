@@ -1,4 +1,4 @@
-package com.project.ingredient_manage.contract
+package com.project.ingredient_manage.manage.contract
 
 sealed interface ManageIntent {
     object OnClickTopAppBarNavigation : ManageIntent
