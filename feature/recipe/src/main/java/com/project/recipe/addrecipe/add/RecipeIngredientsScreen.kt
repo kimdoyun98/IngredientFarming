@@ -1,10 +1,10 @@
 package com.project.recipe.addrecipe.add
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -102,35 +102,34 @@ internal fun RecipeIngredientsScreen(
     onIngredientUnitChange: (IngredientUiModel, IngredientUnit) -> Unit,
     onDeleteItem: (IngredientUiModel) -> Unit
 ) {
-    Box(
+    Column(
         modifier = modifier
+            .fillMaxSize()
     ) {
+        MainTitleContent(
+            title = stringResource(R.string.add_recipe_ingredients_main_title)
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            ContentTitle(stringResource(R.string.add_recipe_ingredients_ingredient))
+            TextButton(
+                onClick = onAddIngredientButtonClick
+            ) {
+                Text(
+                    text = stringResource(R.string.add_recipe_add_text_button_title),
+                    color = Green
+                )
+            }
+        }
+
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .weight(1f)
         ) {
-            item {
-                MainTitleContent(
-                    title = stringResource(R.string.add_recipe_ingredients_main_title)
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    ContentTitle(stringResource(R.string.add_recipe_ingredients_ingredient))
-                    TextButton(
-                        onClick = onAddIngredientButtonClick
-                    ) {
-                        Text(
-                            text = stringResource(R.string.add_recipe_add_text_button_title),
-                            color = Green
-                        )
-                    }
-                }
-            }
-
             items(
                 items = ingredients,
                 key = { it.id }
@@ -150,7 +149,7 @@ internal fun RecipeIngredientsScreen(
         }
 
         IngredientFarmingWideButton(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            //modifier = Modifier.align(Alignment.BottomCenter),
             onClick = onNextButtonClick,
             background = Green,
             enabled = nextButtonEnable
@@ -273,7 +272,10 @@ private fun UnitDropdown(
     }
 }
 
-@Preview
+@Preview(
+    backgroundColor = 0xFFFFFF,
+    showBackground = true
+)
 @Composable
 private fun RecipeIngredientsScreenPreview() {
     RecipeIngredientsScreen(

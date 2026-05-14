@@ -1,9 +1,10 @@
 package com.project.recipe.addrecipe.add
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -83,35 +84,34 @@ internal fun RecipeStepsScreen(
     onRecipeDeleteButtonClick: (RecipeStepUiModel) -> Unit,
     onSaveButtonClick: () -> Unit,
 ) {
-    Box(
+    Column(
         modifier = modifier
+            .fillMaxSize()
     ) {
+        MainTitleContent(
+            title = stringResource(R.string.add_recipe_ingredients_step_main_title)
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            ContentTitle(stringResource(R.string.add_recipe_ingredients_cooking_step))
+            TextButton(
+                onClick = onAddStepButtonClick
+            ) {
+                Text(
+                    text = stringResource(R.string.add_recipe_add_text_button_title),
+                    color = Green
+                )
+            }
+        }
+
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth(),
+                .weight(1f),
         ) {
-            item {
-                MainTitleContent(
-                    title = stringResource(R.string.add_recipe_ingredients_step_main_title)
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    ContentTitle(stringResource(R.string.add_recipe_ingredients_cooking_step))
-                    TextButton(
-                        onClick = onAddStepButtonClick
-                    ) {
-                        Text(
-                            text = stringResource(R.string.add_recipe_add_text_button_title),
-                            color = Green
-                        )
-                    }
-                }
-            }
-
             itemsIndexed(
                 items = steps,
                 key = { _, step -> step.id }
@@ -128,7 +128,7 @@ internal fun RecipeStepsScreen(
         }
 
         IngredientFarmingWideButton(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            //modifier = Modifier.align(Alignment.BottomCenter),
             onClick = onSaveButtonClick,
             background = Green,
             enabled = saveButtonEnable
@@ -177,7 +177,10 @@ private fun RecipeStepItem(
     }
 }
 
-@Preview
+@Preview(
+    backgroundColor = 0xFFFFFF,
+    showBackground = true
+)
 @Composable
 private fun RecipeStepsScreenPreview() {
     RecipeStepsScreen(
