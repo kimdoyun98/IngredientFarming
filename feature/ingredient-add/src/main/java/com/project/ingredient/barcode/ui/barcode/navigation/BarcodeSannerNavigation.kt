@@ -19,7 +19,6 @@ import com.project.ingredient.barcode.ui.barcode.BarcodeViewModel
 import com.project.model.ingredient.getIndexByIngredientCategory
 import com.project.model.ingredient.getIndexByIngredientStore
 import com.project.model.permission.PermissionState
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -27,7 +26,8 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.barcodeScannerGraph(
-    navigator: IngredientFarmingNavigator,
+    navigateToSaveIngredient: (IngredientRoute.SaveIngredient) -> Unit,
+    navigateToDirectInput: () -> Unit,
     requestCameraPermission: ((PermissionState) -> Unit) -> Unit,
 ) {
     composable<IngredientRoute.BarcodeScanner> { backStack ->
@@ -66,7 +66,7 @@ fun NavGraphBuilder.barcodeScannerGraph(
         barcodeViewModel.collectSideEffect { effect ->
             when (effect) {
                 is BarcodeEffect.NavigateSaveIngredientScreen -> {
-                    navigator.navigateToSaveIngredient(
+                    navigateToSaveIngredient(
                         IngredientRoute.SaveIngredient(
                             name = effect.name,
                             count = 1,
@@ -78,7 +78,7 @@ fun NavGraphBuilder.barcodeScannerGraph(
                 }
 
                 is BarcodeEffect.NavigateDirectInputScreen -> {
-                    navigator.navigateToDirectInput()
+                    navigateToDirectInput()
                 }
 
                 is BarcodeEffect.BarcodeProductEmpty, is BarcodeEffect.BarcodeResultError -> {
@@ -88,7 +88,7 @@ fun NavGraphBuilder.barcodeScannerGraph(
                         message = notFoundProductMessage,
                         actionLabel = directInputLabel,
                         withDismissAction = true,
-                        onActionPerformed = navigator::navigateToDirectInput,
+                        onActionPerformed = navigateToDirectInput,
                         onDismissed = { barcodeViewModel.onIntent(BarcodeIntent.SnackBarDismissed) },
                         duration = SnackbarDuration.Long
                     )

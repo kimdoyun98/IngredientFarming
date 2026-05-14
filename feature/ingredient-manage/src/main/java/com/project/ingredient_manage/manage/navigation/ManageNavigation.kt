@@ -12,14 +12,15 @@ import androidx.navigation.compose.composable
 import com.project.ingredient_manage.manage.ManageScreen
 import com.project.ingredient_manage.manage.ManageViewModel
 import com.project.ingredient_manage.manage.contract.ManageEffect
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.manageGraph(
-    navigator: IngredientFarmingNavigator,
+    navigateToHome: () -> Unit,
+    navigateToDefaultIngredientManage: () -> Unit,
+    navigateToUpdateHoldIngredient: (Int) -> Unit,
 ) {
     composable<IngredientRoute.Manage> {
         val manageViewModel: ManageViewModel = hiltViewModel()
@@ -30,15 +31,15 @@ fun NavGraphBuilder.manageGraph(
         manageViewModel.collectSideEffect { effect ->
             when (effect) {
                 is ManageEffect.NavigateToHome -> {
-                    navigator.navigateToHome()
+                    navigateToHome()
                 }
 
                 is ManageEffect.NavigateToDefaultIngredientManage -> {
-                    navigator.navigateToDefaultIngredientManage()
+                    navigateToDefaultIngredientManage()
                 }
 
                 is ManageEffect.NavigateToUpdateIngredient -> {
-                    navigator.navigateToUpdateHoldIngredient(effect.id)
+                    navigateToUpdateHoldIngredient(effect.id)
                 }
 
                 is ManageEffect.ShowSnackBar -> {

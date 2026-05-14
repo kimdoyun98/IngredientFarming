@@ -7,13 +7,13 @@ import androidx.navigation.compose.composable
 import com.project.ingredient.barcode.contract.directInput.DirectInputEffect
 import com.project.ingredient.barcode.ui.directInput.DirectInputScreen
 import com.project.ingredient.barcode.ui.directInput.DirectInputViewModel
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.directInputGraph(
-    navigator: IngredientFarmingNavigator,
+    popBackStack: () -> Unit,
+    navigateToSaveIngredient: (IngredientRoute.SaveIngredient) -> Unit
 ) {
     composable<IngredientRoute.DirectInput> {
         val directInputViewModel: DirectInputViewModel = hiltViewModel()
@@ -22,12 +22,12 @@ fun NavGraphBuilder.directInputGraph(
         directInputViewModel.collectSideEffect { effect ->
             when (effect) {
                 is DirectInputEffect.NavigateToBack -> {
-                    navigator.navController.popBackStack()
+                    popBackStack()
                 }
 
                 is DirectInputEffect.NavigateToSaveIngredient -> {
-                    navigator.navController.popBackStack()
-                    navigator.navigateToSaveIngredient(
+                    popBackStack()
+                    navigateToSaveIngredient(
                         IngredientRoute.SaveIngredient(
                             name = directInputState.name,
                             count = directInputState.count.toInt(),

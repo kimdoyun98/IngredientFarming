@@ -16,7 +16,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.project.model.permission.PermissionState
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import com.project.recipe.R
 import com.project.recipe.addrecipe.AddRecipeScreen
@@ -28,7 +27,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.addRecipeGraph(
-    navigator: IngredientFarmingNavigator,
+    popBackStack: () -> Unit,
     launchMediaImagePermission: ((PermissionState) -> Unit) -> Unit,
 ) {
     composable<IngredientRoute.AddRecipe> {
@@ -72,7 +71,7 @@ fun NavGraphBuilder.addRecipeGraph(
         addRecipeViewModel.collectSideEffect { effect ->
             when (effect) {
                 is AddRecipeEffect.NavigateToRecipeList -> {
-                    navigator.navController.popBackStack()
+                    popBackStack()
                 }
 
                 is AddRecipeEffect.UriIsNull -> {

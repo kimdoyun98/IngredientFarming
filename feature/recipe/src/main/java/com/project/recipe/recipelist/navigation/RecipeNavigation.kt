@@ -5,7 +5,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import com.project.recipe.recipelist.RecipeScreen
 import com.project.recipe.recipelist.RecipeViewModel
@@ -14,7 +13,9 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.recipeGraph(
-    navigator: IngredientFarmingNavigator,
+    navigateToHome: () -> Unit,
+    navigateToAddRecipe: () -> Unit,
+    navigateToRecipeInfo: (Int) -> Unit,
 ) {
     composable<IngredientRoute.Recipe> {
         val recipeViewModel: RecipeViewModel = hiltViewModel()
@@ -22,17 +23,17 @@ fun NavGraphBuilder.recipeGraph(
         val recipes = recipeViewModel.recipes.collectAsLazyPagingItems()
 
         recipeViewModel.collectSideEffect { effect ->
-            when(effect){
+            when (effect) {
                 is RecipeEffect.NavigateToHome -> {
-                    navigator.navigateToHome()
+                    navigateToHome()
                 }
 
                 is RecipeEffect.NavigateToRecipeAdd -> {
-                    navigator.navigateToAddRecipe()
+                    navigateToAddRecipe()
                 }
 
                 is RecipeEffect.NavigateToRecipeInfo -> {
-                    navigator.navigateToRecipeInfo(effect.recipeId)
+                    navigateToRecipeInfo(effect.recipeId)
                 }
             }
         }

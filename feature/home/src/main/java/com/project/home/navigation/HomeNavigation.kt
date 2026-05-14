@@ -9,13 +9,16 @@ import androidx.navigation.compose.composable
 import com.project.home.HomeScreen
 import com.project.home.HomeViewModel
 import com.project.home.contract.HomeEffect
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 fun NavGraphBuilder.homeGraph(
-    navigator: IngredientFarmingNavigator,
+    navigateToManage: () -> Unit,
+    navigateToBarcodeScanner: () -> Unit,
+    navigateToDirectInput: () -> Unit,
+    navigateToRecipe: () -> Unit,
+    navigateToShoppingCart: () -> Unit,
 ) {
     composable<IngredientRoute.Home> {
         val viewModel: HomeViewModel = hiltViewModel()
@@ -25,23 +28,23 @@ fun NavGraphBuilder.homeGraph(
         viewModel.collectSideEffect { effect ->
             when (effect) {
                 is HomeEffect.NavigateToManage -> {
-                    navigator.navigateToManage()
+                    navigateToManage()
                 }
 
                 is HomeEffect.NavigateToBarcodeScanner -> {
-                    navigator.navigateToBarcodeScanner()
+                    navigateToBarcodeScanner()
                 }
 
                 is HomeEffect.NavigateToDirectInput -> {
-                    navigator.navigateToDirectInput()
+                    navigateToDirectInput()
                 }
 
                 is HomeEffect.NavigateToRecipe -> {
-                    navigator.navigateToRecipe()
+                    navigateToRecipe()
                 }
 
                 is HomeEffect.NavigateToShoppingCart -> {
-                    navigator.navigateToShoppingCart()
+                    navigateToShoppingCart()
                 }
             }
 

@@ -3,6 +3,7 @@ package com.project.ingredient.barcode.ui.save.navigation
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -12,19 +13,21 @@ import com.project.ingredient.barcode.ui.save.SaveIngredientViewModel
 import com.project.model.ingredient.Ingredient
 import com.project.model.ingredient.getIndexToIngredientCategory
 import com.project.model.ingredient.getIndexToIngredientStore
-import com.project.navigation.IngredientFarmingNavigator
 import com.project.navigation.IngredientRoute
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.time.LocalDate
 
 fun NavGraphBuilder.saveIngredientGraph(
-    navigator: IngredientFarmingNavigator,
+    getBackStackEntry: (IngredientRoute) -> NavBackStackEntry,
+    navigateToHome: () -> Unit,
+    navigateToDirectInput: () -> Unit,
+    navigateToBarcodeScanner: () -> Unit,
 ) {
     composable<IngredientRoute.SaveIngredient> { navBackStackEntry ->
         val newIngredient = navBackStackEntry.toRoute<IngredientRoute.SaveIngredient>()
         val saveIngredientNavBackStackEntry = remember(navBackStackEntry) {
-            navigator.navController.getBackStackEntry(newIngredient)
+            getBackStackEntry(newIngredient)
         }
         val saveIngredientViewModel: SaveIngredientViewModel =
             hiltViewModel(saveIngredientNavBackStackEntry)
@@ -33,15 +36,15 @@ fun NavGraphBuilder.saveIngredientGraph(
         saveIngredientViewModel.collectSideEffect { effect ->
             when (effect) {
                 SaveIngredientEffect.SaveIngredient -> {
-                    navigator.navigateToHome()
+                    navigateToHome()
                 }
 
                 SaveIngredientEffect.NavigateToDirectInputScreen -> {
-                    navigator.navigateToDirectInput()
+                    navigateToDirectInput()
                 }
 
                 SaveIngredientEffect.NavigateToBarcodeScannerScreen -> {
-
+                    navigateToBarcodeScanner()
                 }
             }
         }

@@ -30,32 +30,63 @@ internal fun MainScreen(
         navController = navigator.navController,
         startDestination = IngredientRoute.Home
     ) {
-        homeGraph(navigator = navigator)
+        homeGraph(
+            navigateToManage = navigator::navigateToManage,
+            navigateToBarcodeScanner = navigator::navigateToBarcodeScanner,
+            navigateToDirectInput = navigator::navigateToDirectInput,
+            navigateToRecipe = navigator::navigateToRecipe,
+            navigateToShoppingCart = navigator::navigateToShoppingCart,
+        )
 
         barcodeScannerGraph(
-            navigator = navigator,
+            navigateToSaveIngredient = navigator::navigateToSaveIngredient,
+            navigateToDirectInput = navigator::navigateToDirectInput,
             requestCameraPermission = ingredientFarmingPermission::launchCameraPermission
         )
 
-        saveIngredientGraph(navigator = navigator)
+        saveIngredientGraph(
+            getBackStackEntry = navigator.navController::getBackStackEntry,
+            navigateToHome = navigator::navigateToHome,
+            navigateToDirectInput = navigator::navigateToDirectInput,
+            navigateToBarcodeScanner = navigator::navigateToBarcodeScanner
+        )
 
-        directInputGraph(navigator = navigator)
+        directInputGraph(
+            popBackStack = navigator.navController::popBackStack,
+            navigateToSaveIngredient = navigator::navigateToSaveIngredient
+        )
 
-        manageGraph(navigator = navigator)
+        manageGraph(
+            navigateToHome = navigator::navigateToHome,
+            navigateToDefaultIngredientManage = navigator::navigateToDefaultIngredientManage,
+            navigateToUpdateHoldIngredient = navigator::navigateToUpdateHoldIngredient,
+        )
 
-        defaultIngredientManageGraph(navigator = navigator)
+        defaultIngredientManageGraph(
+            popBackStack = navigator.navController::popBackStack
+        )
 
-        updateHoldIngredientGraph(navigator = navigator)
+        updateHoldIngredientGraph(
+            popBackStack = navigator.navController::popBackStack
+        )
 
-        shoppingCartGraph(navigator = navigator)
+        shoppingCartGraph(
+            popBackStack = navigator.navController::popBackStack
+        )
 
-        recipeGraph(navigator = navigator)
+        recipeGraph(
+            navigateToHome = navigator::navigateToHome,
+            navigateToAddRecipe = navigator::navigateToAddRecipe,
+            navigateToRecipeInfo = navigator::navigateToRecipeInfo,
+        )
 
         addRecipeGraph(
-            navigator = navigator,
+            popBackStack = navigator.navController::popBackStack,
             launchMediaImagePermission = ingredientFarmingPermission::launchMediaImagesPermission,
         )
 
-        recipeInfoGraph(navigator = navigator)
+        recipeInfoGraph(
+            popBackStack = navigator.navController::popBackStack
+        )
     }
 }
