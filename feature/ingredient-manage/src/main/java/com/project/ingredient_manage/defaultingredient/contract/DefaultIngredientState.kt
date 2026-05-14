@@ -1,10 +1,12 @@
 package com.project.ingredient_manage.defaultingredient.contract
 
+import androidx.compose.runtime.Stable
 import com.project.ingredient_manage.defaultingredient.util.UpdateDefaultIngredientState
 import com.project.model.ingredient.DefaultIngredient
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 
+@Stable
 data class DefaultIngredientState(
     val query: String = "",
     val selectedCategory: IngredientCategory? = null,

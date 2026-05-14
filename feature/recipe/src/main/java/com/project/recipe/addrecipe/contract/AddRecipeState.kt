@@ -10,6 +10,7 @@ import com.project.recipe.addrecipe.util.RecipeSaveState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Stable
 data class AddRecipeState(
     val recentIngredientNumber: Int = 0,
     val recentRecipeStepNumber: Int = 0,
