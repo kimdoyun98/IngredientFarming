@@ -130,14 +130,12 @@ internal fun DefaultIngredientManageScreen(
                     .fillMaxSize()
             ) {
                 IngredientFarmingSearchBar(
-                    modifier = modifier,
                     query = query,
                     onQueryChange = { q -> onSearchQueryChange(q) },
                     onCloseClick = onSearchCloseButtonClick
                 )
 
                 CategoryFilterChipGroup(
-                    modifier = modifier,
                     selectedCategory = selectedCategory,
                     onSelectCategoryChip = { category -> onSelectCategoryChip(category) }
                 )
