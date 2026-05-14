@@ -19,7 +19,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             IngredientFarmingTheme {
                 MainScreen(
-                    ingredientFarmingPermission = remember { ingredientFarmingPermission }
+                    ingredientFarmingPermission = remember { ingredientFarmingPermission },
+                    appFinish = this::finish,
                 )
             }
         }

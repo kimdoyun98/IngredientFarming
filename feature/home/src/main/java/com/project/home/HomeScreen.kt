@@ -1,5 +1,6 @@
 package com.project.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -55,6 +56,7 @@ internal fun HomeScreen(
         onBarcodeScannerButtonClick = { onIntent(HomeIntent.OnBarcodeScannerButtonClick) },
         onRecipeButtonClick = { onIntent(HomeIntent.OnRecipeButtonClick) },
         onShoppingCartButtonClick = { onIntent(HomeIntent.OnShoppingCartButtonClick) },
+        backPress = { onIntent(HomeIntent.BackPress) },
     )
 }
 
@@ -76,6 +78,7 @@ internal fun HomeScreen(
     onBarcodeScannerButtonClick: () -> Unit,
     onRecipeButtonClick: () -> Unit,
     onShoppingCartButtonClick: () -> Unit,
+    backPress: () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
@@ -124,6 +127,10 @@ internal fun HomeScreen(
                 }
             )
         }
+    }
+
+    BackHandler {
+        backPress()
     }
 }
 

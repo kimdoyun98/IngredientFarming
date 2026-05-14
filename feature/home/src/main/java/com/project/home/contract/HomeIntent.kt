@@ -8,4 +8,5 @@ sealed interface HomeIntent {
     object OnBarcodeScannerButtonClick : HomeIntent
     object OnRecipeButtonClick : HomeIntent
     object OnShoppingCartButtonClick : HomeIntent
+    object BackPress : HomeIntent
 }

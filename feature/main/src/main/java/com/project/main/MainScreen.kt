@@ -24,6 +24,7 @@ internal fun MainScreen(
     modifier: Modifier = Modifier,
     navigator: IngredientFarmingNavigator = rememberIngredientFarmingNavigator(),
     ingredientFarmingPermission: IngredientFarmingPermission,
+    appFinish: () -> Unit,
 ) {
     NavHost(
         modifier = modifier,
@@ -36,6 +37,7 @@ internal fun MainScreen(
             navigateToDirectInput = navigator::navigateToDirectInput,
             navigateToRecipe = navigator::navigateToRecipe,
             navigateToShoppingCart = navigator::navigateToShoppingCart,
+            appFinish = appFinish
         )
 
         barcodeScannerGraph(

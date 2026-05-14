@@ -6,4 +6,5 @@ sealed interface HomeEffect {
     object NavigateToDirectInput : HomeEffect
     object NavigateToRecipe : HomeEffect
     object NavigateToShoppingCart : HomeEffect
+    object AppFinish: HomeEffect
 }

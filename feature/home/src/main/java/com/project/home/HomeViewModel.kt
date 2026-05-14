@@ -99,6 +99,10 @@ class HomeViewModel @Inject constructor(
             HomeIntent.OnShoppingCartButtonClick -> intent {
                 postSideEffect(HomeEffect.NavigateToShoppingCart)
             }
+
+            HomeIntent.BackPress -> intent {
+                postSideEffect(HomeEffect.AppFinish)
+            }
         }
     }
 }
