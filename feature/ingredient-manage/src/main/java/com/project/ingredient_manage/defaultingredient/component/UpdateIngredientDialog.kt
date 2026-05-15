@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -32,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.project.designsystem.component.IngredientFarmingButton
+import com.project.designsystem.component.AppNegativeButton
+import com.project.designsystem.component.AppPositiveButton
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.ingredient_manage.R
@@ -130,34 +130,26 @@ internal fun UpdateIngredientDialog(
                     color = LightGray
                 )
 
-                Row {
-                    IngredientFarmingButton(
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    AppNegativeButton(
                         modifier = Modifier
-                            .height(40.dp)
                             .weight(1f),
-                        contentPadding = PaddingValues(vertical = 0.dp),
-                        background = LightGray,
+                        text = stringResource(R.string.default_ingredients_dialog_dismiss_bt_text),
+                        textStyle = MaterialTheme.typography.bodySmall,
+                        contentPadding = 8.dp,
                         onClick = onClickDismiss
-                    ) {
-                        Text(
-                            text = stringResource(R.string.default_ingredients_dialog_dismiss_bt_text),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
+                    )
 
-                    IngredientFarmingButton(
+                    AppPositiveButton(
                         modifier = Modifier
-                            .height(40.dp)
                             .weight(1f),
-                        contentPadding = PaddingValues(vertical = 0.dp),
-                        background = Green,
+                        text = stringResource(R.string.default_ingredients_dialog_save_bt_text),
+                        textStyle = MaterialTheme.typography.bodySmall,
+                        contentPadding = 8.dp,
                         onClick = onClickSave
-                    ) {
-                        Text(
-                            text = stringResource(R.string.default_ingredients_dialog_save_bt_text),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
+                    )
                 }
             }
         }
