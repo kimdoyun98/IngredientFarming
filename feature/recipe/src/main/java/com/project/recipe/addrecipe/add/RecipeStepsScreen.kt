@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -23,7 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.component.IngredientFarmingWideButton
+import com.project.designsystem.component.AppPositiveButton
 import com.project.designsystem.component.LocarmTextField
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.LightGreen
@@ -127,14 +128,14 @@ internal fun RecipeStepsScreen(
             }
         }
 
-        IngredientFarmingWideButton(
-            //modifier = Modifier.align(Alignment.BottomCenter),
+        AppPositiveButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+            text = stringResource(R.string.add_recipe_save_button_title),
+            enabled = saveButtonEnable,
             onClick = onSaveButtonClick,
-            background = Green,
-            enabled = saveButtonEnable
-        ) {
-            Text(stringResource(R.string.add_recipe_save_button_title))
-        }
+        )
     }
 }
 

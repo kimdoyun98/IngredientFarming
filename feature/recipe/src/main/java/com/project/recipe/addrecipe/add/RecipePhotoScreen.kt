@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CameraAlt
@@ -34,8 +35,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.placeholder
-import com.project.designsystem.component.IngredientFarmingWideButton
-import com.project.designsystem.theme.Green
+import com.project.designsystem.component.AppPositiveButton
 import com.project.recipe.R
 import com.project.recipe.addrecipe.component.MainTitleContent
 import com.project.recipe.addrecipe.contract.AddRecipeIntent
@@ -94,14 +94,14 @@ internal fun RecipePhotoScreen(
             }
         }
 
-        IngredientFarmingWideButton(
+        AppPositiveButton(
             modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
                 .align(Alignment.BottomCenter),
+            text = stringResource(R.string.add_recipe_next_button_title),
             onClick = onNextButtonClick,
-            background = Green
-        ) {
-            Text(stringResource(R.string.add_recipe_next_button_title))
-        }
+        )
     }
 }
 
