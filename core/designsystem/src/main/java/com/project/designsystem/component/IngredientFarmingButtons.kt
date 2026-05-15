@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.project.designsystem.util.AppButtonBackGroundColor
+import com.project.ui_core.modifier.singleClickEvent
 import com.project.ui_core.modifier.singleClickable
 
 @Composable
@@ -188,6 +189,34 @@ fun IngredientFarmingButton(
         enabled = enabled,
         content = { content() }
     )
+}
+
+@Composable
+fun AppDefaultButton(
+    modifier: Modifier = Modifier,
+    background: Color? = null,
+    enabled: Boolean = true,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+){
+    singleClickEvent { singleEvent ->
+        Button(
+            modifier = modifier,
+            colors =
+                if (background == null) ButtonDefaults.buttonColors()
+                else ButtonDefaults.buttonColors(containerColor = background),
+            contentPadding = contentPadding,
+            shape = RoundedCornerShape(8.dp),
+            onClick = {
+                singleEvent.event {
+                    onClick()
+                }
+            },
+            enabled = enabled,
+            content = { content() }
+        )
+    }
 }
 
 @Composable
