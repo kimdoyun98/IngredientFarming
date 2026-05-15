@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun LocarmTextField(
+fun AppTextField(
     modifier: Modifier = Modifier,
     value: String,
     label: String? = null,
@@ -52,7 +52,7 @@ fun LocarmTextField(
 }
 
 @Composable
-fun LocarmNumberTextField(
+fun AppNumberTextField(
     modifier: Modifier = Modifier,
     value: String,
     label: String? = null,
@@ -62,7 +62,7 @@ fun LocarmNumberTextField(
     shape: Shape = OutlinedTextFieldDefaults.shape,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
 ) {
-    LocarmTextField(
+    AppTextField(
         modifier = modifier,
         value = value,
         label = label,
@@ -76,7 +76,7 @@ fun LocarmNumberTextField(
 }
 
 @Composable
-fun LocarmDateTextField(
+fun AppDateTextField(
     modifier: Modifier = Modifier,
     value: String,
     label: String? = null,
@@ -105,7 +105,7 @@ fun LocarmDateTextField(
 @Preview
 @Composable
 private fun LocarmTextFieldPreview() {
-    LocarmTextField(
+    AppTextField(
         value = "",
         label = "테스트",
         placeholder = "PlaceHolder Test",

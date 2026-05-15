@@ -36,9 +36,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.component.AppNumberTextField
 import com.project.designsystem.component.AppPositiveButton
-import com.project.designsystem.component.LocarmNumberTextField
-import com.project.designsystem.component.LocarmTextField
+import com.project.designsystem.component.AppTextField
 import com.project.designsystem.theme.Green
 import com.project.model.recipe.IngredientUnit
 import com.project.recipe.R
@@ -174,7 +174,7 @@ private fun IngredientItem(
             .shadowLayout()
             .padding(8.dp)
     ) {
-        LocarmTextField(
+        AppTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             value = ingredientName,
@@ -192,7 +192,7 @@ private fun IngredientItem(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            LocarmNumberTextField(
+            AppNumberTextField(
                 modifier = Modifier.weight(2f),
                 value = ingredientAmount,
                 placeholder = stringResource(R.string.add_recipe_ingredients_ingredient_amount_placeholder),

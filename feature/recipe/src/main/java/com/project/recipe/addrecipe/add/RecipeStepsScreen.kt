@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.designsystem.component.AppPositiveButton
-import com.project.designsystem.component.LocarmTextField
+import com.project.designsystem.component.AppTextField
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.LightGreen
 import com.project.recipe.R
@@ -158,7 +158,7 @@ private fun RecipeStepItem(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        LocarmTextField(
+        AppTextField(
             modifier = Modifier.weight(1f),
             value = descriptions,
             placeholder = stringResource(R.string.add_recipe_ingredients_cooking_step_placeholder),

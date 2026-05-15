@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.designsystem.component.LocarmDateTextField
-import com.project.designsystem.component.LocarmNumberTextField
-import com.project.designsystem.component.LocarmTextField
+import com.project.designsystem.component.AppDateTextField
+import com.project.designsystem.component.AppNumberTextField
+import com.project.designsystem.component.AppTextField
 import com.project.ingredient.R
 import com.project.ui.FilterChipGroup
 import com.project.ui.util.rememberIngredientCategoryTitles
@@ -36,7 +36,7 @@ internal fun IngredientInputContent(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
 
-        LocarmTextField(
+        AppTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             value = name,
@@ -44,7 +44,7 @@ internal fun IngredientInputContent(
             onValueChange = { changeNameValue(it) }
         )
 
-        LocarmNumberTextField(
+        AppNumberTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             value = count,
@@ -52,7 +52,7 @@ internal fun IngredientInputContent(
             onValueChange = { changeCountValue(it) },
         )
 
-        LocarmDateTextField(
+        AppDateTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             value = expirationDate,

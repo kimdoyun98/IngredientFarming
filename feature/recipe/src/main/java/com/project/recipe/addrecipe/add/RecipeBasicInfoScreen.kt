@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.component.AppNumberTextField
 import com.project.designsystem.component.AppPositiveButton
-import com.project.designsystem.component.LocarmNumberTextField
-import com.project.designsystem.component.LocarmTextField
+import com.project.designsystem.component.AppTextField
 import com.project.model.recipe.RecipeCategory
 import com.project.recipe.R
 import com.project.recipe.addrecipe.component.ContentTitle
@@ -80,7 +80,7 @@ internal fun RecipeBasicInfoScreen(
                 title = stringResource(R.string.add_recipe_basic_info_main_title)
             )
 
-            LocarmTextField(
+            AppTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
                 label = stringResource(R.string.add_recipe_basic_info_recipe_name_label),
@@ -158,7 +158,7 @@ private fun TimeAndPeopleContent(
                 )
             }
 
-            LocarmNumberTextField(
+            AppNumberTextField(
                 placeholder = stringResource(R.string.add_recipe_basic_info_cook_time_placeholder),
                 value = cookTime,
                 onValueChange = { onCookTimeValueChange(it) },
@@ -178,7 +178,7 @@ private fun TimeAndPeopleContent(
                 )
             }
 
-            LocarmNumberTextField(
+            AppNumberTextField(
                 placeholder = stringResource(R.string.add_recipe_basic_info_people_placeholder),
                 value = people,
                 onValueChange = { onPeopleValueChange(it) },
