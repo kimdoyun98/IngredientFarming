@@ -14,5 +14,5 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.core.uiCore)
 }
