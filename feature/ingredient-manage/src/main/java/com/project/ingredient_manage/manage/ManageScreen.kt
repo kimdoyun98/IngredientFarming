@@ -29,10 +29,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.component.IngredientFarmingWideButton
+import com.project.designsystem.component.AppDefaultButton
 import com.project.ingredient_manage.R
 import com.project.ingredient_manage.manage.contract.ManageIntent
 import com.project.ingredient_manage.manage.contract.ManageState
@@ -162,15 +163,14 @@ internal fun ManageScreen(
             }
 
             if (deleteOptionsState) {
-                Row(
+                AppDefaultButton(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                ) {
-                    IngredientFarmingWideButton(
-                        onClick = onDeleteClick
-                    ) { Text("재료 소진/폐기") }
-                }
+                        .padding(4.dp)
+                        .align(Alignment.BottomCenter),
+                    background = Red,
+                    onClick = onDeleteClick
+                ) { Text(stringResource(R.string.delete_button_text)) }
             }
         }
     }

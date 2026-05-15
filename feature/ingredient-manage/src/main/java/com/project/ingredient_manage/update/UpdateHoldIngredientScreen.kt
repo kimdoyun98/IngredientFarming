@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.component.IngredientFarmingButton
+import com.project.designsystem.component.AppDefaultButton
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.ingredient_manage.update.contract.UpdateIntent
@@ -35,13 +35,12 @@ import com.project.ingredient_manage.update.contract.UpdateState
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.AppBarType
-import com.project.ui.iconbox.CategoryLargeIconBox
-import com.project.ui.iconbox.IconBoxSize
 import com.project.ui.IngredientFarmingTopAppBar
 import com.project.ui.LocarmIcon
-import com.project.ui.iconbox.MediumIconBox
 import com.project.ui.R
-import com.project.ui_core.modifier.singleClickEvent
+import com.project.ui.iconbox.CategoryLargeIconBox
+import com.project.ui.iconbox.IconBoxSize
+import com.project.ui.iconbox.MediumIconBox
 import com.project.ui.util.format
 import com.project.ui.util.rememberUpdateContentList
 import java.time.LocalDate
@@ -113,29 +112,21 @@ internal fun UpdateHoldIngredientScreen(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                singleClickEvent { singleEvent ->
-                    IngredientFarmingButton(
-                        modifier = Modifier
-                            .weight(1f),
-                        background = Red,
-                        onClick = {
-                            singleEvent.event {
-                                onDeleteButtonClick()
-                            }
-                        }
-                    ) { Text(stringResource(com.project.ingredient_manage.R.string.delete_button_text)) }
+                AppDefaultButton(
+                    modifier = Modifier
+                        .weight(1f),
+                    background = Red,
+                    onClick = onDeleteButtonClick
+                ) { Text(stringResource(com.project.ingredient_manage.R.string.delete_button_text)) }
 
-                    IngredientFarmingButton(
-                        modifier = Modifier
-                            .weight(1f),
-                        onClick = {
-                            singleEvent.event {
-                                onUpdateButtonClick()
-                            }
-                        }
-                    ) { Text(stringResource(com.project.ingredient_manage.R.string.update_button_text)) }
-                }
+                AppDefaultButton(
+                    modifier = Modifier
+                        .weight(1f),
+                    onClick = onUpdateButtonClick
+                ) { Text(stringResource(com.project.ingredient_manage.R.string.update_button_text)) }
+
             }
         }
     }

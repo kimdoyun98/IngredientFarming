@@ -31,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.component.IngredientFarmingWideButton
+import com.project.designsystem.component.AppDefaultButton
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.model.recipe.IngredientUnit
@@ -45,9 +45,9 @@ import com.project.recipe.recipinfo.contract.RecipeInfoState
 import com.project.recipe.recipinfo.model.RecipeIngredientUiModel
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingTopAppBar
+import com.project.ui.util.format
 import com.project.ui_core.modifier.circleLayout
 import com.project.ui_core.modifier.shadowLayout
-import com.project.ui.util.format
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -211,9 +211,12 @@ private fun RecipeIngredientsContent(
     }
 
     if (hasMissingIngredients) {
-        IngredientFarmingWideButton(
-            onClick = onClickAddRequireIngredientButton,
-            background = Red
+        AppDefaultButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+            background = Red,
+            onClick = onClickAddRequireIngredientButton
         ) { Text(stringResource(R.string.recipe_info_ingredients_require_ingredients_add_button_text)) }
     }
 }

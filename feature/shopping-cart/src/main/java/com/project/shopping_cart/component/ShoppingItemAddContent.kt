@@ -1,5 +1,6 @@
 package com.project.shopping_cart.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +13,12 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.component.IngredientFarmingButton
+import com.project.designsystem.component.AppDefaultButton
 import com.project.designsystem.theme.Purple500
 import com.project.shopping_cart.R
 import com.project.ui.FilterChipGroup
-import com.project.ui_core.modifier.shadowLayout
 import com.project.ui.util.rememberIngredientCategoryTitles
+import com.project.ui_core.modifier.shadowLayout
 
 @Composable
 internal fun ShoppingItemAddContent(
@@ -58,8 +59,10 @@ internal fun ShoppingItemAddContent(
             selectedChipIndex = addItemCategorySelected
         )
 
-        Row {
-            IngredientFarmingButton(
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            AppDefaultButton(
                 modifier = Modifier
                     .weight(1f),
                 onClick = onCancelButtonClick,
@@ -71,7 +74,7 @@ internal fun ShoppingItemAddContent(
                 )
             }
 
-            IngredientFarmingButton(
+            AppDefaultButton(
                 modifier = Modifier
                     .weight(1f),
                 onClick = onAddButtonClick,
