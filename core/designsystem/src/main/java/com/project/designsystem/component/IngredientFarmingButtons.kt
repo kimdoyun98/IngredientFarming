@@ -147,51 +147,6 @@ private fun AppButton(
 }
 
 @Composable
-fun IngredientFarmingWideButton(
-    modifier: Modifier = Modifier,
-    background: Color? = null,
-    enabled: Boolean = true,
-    onClick: () -> Unit,
-    content: @Composable () -> Unit
-) {
-    Button(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        colors =
-            if (background == null) ButtonDefaults.buttonColors()
-            else ButtonDefaults.buttonColors(containerColor = background),
-        onClick = { onClick() },
-        enabled = enabled,
-        content = { content() }
-    )
-}
-
-@Composable
-fun IngredientFarmingButton(
-    modifier: Modifier = Modifier,
-    background: Color? = null,
-    enabled: Boolean = true,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    onClick: () -> Unit,
-    content: @Composable () -> Unit
-) {
-    Button(
-        modifier = modifier
-            .padding(4.dp),
-        colors =
-            if (background == null) ButtonDefaults.buttonColors()
-            else ButtonDefaults.buttonColors(containerColor = background),
-        contentPadding = contentPadding,
-        shape = RoundedCornerShape(8.dp),
-        onClick = { onClick() },
-        enabled = enabled,
-        content = { content() }
-    )
-}
-
-@Composable
 fun AppDefaultButton(
     modifier: Modifier = Modifier,
     background: Color? = null,
@@ -199,7 +154,7 @@ fun AppDefaultButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     onClick: () -> Unit,
     content: @Composable () -> Unit
-){
+) {
     singleClickEvent { singleEvent ->
         Button(
             modifier = modifier,
@@ -241,16 +196,6 @@ fun IngredientFarmingRoundedIconButton(
         onClick = { onClick() },
         content = { content() }
     )
-}
-
-@Preview
-@Composable
-private fun IngredientFarmingWideButtonPreview() {
-    IngredientFarmingWideButton(
-        onClick = {}
-    ) {
-        Text("다음")
-    }
 }
 
 @Preview
