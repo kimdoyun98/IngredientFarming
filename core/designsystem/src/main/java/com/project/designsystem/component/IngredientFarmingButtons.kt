@@ -200,15 +200,12 @@ fun IngredientFarmingRoundedIconButton(
 
 @Preview
 @Composable
-private fun IngredientFarmingIconButtonPreview() {
-    IngredientFarmingRoundedIconButton(
+private fun AppDefaultButtonPreview() {
+    AppDefaultButton(
+        modifier = Modifier.fillMaxWidth(),
         onClick = {}
     ) {
-        Icon(
-            imageVector = Icons.Outlined.ShoppingCart,
-            contentDescription = null,
-            tint = Color.Magenta
-        )
+        Text("다음")
     }
 }
 
@@ -238,4 +235,18 @@ private fun AppNegativeButtonPreview() {
         modifier = Modifier.fillMaxWidth(),
         text = "취소",
     ) {}
+}
+
+@Preview
+@Composable
+private fun IngredientFarmingIconButtonPreview() {
+    IngredientFarmingRoundedIconButton(
+        onClick = {}
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.ShoppingCart,
+            contentDescription = null,
+            tint = Color.Magenta
+        )
+    }
 }
