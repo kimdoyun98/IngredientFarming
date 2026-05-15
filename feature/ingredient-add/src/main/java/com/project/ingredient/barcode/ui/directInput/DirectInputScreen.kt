@@ -1,14 +1,14 @@
 package com.project.ingredient.barcode.ui.directInput
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.project.designsystem.component.IngredientFarmingWideButton
+import androidx.compose.ui.unit.dp
+import com.project.designsystem.component.AppPositiveButton
 import com.project.ingredient.R
 import com.project.ingredient.barcode.contract.directInput.DirectInputIntent
 import com.project.ingredient.barcode.contract.directInput.DirectInputState
@@ -72,31 +72,29 @@ internal fun DirectInputScreen(
         Column(
             modifier = modifier
                 .padding(innerPadding)
+                .padding(16.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                IngredientInputContent(
-                    name = name,
-                    count = count,
-                    expirationDate = expirationDate,
-                    changeNameValue = onChangeNameValue,
-                    changeCountValue = onChangeCountValue,
-                    changeExpirationDateValue = onChangeExpirationDateValue,
-                    clickStoreFilterChip = onClickStoreFilterChip,
-                    clickCategoryFilterChip = onClickCategoryFilterChip,
-                    storeChipSelectIndex = storeChipSelectIndex,
-                    categoryChipSelectIndex = categoryChipSelectIndex,
-                )
-            }
+            IngredientInputContent(
+                modifier = Modifier.weight(1f),
+                name = name,
+                count = count,
+                expirationDate = expirationDate,
+                changeNameValue = onChangeNameValue,
+                changeCountValue = onChangeCountValue,
+                changeExpirationDateValue = onChangeExpirationDateValue,
+                clickStoreFilterChip = onClickStoreFilterChip,
+                clickCategoryFilterChip = onClickCategoryFilterChip,
+                storeChipSelectIndex = storeChipSelectIndex,
+                categoryChipSelectIndex = categoryChipSelectIndex,
+            )
 
-            IngredientFarmingWideButton(
-                onClick = onClickNextButton,
-                enabled = nextButtonEnabled
-            ) {
-                Text(text = stringResource(R.string.next))
-            }
+            AppPositiveButton(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = stringResource(R.string.next),
+                enabled = nextButtonEnabled,
+                onClick = onClickNextButton
+            )
         }
     }
 }
@@ -105,7 +103,7 @@ internal fun DirectInputScreen(
 @Composable
 private fun DirectInputScreenPreview() {
     DirectInputScreen(
-        directInputState =  DirectInputState() ,
+        directInputState = DirectInputState(),
         onIntent = {},
     )
 }

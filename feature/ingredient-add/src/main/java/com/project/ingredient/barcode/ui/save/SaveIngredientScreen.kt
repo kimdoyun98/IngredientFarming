@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -25,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.component.IngredientFarmingWideButton
+import com.project.designsystem.component.AppPositiveButton
 import com.project.ingredient.R
 import com.project.ingredient.barcode.contract.directInput.DirectInputState
 import com.project.ingredient.barcode.contract.save.SaveIngredientIntent
@@ -141,40 +142,39 @@ internal fun SaveIngredientScreen(
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .weight(1f)
+            LazyColumn(
+                modifier = Modifier.weight(1f)
             ) {
-                LazyColumn {
-                    items(
-                        count = ingredientList.size,
-                        key = { idx -> ingredientList[idx].name }
-                    ) { idx ->
-                        Box {
-                            IngredientCard(item = ingredientList[idx])
+                items(
+                    count = ingredientList.size,
+                    key = { idx -> ingredientList[idx].name }
+                ) { idx ->
+                    Box {
+                        IngredientCard(item = ingredientList[idx])
 
-                            IconButton(
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .padding(12.dp),
-                                onClick = { onUpdateButtonClick(idx) },
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Edit,
-                                    contentDescription = null,
-                                    tint = Color.Blue
-                                )
-                            }
+                        IconButton(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(12.dp),
+                            onClick = { onUpdateButtonClick(idx) },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = null,
+                                tint = Color.Blue
+                            )
                         }
                     }
                 }
             }
 
-            IngredientFarmingWideButton(
-                onClick = { onSaveButtonClick() }
-            ) {
-                Text(stringResource(R.string.save))
-            }
+            AppPositiveButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                text = stringResource(R.string.save),
+                onClick = onSaveButtonClick
+            )
         }
 
         if (updateBottomSheetState) {
@@ -250,6 +250,8 @@ private fun UpdateBottomSheetContent(
             }
 
             IngredientInputContent(
+                modifier = Modifier
+                    .padding(16.dp),
                 name = updateIngredient.name,
                 count = updateIngredient.count,
                 expirationDate = updateIngredient.expirationDate,
@@ -263,12 +265,14 @@ private fun UpdateBottomSheetContent(
             )
         }
 
-        IngredientFarmingWideButton(
-            onClick = clickUpdateButton,
+        AppPositiveButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            text = stringResource(R.string.bottom_sheet_update_button_text),
             enabled = updateIngredient.isEnabled(),
-        ) {
-            Text(text = stringResource(R.string.bottom_sheet_update_button_text))
-        }
+            onClick = clickUpdateButton
+        )
     }
 }
 
@@ -289,6 +293,20 @@ private fun SaveIngredientScreenPreview() {
                     Ingredient(
                         name = "사과",
                         count = 10.0,
+                        category = IngredientCategory.FRUIT,
+                        store = IngredientStore.ROOM_TEMPERATURE,
+                        expirationDate = LocalDate.parse("2026-02-24")
+                    ),
+                    Ingredient(
+                        name = "치즈",
+                        count = 10.0,
+                        category = IngredientCategory.DAIRY,
+                        store = IngredientStore.REFRIGERATED,
+                        expirationDate = LocalDate.parse("2026-02-24")
+                    ),
+                    Ingredient(
+                        name = "우유",
+                        count = 1.0,
                         category = IngredientCategory.FRUIT,
                         store = IngredientStore.ROOM_TEMPERATURE,
                         expirationDate = LocalDate.parse("2026-02-24")
