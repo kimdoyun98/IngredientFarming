@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.project.model.ingredient.IngredientCategory
-import com.project.ui.LocarmIcon
+import com.project.ui.IngredientFarmingIcon
 import com.project.ui.R
 import com.project.ui.util.iconResource
 
@@ -24,7 +24,7 @@ fun SelectCategoryIconBox(
         selected = selected,
         iconBoxSize = IconBoxSize.MEDIUM
     ) {
-        LocarmIcon(
+        IngredientFarmingIcon(
             modifier = Modifier.size(IconBoxSize.SMALL.iconSize.dp),
             iconResource = category.iconResource,
             contentDescription = stringResource(R.string.icon_description, category.title),

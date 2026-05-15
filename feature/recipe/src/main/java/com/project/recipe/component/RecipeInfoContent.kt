@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.unit.dp
 import com.project.ui.IconResource
-import com.project.ui.LocarmIcon
+import com.project.ui.IngredientFarmingIcon
 
 @Composable
 internal fun RecipeInfoContent(
@@ -46,7 +46,7 @@ private fun RecipeInfoContentItem(
     iconResource: IconResource,
     title: String,
 ) {
-    LocarmIcon(
+    IngredientFarmingIcon(
         modifier = modifier
             .size(16.dp),
         iconResource = iconResource,

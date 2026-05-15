@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 
 @Composable
-fun LocarmIcon(
+fun IngredientFarmingIcon(
     modifier: Modifier = Modifier,
     iconResource: IconResource,
     contentDescription: String?,

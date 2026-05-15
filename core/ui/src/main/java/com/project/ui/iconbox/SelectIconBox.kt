@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.model.ingredient.IngredientCategory
-import com.project.ui.LocarmIcon
+import com.project.ui.IngredientFarmingIcon
 import com.project.ui.R
 import com.project.ui.util.iconResource
 
@@ -63,7 +63,7 @@ private fun SelectedIconBoxPreview() {
         iconBoxSize = IconBoxSize.MEDIUM
 
     ) {
-        LocarmIcon(
+        IngredientFarmingIcon(
             modifier = Modifier.size(IconBoxSize.SMALL.iconSize.dp),
             iconResource = category.iconResource,
             contentDescription = stringResource(R.string.icon_description, category.title),
@@ -85,7 +85,7 @@ private fun UnSelectedIconBoxPreview() {
         iconBoxSize = IconBoxSize.MEDIUM
 
     ) {
-        LocarmIcon(
+        IngredientFarmingIcon(
             modifier = Modifier.size(IconBoxSize.SMALL.iconSize.dp),
             iconResource = category.iconResource,
             contentDescription = stringResource(R.string.icon_description, category.title),

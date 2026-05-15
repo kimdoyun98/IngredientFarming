@@ -175,7 +175,7 @@ private fun IngredientCardContent(
         cardContentList.forEach {
             IngredientAttrItem(
                 icon = {
-                    LocarmIcon(
+                    IngredientFarmingIcon(
                         modifier = Modifier.size(20.dp),
                         iconResource = it.iconResource,
                         contentDescription = stringResource(R.string.ingredient_card_view_icon_description),
