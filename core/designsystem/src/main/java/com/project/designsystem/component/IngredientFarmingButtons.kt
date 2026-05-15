@@ -27,17 +27,71 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.project.designsystem.util.AppButtonBackGroundColor
 import com.project.ui_core.modifier.singleClickable
 
 @Composable
 fun AppPositiveButton(
     modifier: Modifier = Modifier,
     text: String,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     enabled: Boolean = true,
+    contentPadding: Dp = 14.dp,
+    onClick: () -> Unit,
+) {
+    AppButton(
+        modifier = modifier,
+        text = text,
+        textStyle = textStyle,
+        backgroundColor = AppButtonBackGroundColor.BackGroundBrush(
+            Brush.horizontalGradient(
+                colors = listOf(
+                    Color(0xFF059669),
+                    Color(0xFF10B981)
+                )
+            )
+        ),
+        enabled = enabled,
+        contentPadding = contentPadding,
+        onClick = onClick
+    )
+}
+
+@Composable
+fun AppNegativeButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    contentPadding: Dp = 14.dp,
+    onClick: () -> Unit,
+) {
+    AppButton(
+        modifier = modifier,
+        text = text,
+        textStyle = textStyle,
+        textColor = DarkGray,
+        backgroundColor = AppButtonBackGroundColor.BackGroundColor(Color(0xFFD1D5DB)),
+        contentPadding = contentPadding,
+        onClick = onClick
+    )
+}
+
+@Composable
+private fun AppButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    textColor: Color = Color.White,
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    backgroundColor: AppButtonBackGroundColor,
+    enabled: Boolean = true,
+    contentPadding: Dp = 14.dp,
     onClick: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -46,25 +100,24 @@ fun AppPositiveButton(
         targetValue = if (isPressed) 0.97f else 1f,
         label = "button_scale"
     )
-
     val alpha by animateFloatAsState(
         targetValue = if (isPressed) 0.85f else 1f,
         label = "button_alpha"
     )
+    val backgroundModifier = when {
+        !enabled -> {
+            Modifier.background(Gray)
+        }
 
-    val backgroundModifier = if (enabled) {
-        Modifier.background(
-            brush = Brush.horizontalGradient(
-                colors = listOf(
-                    Color(0xFF059669),
-                    Color(0xFF10B981)
-                )
-            )
-        )
-    } else {
-        Modifier.background(
-            color = Gray
-        )
+        backgroundColor is AppButtonBackGroundColor.BackGroundBrush -> {
+            Modifier.background(backgroundColor.brush)
+        }
+
+        backgroundColor is AppButtonBackGroundColor.BackGroundColor -> {
+            Modifier.background(backgroundColor.color)
+        }
+
+        else -> Modifier
     }
 
     Box(
@@ -81,13 +134,13 @@ fun AppPositiveButton(
                 enabled = enabled,
                 onClick = onClick
             )
-            .padding(vertical = 14.dp),
+            .padding(vertical = contentPadding),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,
-            color = Color.White,
-            style = MaterialTheme.typography.bodyLarge
+            color = textColor,
+            style = textStyle
         )
     }
 }
@@ -202,4 +255,13 @@ private fun DisabledAppPositiveButtonPreview() {
         enabled = false,
         text = "확인"
     ) { }
+}
+
+@Preview
+@Composable
+private fun AppNegativeButtonPreview() {
+    AppNegativeButton(
+        modifier = Modifier.fillMaxWidth(),
+        text = "취소",
+    ) {}
 }
