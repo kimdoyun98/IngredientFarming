@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.project.designsystem.compose.IngredientFarmingButton
+import com.project.designsystem.component.IngredientFarmingButton
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.ingredient_manage.R

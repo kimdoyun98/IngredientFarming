@@ -15,7 +15,7 @@ import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.project.designsystem.compose.IngredientFarmingRoundedIconButton
+import com.project.designsystem.component.IngredientFarmingRoundedIconButton
 import com.project.ui.modifier.circleLayout
 
 @Composable

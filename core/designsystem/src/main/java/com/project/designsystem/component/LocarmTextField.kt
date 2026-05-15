@@ -1,4 +1,4 @@
-package com.project.designsystem.compose
+package com.project.designsystem.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField

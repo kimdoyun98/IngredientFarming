@@ -36,9 +36,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.compose.IngredientFarmingWideButton
-import com.project.designsystem.compose.LocarmNumberTextField
-import com.project.designsystem.compose.LocarmTextField
+import com.project.designsystem.component.IngredientFarmingWideButton
+import com.project.designsystem.component.LocarmNumberTextField
+import com.project.designsystem.component.LocarmTextField
 import com.project.designsystem.theme.Green
 import com.project.model.recipe.IngredientUnit
 import com.project.recipe.R

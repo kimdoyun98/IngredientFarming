@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.compose.LocarmDateTextField
-import com.project.designsystem.compose.LocarmNumberTextField
-import com.project.designsystem.compose.LocarmTextField
+import com.project.designsystem.component.LocarmDateTextField
+import com.project.designsystem.component.LocarmNumberTextField
+import com.project.designsystem.component.LocarmTextField
 import com.project.ingredient.R
 import com.project.ui.FilterChipGroup
 import com.project.ui.util.rememberIngredientCategoryTitles

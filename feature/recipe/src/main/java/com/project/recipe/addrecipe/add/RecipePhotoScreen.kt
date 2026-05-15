@@ -34,7 +34,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import coil3.request.ImageRequest
 import coil3.request.placeholder
-import com.project.designsystem.compose.IngredientFarmingWideButton
+import com.project.designsystem.component.IngredientFarmingWideButton
 import com.project.designsystem.theme.Green
 import com.project.recipe.R
 import com.project.recipe.addrecipe.component.MainTitleContent

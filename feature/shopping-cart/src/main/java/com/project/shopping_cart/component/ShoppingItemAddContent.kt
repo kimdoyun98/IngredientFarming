@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.project.designsystem.compose.IngredientFarmingButton
+import com.project.designsystem.component.IngredientFarmingButton
 import com.project.designsystem.theme.Purple500
 import com.project.shopping_cart.R
 import com.project.ui.FilterChipGroup
