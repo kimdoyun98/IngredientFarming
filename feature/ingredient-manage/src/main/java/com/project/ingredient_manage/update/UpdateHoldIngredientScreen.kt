@@ -41,7 +41,7 @@ import com.project.ui.IngredientFarmingTopAppBar
 import com.project.ui.LocarmIcon
 import com.project.ui.iconbox.MediumIconBox
 import com.project.ui.R
-import com.project.ui.modifier.singleClickEvent
+import com.project.ui_core.modifier.singleClickEvent
 import com.project.ui.util.format
 import com.project.ui.util.rememberUpdateContentList
 import java.time.LocalDate

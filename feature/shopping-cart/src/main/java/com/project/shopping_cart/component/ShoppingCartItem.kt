@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.project.designsystem.theme.Green
 import com.project.designsystem.theme.MoreLightGreen
 import com.project.model.ingredient.IngredientCategory
-import com.project.ui.modifier.shadowLayout
+import com.project.ui_core.modifier.shadowLayout
 import com.project.ui.util.format
 
 @Composable

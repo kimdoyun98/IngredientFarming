@@ -45,8 +45,8 @@ import com.project.recipe.recipinfo.contract.RecipeInfoState
 import com.project.recipe.recipinfo.model.RecipeIngredientUiModel
 import com.project.ui.AppBarType
 import com.project.ui.IngredientFarmingTopAppBar
-import com.project.ui.modifier.circleLayout
-import com.project.ui.modifier.shadowLayout
+import com.project.ui_core.modifier.circleLayout
+import com.project.ui_core.modifier.shadowLayout
 import com.project.ui.util.format
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

@@ -16,7 +16,7 @@ import com.project.designsystem.component.IngredientFarmingButton
 import com.project.designsystem.theme.Purple500
 import com.project.shopping_cart.R
 import com.project.ui.FilterChipGroup
-import com.project.ui.modifier.shadowLayout
+import com.project.ui_core.modifier.shadowLayout
 import com.project.ui.util.rememberIngredientCategoryTitles
 
 @Composable

@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.project.designsystem.component.IngredientFarmingRoundedIconButton
-import com.project.ui.modifier.circleLayout
+import com.project.ui_core.modifier.circleLayout
 
 @Composable
 fun IndicatorRoundedIconButton(

@@ -47,7 +47,7 @@ import com.project.recipe.addrecipe.component.MainTitleContent
 import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import com.project.recipe.addrecipe.contract.AddRecipeState
 import com.project.recipe.addrecipe.model.IngredientUiModel
-import com.project.ui.modifier.shadowLayout
+import com.project.ui_core.modifier.shadowLayout
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

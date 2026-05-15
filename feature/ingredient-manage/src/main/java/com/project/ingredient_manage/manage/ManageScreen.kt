@@ -43,7 +43,7 @@ import com.project.ui.AppBarType
 import com.project.ui.IconIngredientCard
 import com.project.ui.IngredientFarmingSearchBar
 import com.project.ui.IngredientFarmingTopAppBar
-import com.project.ui.modifier.singleClickable
+import com.project.ui_core.modifier.singleClickable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf

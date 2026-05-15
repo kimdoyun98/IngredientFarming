@@ -42,8 +42,8 @@ import com.project.recipe.addrecipe.contract.AddRecipeIntent
 import com.project.recipe.addrecipe.contract.AddRecipeState
 import com.project.ui.IngredientFarmingCenterLoading
 import com.project.ui.iconbox.MediumIconBox
-import com.project.ui.modifier.dottedLineLayout
-import com.project.ui.modifier.singleClickable
+import com.project.ui_core.modifier.dottedLineLayout
+import com.project.ui_core.modifier.singleClickable
 
 @Composable
 internal fun RecipePhotoScreen(
@@ -162,7 +162,7 @@ private fun InsertRecipePhoto(
             .fillMaxWidth()
             .height(170.dp)
             .dottedLineLayout()
-            .singleClickable(onClick),
+            .singleClickable(onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {

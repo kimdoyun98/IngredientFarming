@@ -39,8 +39,8 @@ import com.project.designsystem.theme.Green
 import com.project.model.recipe.RecipeCategory
 import com.project.recipe.R
 import com.project.recipe.component.RecipeInfoContent
-import com.project.ui.modifier.shadowLayout
-import com.project.ui.modifier.singleClickable
+import com.project.ui_core.modifier.shadowLayout
+import com.project.ui_core.modifier.singleClickable
 import java.io.File
 
 @Composable
@@ -59,7 +59,7 @@ internal fun RecipeCardItem(
         modifier = modifier
             .fillMaxWidth()
             .shadowLayout()
-            .singleClickable(onClick),
+            .singleClickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column {

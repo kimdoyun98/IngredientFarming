@@ -39,7 +39,7 @@ import com.project.ingredient_manage.R
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
 import com.project.ui.iconbox.SelectCategoryIconBox
-import com.project.ui.modifier.singleClickable
+import com.project.ui_core.modifier.singleClickable
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

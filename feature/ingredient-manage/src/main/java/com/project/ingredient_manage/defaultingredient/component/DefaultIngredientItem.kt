@@ -36,8 +36,8 @@ import com.project.designsystem.theme.Pink40
 import com.project.designsystem.theme.Silver
 import com.project.model.ingredient.IngredientCategory
 import com.project.model.ingredient.IngredientStore
-import com.project.ui.modifier.shadowLayout
-import com.project.ui.modifier.singleClickable
+import com.project.ui_core.modifier.shadowLayout
+import com.project.ui_core.modifier.singleClickable
 
 @Composable
 internal fun DefaultIngredientItem(
@@ -61,7 +61,7 @@ internal fun DefaultIngredientItem(
                         shape = RoundedCornerShape(16.dp)
                     )
             )
-            .singleClickable(onClick),
+            .singleClickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(
